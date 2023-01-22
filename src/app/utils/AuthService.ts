@@ -11,6 +11,7 @@ export class AuthService {
   logout(): void {
     this.router.navigate(['/login']);
     localStorage.setItem('indLogeado', 'false');
+    localStorage.setItem('usuario', '');
   }
 
 }

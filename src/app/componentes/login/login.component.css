@@ -11,16 +11,12 @@
 }
 
 .mat-card {
-    border-width: 1px;
-    border-style: solid;
-    border-color: #fff;
-    border-top-color: #fff;
     background-color: #002361;
-    border-radius: 2ch;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #fff;
 }
 
 .mat-button {
@@ -32,11 +28,45 @@
 }
 
 .mat-card-title {
-    color: #002361;
+    color: #fff;
 }
 
 ::ng-deep .snackBar {
-    color: white;
+    color: #fff;
     background: #002361 !important;
     background-color: #002361;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #fff;
+    ;
+}
+
+
+/* Font color */
+
+::ng-deep .input.mat-input-element {
+    color: #fff;
+}
+
+::ng-deep input.mat-input-element {
+    color: #fff;
+}
+
+.mat-input-element {
+    color: #fff;
+}
+
+.mat-form-field--inline {
+    flex-direction: row;
+    align-items: center;
+    color: #fff;
+}
+
+::ng-deep .mat-button-wrapper {
+    color: #fff;
+}
+
+.mat-form-field-wrapper {
+    color: white;
 }

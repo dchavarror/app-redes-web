@@ -9,11 +9,16 @@
             </app-buscar-ganadores>
         </mat-tab>
         <mat-tab label="Documentos"></mat-tab>
-        <div>
-            <h3>Hola</h3>
-        </div>
+        <mat-tab disabled style="height: 100vh;">
+            <ng-template mat-tab-label>
+                <button mat-icon-button (click)="logout()">
+                   Cerrar sesión
+                </button>
+            </ng-template>
+        </mat-tab>
 
     </mat-tab-group>
+
 
 
 
