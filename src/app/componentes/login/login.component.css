@@ -1,0 +1,42 @@
+.mat-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff!important;
+    outline-color: #fff;
+}
+
+::placeholder {
+    color: #fff!important;
+}
+
+.mat-card {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #fff;
+    border-top-color: #fff;
+    background-color: #002361;
+    border-radius: 2ch;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-button {
+    border-radius: 1ch;
+    border-style: solid;
+    border-color: #fff;
+    border-top-color: #fff;
+    align-items: center;
+}
+
+.mat-card-title {
+    color: #002361;
+}
+
+::ng-deep .snackBar {
+    color: white;
+    background: #002361 !important;
+    background-color: #002361;
+}

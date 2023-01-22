@@ -1,0 +1,47 @@
+<mat-card>
+
+    <mat-card-content>
+        <form [formGroup]="promocionalesFormGroup" role="form">
+            <p>
+                <mat-card-title>Backend promocionales</mat-card-title>
+            </p>
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label class="label">Nombre promoción</mat-label>
+                            <input matInput placeholder="Nombre promoción" formControlName="npromocion">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label class="label">Código promocional</mat-label>
+                            <input matInput placeholder="Código promocional" formControlName="cpromocion">
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
+            <p>
+                <mat-form-field>
+                    <mat-label class="label">Link publicación</mat-label>
+                    <input type="text" matInput placeholder="Link publicación" formControlName="lpublicacion">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <mat-label class="label">Terminos y condiciones</mat-label>
+                    <textarea matInput placeholder="Terminos y condiciones" formControlName="tcondiciones"></textarea>
+                </mat-form-field>
+            </p>
+
+            <div class="example-button-row">
+
+                <button mat-fab matTooltip="Primary" color="primary" aria-label="Example fab with a heart icon">
+                    <mat-icon>queue</mat-icon>
+                  </button>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>

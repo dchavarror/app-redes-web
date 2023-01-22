@@ -1,0 +1,27 @@
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="loginFormGroup" role="form">
+            <p>
+                <img src="https://apicrm.betplay.com.co/logos/63177d7538190c079e14869f.png">
+            </p>
+            <p>
+                <mat-form-field>
+                    <mat-label class="label">Usuario</mat-label>
+                    <input type="text" matInput placeholder="Usuario" formControlName="username" #action>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field>
+                    <mat-label class="label">Password</mat-label>
+                    <input type="password" matInput placeholder="Password" formControlName="password">
+                </mat-form-field>
+            </p>
+
+            <div class="button">
+                <button type="button" mat-button (click)="autenticar()">Ingresar</button>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,18 @@
+.mat-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #002361;
+}
+
+.mat-card-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.example-button-row {
+    justify-content: center;
+    align-items: center;
+}
