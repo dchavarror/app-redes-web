@@ -53,6 +53,8 @@ import { AutenticacionSave } from './utils/AutenticacionSave';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SnackbarComponent } from './componentes/shared/snackbar/snackbar.component';
 import { MessageUtilsComponent } from './componentes/shared/message-utils/message-utils.component';
+import { PremioComponent } from './componentes/shared/premio/premio.component';
+import { DialogComponent } from './componentes/shared/dialog/dialog.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -103,7 +105,9 @@ const materialModules = [
     GanadorComponent,
     BuscarGanadoresComponent,
     SnackbarComponent,
-    MessageUtilsComponent
+    MessageUtilsComponent,
+    PremioComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

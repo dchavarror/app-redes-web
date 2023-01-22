@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
         this.response = data;
         if(this.response.statusCode === STATUS_SERVICE.CREACION || this.response.statusCode === STATUS_SERVICE.EXITOSO){
           localStorage.setItem('indLogeado', 'true');
+          localStorage.setItem('usuario', this.usuario.nombre);
           this.router.navigate( ['home']);
         }else{
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);

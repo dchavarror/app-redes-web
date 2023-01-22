@@ -3,9 +3,13 @@
 html,
 body {
     height: 100%;
-    background-color: #002361;
+    background-color: #c6d8e8;
 }
 
 .label {
-    color: #fff;
+    color: #002361;
+}
+
+.mat-card {
+    background-color: #002361;
 }

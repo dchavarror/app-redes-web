@@ -1,0 +1,69 @@
+.detalle-premio-container mat-form-field+mat-form-field {
+    margin-left: 5px;
+    border-radius: 2ch;
+    border-color: white;
+}
+
+.detalle-premio-container mat-form-field {
+    width: 220px;
+}
+
+.detalle-premio-container form {
+    margin-bottom: 8px;
+}
+
+.detalle-premio-container form>* {
+    margin: 12px 0;
+}
+
+::ng-deep .mat-select-value-text {
+    color: white;
+}
+
+::ng-deep .mat-select-placeholder {
+    color: white;
+}
+
+::ng-deep .mat-select-min-line {
+    color: white;
+}
+
+::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder {
+    color: white;
+}
+
+
+/* Border */
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white;
+}
+
+
+/* Font color */
+
+::ng-deep .input.mat-input-element {
+    color: white;
+}
+
+::ng-deep input.mat-input-element {
+    color: white;
+}
+
+.mat-input-element {
+    color: white;
+}
+
+.text-area-full-width {
+    width: 100%;
+    height: 100%;
+}
+
+.mat-form-field--inline {
+    flex-direction: row;
+    align-items: center;
+}
+
+.example-full-width {
+    width: 100%;
+}

@@ -2,17 +2,110 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #002361;
+    background-color: #c6d8e8;
 }
 
 .mat-card-title {
-    display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #002361;
 }
 
-.example-button-row {
+section {
+    display: table;
+}
+
+.promocion-button-row {
+    display: table-cell;
+    max-width: 600px;
+}
+
+.promocion-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+}
+
+.promocion-flex-container {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.promocion-button-container {
     justify-content: center;
+    width: 120px;
+}
+
+.mat-fab {
+    background: #002361;
+}
+
+.promocion-container mat-form-field+mat-form-field {
+    margin-left: 5px;
+    border-radius: 2ch;
+}
+
+.promocion-container mat-form-field {
+    width: 220px;
+}
+
+.promocion-container form {
+    margin-bottom: 20px;
+}
+
+.promocion-container form>* {
+    margin: 12px 0;
+}
+
+
+/* Border */
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #002361;
+}
+
+
+/* Font color */
+
+::ng-deep .input.mat-input-element {
+    color: #002361;
+}
+
+::ng-deep input.mat-input-element {
+    color: #002361;
+}
+
+.mat-input-element {
+    color: #002361;
+}
+
+.text-area-full-width {
+    width: 100%;
+    height: 100%;
+}
+
+.mat-form-field--inline {
+    flex-direction: row;
     align-items: center;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.mat-button {
+    border-radius: 1ch;
+    border-style: solid;
+    border-color: #002361;
+    border-top-color: #002361;
+    background: #002361;
+    color: #fff;
+}
+
+::ng-deep .snackBar {
+    color: #fff;
+    background: #002361 !important;
+    background-color: #002361;
+}
+
+::ng-deep .mat-button-wrapper {
+    color: #fff;
 }

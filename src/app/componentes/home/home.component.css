@@ -1,0 +1,7 @@
+.container-home {
+    color: #fff;
+}
+
+::ng-deep .mat-tab-label-content {
+    color: #fff;
+}
