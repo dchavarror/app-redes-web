@@ -1,7 +1,11 @@
 export const END_POINT_SERVICE = {
     USUARIO_VALIDAR: 'usuario/validar',
     GET_PREMIO: 'premio',
-    POST_PROMOCION: 'promocion'
+    POST_PROMOCION: 'promocion',
+    DETALLE_PREMIO: 'detalle-premio/',
+    PERSONA: 'persona',
+    GANADOR: 'ganador',
+    PROMOCION_DOCUMENTO :'promocion/documento/'
 };
 
 export const MESSAGE_SERVICE={
@@ -9,7 +13,13 @@ export const MESSAGE_SERVICE={
 }
 
 export const TITULOS_MODALES={
-    TITULO_AGREGAR_RED : 'Agregar red'
+    TITULO_AGREGAR_RED : 'Agregar red',
+    INFORMACION : 'Información'
+}
+
+export const MENSAJE_MODALES={
+    POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO : 'Por favor validar ya se vencio el tiempo de diligenciar datos',
+    POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS : 'Por favor validar datos incompletos'
 }
 
 export const REDES={
@@ -27,5 +37,10 @@ export const TYPE_ICON_SNACKBAR={
 export const STATUS_SERVICE={
     EXITOSO :200,
     CREACION :201,
-    VENCIDO :999
+    VENCIDO :999,
+    ACCEPTED :202
+}
+
+export const DOCUMENTO={
+    NOMBRE :'Reporte.xlsx'
 }

@@ -1,21 +1,24 @@
 <mat-card>
     <form>
-        <p dias>
-            <mat-form-field appearance="outline" style="margin: 6px;">
+        <div>
+            <mat-form-field appearance="outline" class="mat-form-field-50">
                 <mat-label class="label">ID_RED</mat-label>
-                <input [disabled]="true" value="{{detalle.red}}" type="text" matInput placeholder="ID_RED">
+                <input [disabled]="true" value="{{ detalle.red }}" type="text" matInput placeholder="ID_RED" />
             </mat-form-field>
 
-            <mat-form-field appearance="outline" style="margin: 6px;">
+            <mat-form-field appearance="outline" class="mat-form-field-50">
                 <mat-label class="label">Premio</mat-label>
-                <input [disabled]="true" value="{{detalle.premio.descripcion}}" type="text" matInput placeholder="Premio">
+                <input [disabled]="true" value="{{ detalle.premio.descripcion }}" type="text" matInput placeholder="Premio" />
             </mat-form-field>
-            <mat-form-field appearance="outline" style="margin: 6px;">
+        </div>
+        <div>
+            <mat-form-field appearance="outline" class="mat-form-field-100">
                 <mat-label class="label">Link</mat-label>
-                <input [disabled]="true" value="{{detalle.link}}" type="text" style="width:50vw;" matInput placeholder="Link">
+                <input [disabled]="true" value="{{ detalle.link }}" type="text" style="width: 50vw" matInput placeholder="Link" />
             </mat-form-field>
-            <button mat-button (click)="onCopyLink()" color="primary">Copy link</button>
-        </p>
+            <button class="mat-button" (click)="onCopyLink()">
+        Copy link
+      </button>
+        </div>
     </form>
-
 </mat-card>

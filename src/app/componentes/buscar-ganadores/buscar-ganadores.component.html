@@ -1,1 +1,49 @@
-<p>buscar-ganadores works!</p>
+<div class="content">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Buscar Ganadores </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div>
+                <mat-form-field appearance="outline" class="mat-form-field-100">
+                    <mat-label class="label">Nombre completo</mat-label>
+                    <input [(ngModel)]="nombre" class="input-one" matInput placeholder="Nombre completo" required />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mat-form-field-100">
+                    <mat-label class="label">Cedula</mat-label>
+                    <input [(ngModel)]="cedula" class="input-one" matInput placeholder="Cedula" required />
+                </mat-form-field>
+                <button mat-button class="mat-button mat-form-field-100" type="button" (click)="getGanadores()">BUSCAR</button>
+            </div>
+            <div>
+
+            </div>
+            <div>
+                <table mat-table class="mat-elevation-z8 demo-table" [dataSource]="ganadores">
+
+                    <ng-container matColumnDef="cedula">
+                        <th *matHeaderCellDef> Cedula. </th>
+                        <td *matCellDef="let element"> {{element.persona.cedula}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nombre">
+                        <th *matHeaderCellDef> Nombre </th>
+                        <td *matCellDef="let element"> {{element.persona.nombreCompleto}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="acciones">
+                        <th *matHeaderCellDef>Acciones</th>
+                        <td *matCellDef="let element">
+                            <button mat-button type="button">Ver</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr style="justify-content: center;" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionado(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

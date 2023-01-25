@@ -20,7 +20,7 @@ export class PromocionesComponent implements OnInit {
   idPremio: string='';
   name: string=TITULOS_MODALES.TITULO_AGREGAR_RED;
   promocion:Promocion = new Promocion();
-  indVisibilidadGuardar = false;
+  indVisibilidadGuardar = true;
   detalle: Detalle=  new Detalle();
   response: Response = new Response();
 

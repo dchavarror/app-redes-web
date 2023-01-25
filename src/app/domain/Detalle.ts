@@ -4,6 +4,7 @@ import { Persona } from './Persona';
 
 @Injectable()
 export class Detalle {
+    id =0;
     red ='';
     premio = new Premio();
     link = '';

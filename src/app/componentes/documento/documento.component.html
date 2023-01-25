@@ -1,0 +1,18 @@
+<div class="content">
+    <mat-card class="mat-card">
+        <mat-card-header>
+            <mat-card-title>Promocionales</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                <mat-form-field appearance="outline" class="mat-form-field-100">
+                    <mat-label class="label">Nombre promoción</mat-label>
+                    <input [(ngModel)]="codigoPromocional" matInput placeholder="Codigo Promocional" />
+                </mat-form-field>
+            </p>
+            <div>
+                <button class="mat-button" type="button" (click)="getDocumento()">Generar Documento</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

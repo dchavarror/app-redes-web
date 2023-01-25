@@ -1,0 +1,30 @@
+<div class="content">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Actualizar ganador </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div>
+                <mat-form-field appearance="outline" class="mat-form-field-100">
+                    <mat-label class="label">Nombre completo</mat-label>
+                    <input [(ngModel)]="data.persona.nombreCompleto" class="input-one" matInput placeholder="Nombre completo" required />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mat-form-field-100">
+                    <mat-label class="label">Cedula</mat-label>
+                    <input [(ngModel)]="data.persona.cedula" class="input-one" matInput placeholder="Cedula" required />
+                </mat-form-field>
+            </div>
+            <div>
+                <app-premio [detalle]="data.detallePremio"></app-premio>
+            </div>
+
+        </mat-card-content>
+        <mat-card-footer>
+            <div mat-dialog-actions>
+                <button mat-button (click)="onNoClick()">Cerrar</button>
+                <button mat-button [mat-dialog-close]="data.persona" cdkFocusInitial>Actualizar</button>
+            </div>
+        </mat-card-footer>
+    </mat-card>
+
+</div>

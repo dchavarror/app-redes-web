@@ -21,6 +21,11 @@ export class ServiceUtils {
     return this.http.post(environment.apiUrl  + endpoint, payload, { headers });
   }
 
+  public put(endpoint: string, payload = {}): Observable<any> {
+    const headers = this.getHeader();
+    return this.http.put(environment.apiUrl  + endpoint, payload, { headers });
+  }
+
   public get(endpoint: string, query: string): Observable<any> {
     const endpointFinal = endpoint + query;
     const headers = this.getHeader();

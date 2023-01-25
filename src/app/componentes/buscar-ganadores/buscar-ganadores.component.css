@@ -1,0 +1,60 @@
+.content {
+    justify-content: center;
+    align-items: center;
+    background-color: #c6d8e8;
+    display: flex;
+}
+
+.mat-card {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 30%;
+    width: 50%;
+}
+
+.mat-form-field-100 {
+    width: 33%;
+    height: 50%;
+    margin-right: 10px;
+}
+
+mat-card-header {
+    justify-content: center;
+}
+
+.mat-button {
+    border-radius: 1ch;
+    border-style: solid;
+    background: #002361;
+    color: #002361;
+    margin: auto;
+    color: white;
+    width: 110px;
+    font-size: larger;
+}
+
+.mat-button:hover {
+    background: #385170;
+}
+
+table {
+    width: 80%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+mat-table {
+    justify-content: center;
+}

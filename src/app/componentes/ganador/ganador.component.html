@@ -1,1 +1,52 @@
-<p>ganador works!</p>
+<div class="content">
+    <mat-card *ngIf="indMostrar" class="mat-card">
+        <mat-card-content>
+            <form role="form">
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100">
+                        <mat-label class="label">Nombre completo</mat-label>
+                        <input class="input-one" [(ngModel)]="persona.nombreCompleto" matInput placeholder="Nombre completo" required [ngModelOptions]="{ standalone: true }" disabled="{{ indDisablePersona }}" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100">
+                        <mat-label class="label">Cedula</mat-label>
+                        <input disabled="{{ indDisablePersona }}" [(ngModel)]="persona.cedula" matInput placeholder="Cedula" required [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                </div>
+                <div class="content-two">
+                    <mat-card>
+                        <p class="button-save">
+                            <input type="file" accept=".jpg,.png" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+                        </p>
+                        <div class="file-upload">
+                            {{ fileName || "Seleccionar foto" }}
+
+                            <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+                        </div>
+                        <section>
+                            <p class="button-save">
+                                <mat-checkbox [(ngModel)]="ganador.aceptoTerminos" disabled="{{ indDisable }}" required [ngModelOptions]="{ standalone: true }">Acepta términos y condiciones <a class="link-terminos">(Ver términos)</a> </mat-checkbox>
+                            </p>
+                            <p class="button-save">
+                                <mat-checkbox [(ngModel)]="ganador.tratamientoDatos" disabled="{{ indDisable }}" required [ngModelOptions]="{ standalone: true }">Acepto tratamiento de datos <a class="link-terminos">(Ver Tratamientos)</a></mat-checkbox>
+                            </p>
+                            <p class="button-save">
+                                <mat-checkbox [(ngModel)]="ganador.aceptacionPremio" disabled="{{ indDisable }}" required [ngModelOptions]="{ standalone: true }">Acepta premio <a class="link-terminos">(Ver Condiciones)</a></mat-checkbox>
+                            </p>
+                        </section>
+                        <section>
+                            <div class="button-save">
+                                <button class="button-save" disabled="{{ indDisable }}" mat-raised-button color="primary" (click)="guardar()">
+                  Guardar
+                </button>
+                            </div>
+                        </section>
+                    </mat-card>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

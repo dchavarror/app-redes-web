@@ -1,8 +1,8 @@
-.mat-card {
-    display: flex;
+.content {
     justify-content: center;
     align-items: center;
     background-color: #c6d8e8;
+    display: flex;
 }
 
 .mat-card-title {
@@ -15,44 +15,8 @@ section {
     display: table;
 }
 
-.promocion-button-row {
-    display: table-cell;
-    max-width: 600px;
-}
-
-.promocion-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-}
-
-.promocion-flex-container {
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.promocion-button-container {
-    justify-content: center;
-    width: 120px;
-}
-
 .mat-fab {
     background: #002361;
-}
-
-.promocion-container mat-form-field+mat-form-field {
-    margin-left: 5px;
-    border-radius: 2ch;
-}
-
-.promocion-container mat-form-field {
-    width: 220px;
-}
-
-.promocion-container form {
-    margin-bottom: 20px;
-}
-
-.promocion-container form>* {
-    margin: 12px 0;
 }
 
 
@@ -94,10 +58,23 @@ section {
 .mat-button {
     border-radius: 1ch;
     border-style: solid;
-    border-color: #002361;
-    border-top-color: #002361;
     background: #002361;
-    color: #fff;
+    color: #002361;
+    display: block;
+    margin: auto;
+    color: white;
+    width: 110px;
+    font-size: larger;
+}
+
+.mat-button:hover,
+.mat-button-one:hover {
+    background: #385170;
+}
+
+.mat-button-one {
+    display: block;
+    margin: auto;
 }
 
 ::ng-deep .snackBar {
@@ -108,4 +85,29 @@ section {
 
 ::ng-deep .mat-button-wrapper {
     color: #fff;
+}
+
+.label {
+    color: #002361;
+}
+
+.mat-form-field-100 {
+    width: 100%;
+    height: 50%;
+}
+
+.mat-card {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 30%;
+    width: 50%;
+}
+
+mat-card-header {
+    justify-content: center;
+}
+
+button {
+    display: block;
+    justify-items: center;
 }

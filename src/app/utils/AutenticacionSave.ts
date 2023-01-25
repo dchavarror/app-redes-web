@@ -14,7 +14,7 @@ export class AutenticacionSave implements CanActivate {
 
     verifyLogin(url:string): boolean{
         if (!this.isLoggedIn()) {
-            this.router.navigate(['/menu']);
+            this.router.navigate(['/login']);
             return false;
         } else if (this.isLoggedIn()) {
             return true;

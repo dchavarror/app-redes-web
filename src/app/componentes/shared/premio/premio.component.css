@@ -1,7 +1,11 @@
+.mat-card {
+    background-color: white;
+}
+
 .detalle-premio-container mat-form-field+mat-form-field {
     margin-left: 5px;
     border-radius: 2ch;
-    border-color: white;
+    border-color: #002361;
 }
 
 .detalle-premio-container mat-form-field {
@@ -17,41 +21,33 @@
 }
 
 ::ng-deep .mat-select-value-text {
-    color: white;
+    color: #002361;
 }
 
 ::ng-deep .mat-select-placeholder {
-    color: white;
+    color: #002361;
 }
 
 ::ng-deep .mat-select-min-line {
-    color: white;
+    color: #002361;
 }
 
 ::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder {
-    color: white;
+    color: #002361;
 }
 
 
 /* Border */
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: white;
+    color: #002361;
 }
 
 
 /* Font color */
 
-::ng-deep .input.mat-input-element {
-    color: white;
-}
-
-::ng-deep input.mat-input-element {
-    color: white;
-}
-
 .mat-input-element {
-    color: white;
+    color: #002361;
 }
 
 .text-area-full-width {
@@ -66,4 +62,33 @@
 
 .example-full-width {
     width: 100%;
+}
+
+.label {
+    color: #002361;
+}
+
+.mat-form-field-50 {
+    width: 50%;
+}
+
+.mat-form-field-100 {
+    width: 100%;
+}
+
+.mat-button {
+    border-radius: 1ch;
+    border-style: solid;
+    background: #002361;
+    display: block;
+    margin: auto;
+    color: white;
+    width: 110px;
+    font-size: larger;
+    display: block;
+    margin: auto;
+}
+
+.mat-button:hover {
+    background: #385170;
 }

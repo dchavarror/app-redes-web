@@ -55,6 +55,9 @@ import { SnackbarComponent } from './componentes/shared/snackbar/snackbar.compon
 import { MessageUtilsComponent } from './componentes/shared/message-utils/message-utils.component';
 import { PremioComponent } from './componentes/shared/premio/premio.component';
 import { DialogComponent } from './componentes/shared/dialog/dialog.component';
+import { DialogMessageComponent } from './componentes/shared/dialog-message/dialog-message.component';
+import { DialogGanadorComponent } from './componentes/shared/dialog-ganador/dialog-ganador.component';
+import { DocumentoComponent } from './componentes/documento/documento.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -107,7 +110,10 @@ const materialModules = [
     SnackbarComponent,
     MessageUtilsComponent,
     PremioComponent,
-    DialogComponent
+    DialogComponent,
+    DialogMessageComponent,
+    DialogGanadorComponent,
+    DocumentoComponent
   ],
   imports: [
     BrowserModule,

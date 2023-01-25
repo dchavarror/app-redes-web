@@ -1,26 +1,18 @@
 <div class="container-home">
-    <mat-tab-group animationDuration="2000ms">
+    <mat-tab-group animationDuration="2000ms" class="tap-group" dynamicHeight>
         <mat-tab label="Promocionales">
             <app-promociones></app-promociones>
         </mat-tab>
         <mat-tab label="Buscar ganadores">
-            <app-buscar-ganadores>
-
-            </app-buscar-ganadores>
+            <app-buscar-ganadores> </app-buscar-ganadores>
         </mat-tab>
-        <mat-tab label="Documentos"></mat-tab>
-        <mat-tab disabled style="height: 100vh;">
+        <mat-tab label="Documentos">
+            <app-documento></app-documento>
+        </mat-tab>
+        <mat-tab disabled>
             <ng-template mat-tab-label>
-                <button mat-icon-button (click)="logout()">
-                   Cerrar sesión
-                </button>
+                <button mat-icon-button (click)="logout()">Cerrar sesión</button>
             </ng-template>
         </mat-tab>
-
     </mat-tab-group>
-
-
-
-
-
 </div>

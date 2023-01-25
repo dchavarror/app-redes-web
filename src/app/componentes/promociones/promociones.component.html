@@ -1,48 +1,49 @@
-<mat-card>
-    <mat-card-content>
-        <form [formGroup]="promocionalesFormGroup" role="form">
-            <p>
-                <mat-card-title>Backend promocionales</mat-card-title>
-            </p>
+<div class="content">
+    <mat-card class="mat-card">
+        <mat-card-header>
+            <mat-card-title>Promocionales</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="promocionalesFormGroup" role="form">
+                <p>
+                    <mat-form-field appearance="outline" class="mat-form-field-100">
+                        <mat-label class="label">Nombre promoción</mat-label>
+                        <input [(ngModel)]="promocion.nombre" matInput placeholder="Nombre promoción" formControlName="npromocion" />
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline" class="mat-form-field-100">
+                        <mat-label class="label">Código promocional</mat-label>
+                        <input [(ngModel)]="promocion.codigo" matInput placeholder="Código promocional" formControlName="cpromocion" />
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline" class="mat-form-field-100">
+                        <mat-label class="label">Link publicación</mat-label>
+                        <input [(ngModel)]="promocion.linkPublicacion" type="text" matInput placeholder="Link publicación" formControlName="lpublicacion" />
+                    </mat-form-field>
+                </p>
 
-            <p>
-                <mat-form-field appearance="outline" style="margin: 6px;">
-                    <mat-label class="label">Nombre promoción</mat-label>
-                    <input [(ngModel)]="promocion.nombre" matInput placeholder="Nombre promoción" formControlName="npromocion">
-                </mat-form-field>
-                <mat-form-field appearance="outline" style="margin: 6px;">
-                    <mat-label class="label">Código promocional</mat-label>
-                    <input [(ngModel)]="promocion.codigo" matInput placeholder="Código promocional" formControlName="cpromocion">
-                </mat-form-field>
-            </p>
-            <p>
-                <mat-form-field appearance="outline" style="margin: 6px;">
-                    <mat-label class="label">Link publicación</mat-label>
-                    <input [(ngModel)]="promocion.linkPublicacion" type="text" matInput placeholder="Link publicación" formControlName="lpublicacion">
-                </mat-form-field>
-            </p>
-
-
-
-            <p>
-                <mat-form-field appearance="outline" style="margin: 6px;">
-                    <mat-label class="label">Terminos y condiciones</mat-label>
-                    <textarea [(ngModel)]="promocion.terminos" rows="5" cols="500" class="text-area-full-width" matInput placeholder="Terminos y condiciones" formControlName="tcondiciones"></textarea>
-                </mat-form-field>
-
-            </p>
-            <p>
-                <button (click)="agregarDetallePromocion()" mat-fab aria-label="Agregar premio">
-                    <mat-icon>queue</mat-icon>
-                </button>
-            </p>
-            <p *ngFor="let item of lstDetalles">
-                <app-premio [detalle]="item"></app-premio>
-            </p>
-            <p>
-                <button class="matButton" type="button" [disabled]="indVisibilidadGuardar" (click)="onClickGuardar()" mat-button color="primary">Guardar</button>
-            </p>
-
-        </form>
-    </mat-card-content>
-</mat-card>
+                <p>
+                    <mat-form-field appearance="outline" class="mat-form-field-100">
+                        <mat-label class="label">Terminos y condiciones</mat-label>
+                        <textarea [(ngModel)]="promocion.terminos" rows="5" cols="500" class="text-area-full-width" matInput placeholder="Terminos y condiciones" formControlName="tcondiciones"></textarea>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <button class="mat-button-one" (click)="agregarDetallePromocion()" mat-fab aria-label="Agregar premio">
+            <mat-icon>queue</mat-icon>
+          </button>
+                </p>
+                <p *ngFor="let item of lstDetalles">
+                    <app-premio [detalle]="item"></app-premio>
+                </p>
+                <p>
+                    <button class="mat-button" type="button" [disabled]="indVisibilidadGuardar" (click)="onClickGuardar()">
+            Guardar
+          </button>
+                </p>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

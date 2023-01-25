@@ -1,5 +1,10 @@
-export interface DialogData {
-    red: string;
-    premio: string;
-    name: string;
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class DialogData {
+    red='';
+    premio='';
+    name='';
+    titulo='';
+    contenido='';
   }
