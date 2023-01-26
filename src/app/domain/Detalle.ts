@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Premio } from './Premio';
 import { Persona } from './Persona';
+import { Promocion } from "./Promocion";
+import { Vigencia } from './Vigencia';
 
 @Injectable()
 export class Detalle {
@@ -8,7 +10,9 @@ export class Detalle {
     red ='';
     premio = new Premio();
     link = '';
+    promocion = new Promocion();
     persona = new Persona();
+    vigencia =new Vigencia();
     codigoPromocional = '';
     usuarioCreacion = '';
     activo = false;

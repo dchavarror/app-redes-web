@@ -58,6 +58,8 @@ import { DialogComponent } from './componentes/shared/dialog/dialog.component';
 import { DialogMessageComponent } from './componentes/shared/dialog-message/dialog-message.component';
 import { DialogGanadorComponent } from './componentes/shared/dialog-ganador/dialog-ganador.component';
 import { DocumentoComponent } from './componentes/documento/documento.component';
+import { DialogCondicionesComponent } from './componentes/shared/dialog-condiciones/dialog-condiciones.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const materialModules = [
   CdkTreeModule,
@@ -113,7 +115,8 @@ const materialModules = [
     DialogComponent,
     DialogMessageComponent,
     DialogGanadorComponent,
-    DocumentoComponent
+    DocumentoComponent,
+    DialogCondicionesComponent
   ],
   imports: [
     BrowserModule,
@@ -122,7 +125,8 @@ const materialModules = [
     materialModules,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [AutenticacionSave, Usuario, MessageUtilsComponent, MatTabNav],
   bootstrap: [AppComponent],

@@ -16,8 +16,8 @@ export class GanadorService {
     return this.servicio.post(END_POINT_SERVICE.GANADOR , ganador).pipe( map( data => data ));
   }
 
-  getGanadores(cedula: string , nombres:string) {
-    let query = '?cedula=' + cedula + '&nombres=' + nombres;
+  getGanadores(idPersona: number ) {
+    let query = '?idPersona=' + idPersona;
     return this.servicio.get(END_POINT_SERVICE.GANADOR , query).pipe( map( data => data ));
   }
 }

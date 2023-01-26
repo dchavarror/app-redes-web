@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>{{data.titulo}}</h1>
+<div mat-dialog-content>
+    <div *ngIf="tratamiento">
+        PENDIENTE LOS TRATAMIENTOS
+    </div>
+    <div *ngIf="terminos">
+        <p>
+            Solo podrán participar personas mayores de edad, de nacionalidad colombiana y residentes legalmente en Colombia. Liga BetPlay Dimayor y BetPlay no se responsabilizan por los gastos adicionales a los establecidos en los Términos y Condiciones de la campaña.
+            El premio no podrá redimirse o compensarse de diferente forma a la que sugiere la promoción en dinero, tiquetes diferentes a los incluidos en el premio u otros bienes y servicios. El premio no podrá ser transferido a otra persona, no estará
+            permitida la reventa por los ganadores.
+        </p>
+        <p>
+            Liga BetPlay Dimayor y BetPlay podrán descalificar al participante que incurra en conductas irregulares, cometa fraudes o practique acciones contrarias a la ley o contrarias a estos términos y condiciones. Al participar en “La Promoción”, los participantes
+            manifiestan su aceptación a los presentes términos y condiciones. Toda la información relacionada con “La Promoción” será suministrada en idioma español. Las únicas cuentas válidas para la comunicación serán las oficiales de Liga BetPlay Dimayor
+            en redes sociales:
+        </p>
+        <p>
+            https://www.facebook.com/LigaBetPlayDimayor https://www.instagram.com/ligabetplaydimayor/ https://twitter.com/LigaBetPlayD
+
+        </p>
+        <p>
+            Cada persona solo podrá ganar un premio dentro del sorteo que se realizará y bajo ninguna circunstancia podrá repetir premio. En caso de que el proveedor no tenga existencia del premio correspondiente en su inventario, este será compensado con un bono
+            de consumo equivalente al premio dispuesto para este promocional y que por sorteo el ganador adquirió. Se entenderá que las personas ganadoras autorizan a la empresa BetPlay y a las cuentas de redes sociales Liga BetPlay Dimayor para utilizar
+            con fines publicitarios, su nombre y fotografía, sin limitación del tiempo que fuera necesario o útil para efectos promocionales, sin tener derecho a percibir pago alguno por dicho concepto. Los términos y condiciones de la actividad podrán
+            ser modificados por BetPlay sin previo aviso. Los premios y las apuestas gratis solo serán entregados a las cuentas de BetPlay que se encuentren activas.
+        </p>
+        <p>
+            Sorteo: La selección de los ganadores se realizará 3 días hábiles después de terminarse el plazo indicado para participar y se incluirá toda la participación de los posts publicados en las cuentas de la Liga BetPlay Dimayor en Facebook e Instagram identificadas
+            con el promocional. Se usará un aplicativo de selección aleatoria para elegir las personas ganadoras y suplentes. Cada participante tendrá derecho a un cupo en cada sorteo. Las personas ganadoras no podrán repetir premio bajo ninguna circunstancia.
+            Cada ganador y suplente que arroje el sorteo estará sujeto a la verificación de si cumplió todos los términos, condiciones y mecánica de este promocional. El sorteo se realizará con el acompañamiento del equipo de auditoría de Corredor Empresarial
+            S.A., el cual garantizará la transparencia del procedimiento. El archivo que contiene los datos de los ganadores y suplentes será verificado por el equipo de auditoría.
+        </p>
+        <p>
+            No se tendrán en cuenta comentarios mal intencionados, ofensivos o que puedan herir susceptibilidades de los demás participantes, incluso si estos cumplen con los requisitos antes mencionados.
+        </p>
+        <p>
+            Se sortearán 30 ganadores oficiales y 60 suplentes que podrán disfrutar del premio en caso de que alguno de los primeros 30 ganadores oficiales no pueda disfrutar del premio o no cumpla a cabalidad con las condiciones de la “Mecánica para participar”.
+            El ganador suplente se seleccionará según el orden ascendente en el que se sortearon. Se declararán como desiertos los premios que no puedan ser entregados por falta de participantes para completar la cuota mínima de ganadores o suplentes
+            correspondiente, o de personas que cumplan con la “mecánica para participar” y términos y condiciones de esta campaña. Por cada publicación, los premios serán entregados de la siguiente manera:
+        </p>
+        <p>
+            Ganadores #1 al #3: 1 PS5 + FIFA23 digital + 1 apuesta gratis BetPlay de $50.000 Ganador #4 al #6: 1 combo de Google Home más bombillo inteligente LED + 1 apuesta gratis BetPlay de $50.000 Ganadores #7 al #30: 1 apuesta gratis BetPlay de $50.000
+
+        </p>
+    </div>
+    <div *ngIf="condiciones">
+        PENDIENTE LAS CONDICIONES
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button class="mat-button" [mat-dialog-close]="data.codigoInvocacion" cdkFocusInitial>Aceptar</button>
+</div>

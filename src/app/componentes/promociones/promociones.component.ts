@@ -70,6 +70,7 @@ export class PromocionesComponent implements OnInit {
         this.detalle.premio.id = result.premio;
         this.lstDetalles.push(this.detalle);
         this.indVisibilidadGuardar = false;
+        this.red ='';
       }
      
     });

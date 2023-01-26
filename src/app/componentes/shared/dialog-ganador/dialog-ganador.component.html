@@ -1,30 +1,64 @@
-<div class="content">
-    <mat-card>
-        <mat-card-header>
+<div class="content" fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayout.lg="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <mat-card fxFlex="100%">
+        <mat-card-header fxLayoutAlign="center">
             <mat-card-title>Actualizar ganador </mat-card-title>
+            <button class="mat-button" (click)="onNoClick()"><mat-icon>clear</mat-icon></button>
         </mat-card-header>
         <mat-card-content>
-            <div>
-                <mat-form-field appearance="outline" class="mat-form-field-100">
+            <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                     <mat-label class="label">Nombre completo</mat-label>
-                    <input [(ngModel)]="data.persona.nombreCompleto" class="input-one" matInput placeholder="Nombre completo" required />
+                    <input [(ngModel)]="data.nombreCompleto" class="input-one" matInput placeholder="Nombre completo" required />
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="mat-form-field-100">
+            </div>
+            <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                     <mat-label class="label">Cedula</mat-label>
-                    <input [(ngModel)]="data.persona.cedula" class="input-one" matInput placeholder="Cedula" required />
+                    <input [(ngModel)]="data.cedula" class="input-one" matInput placeholder="Cedula" required />
                 </mat-form-field>
             </div>
-            <div>
-                <app-premio [detalle]="data.detallePremio"></app-premio>
-            </div>
+            <div fxLayoutAlign="center">
+                <table mat-table class="mat-elevation-z8 demo-table" [dataSource]="ganadores" fxFlex="100%">
+                    <ng-container matColumnDef="red">
+                        <th mat-header-cell *matHeaderCellDef>Red</th>
+                        <td *matCellDef="let element">{{ element.detallePremio.red }}</td>
+                    </ng-container>
 
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="premio">
+                        <th mat-header-cell *matHeaderCellDef>Premio</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.detallePremio.premio.descripcion }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="promocion">
+                        <th mat-header-cell *matHeaderCellDef>Promoción</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.detallePremio.promocion.nombre }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button class="mat-button-two" mat-button type="button" fxFlex.gt-sm>
+                Copy link
+              </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr style="justify-content: center" mat-row *matRowDef="let row; columns: displayedColumns" (click)="onCopyLink(row)"></tr>
+                </table>
+            </div>
         </mat-card-content>
-        <mat-card-footer>
-            <div mat-dialog-actions>
-                <button mat-button (click)="onNoClick()">Cerrar</button>
-                <button mat-button [mat-dialog-close]="data.persona" cdkFocusInitial>Actualizar</button>
+        <mat-card-footer fxLayoutAlign="center">
+            <div mat-dialog-actions fxFlex="50%">
+                <button *ngIf="valid()" class="mat-button-two" [mat-dialog-close]="data" cdkFocusInitial>
+          Actualizar
+        </button>
             </div>
         </mat-card-footer>
     </mat-card>
-
 </div>

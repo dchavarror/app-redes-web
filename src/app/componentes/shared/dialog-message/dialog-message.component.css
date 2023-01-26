@@ -1,0 +1,11 @@
+.mat-button {
+    border-radius: 1ch;
+    border-style: solid;
+    background: #002361;
+    color: #002361;
+    display: block;
+    margin: auto;
+    color: white;
+    width: 110px;
+    font-size: larger;
+}

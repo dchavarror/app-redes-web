@@ -3,5 +3,8 @@
 html,
 body {
     height: 100%;
-    background-color: #c6d8e8;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #fff;
 }

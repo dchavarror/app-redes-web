@@ -7,4 +7,5 @@ export class DialogData {
     name='';
     titulo='';
     contenido='';
+    codigoInvocacion='';
   }

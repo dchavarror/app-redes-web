@@ -1,4 +1,50 @@
-.mat-card {
+.content {
+    background-color: #c6d8e8;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.mat-button {
+    border-radius: 1ch;
+    border-style: solid;
+    background: #002361;
+    color: #002361;
+    display: block;
+    margin: auto;
+    color: white;
+    width: 30%;
+    font-size: 100%;
+    margin-bottom: 20px;
+}
+
+.mat-button-ver {
+    border-radius: 50%;
+    background: #002361;
+    margin: auto;
+    color: white;
+    width: 7%;
+}
+
+.mat-button:hover,
+.mat-button-ver:hover {
+    background: #385170;
+}
+
+.button-save-one {
+    visibility: hidden;
+}
+
+.upload-btn {
+    margin-left: 10px;
+    margin-top: -13px;
+}
+
+a {
+    color: rgb(0, 223, 223);
+}
+
+
+/* .mat-card {
     margin-top: 30px;
     margin-bottom: 30px;
     width: 70%;
@@ -34,14 +80,11 @@
 }
 
 
-/* Border */
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     color: #002361;
 }
 
-
-/* Font color */
 
 ::ng-deep .input.mat-input-element {
     color: #002361;
@@ -80,4 +123,4 @@
 .link-terminos {
     text-decoration: none;
     color: #00bbf0;
-}
+} */

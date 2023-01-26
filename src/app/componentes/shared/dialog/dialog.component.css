@@ -3,22 +3,22 @@
         align-items: center;
     }
     
-    ::ng-deep .mat-dialog-container {
+     ::ng-deep .mat-dialog-container {
         background-color: #c6d8e8;
         color: #002361;
     }
     /* Border */
     
-    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+     ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
         color: #002361;
     }
     /* Font color */
     
-    ::ng-deep .input.mat-input-element {
+     ::ng-deep .input.mat-input-element {
         color: #002361;
     }
     
-    ::ng-deep input.mat-input-element {
+     ::ng-deep input.mat-input-element {
         color: #002361;
     }
     
@@ -40,7 +40,7 @@
         width: 100%;
     }
     
-    ::ng-deep .mat-select-value {
+     ::ng-deep .mat-select-value {
         color: #002361;
     }
     
@@ -50,5 +50,5 @@
         border-color: #002361;
         border-top-color: #002361;
         background: #002361;
-        color: #002361;
+        color: white;
     }

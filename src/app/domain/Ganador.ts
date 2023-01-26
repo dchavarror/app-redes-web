@@ -7,9 +7,9 @@ export class Ganador {
     id=0;
     persona = new Persona();
     detallePremio = new Detalle();
-    aceptoTerminos = null;
-    tratamientoDatos = null;
-    aceptacionPremio = null;
+    aceptoTerminos = false;
+    tratamientoDatos = false;
+    aceptacionPremio = false;
     usuarioCreacion = '';
     activo = false;
 

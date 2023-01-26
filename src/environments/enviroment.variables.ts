@@ -5,7 +5,8 @@ export const END_POINT_SERVICE = {
     DETALLE_PREMIO: 'detalle-premio/',
     PERSONA: 'persona',
     GANADOR: 'ganador',
-    PROMOCION_DOCUMENTO :'promocion/documento/'
+    PROMOCION_DOCUMENTO :'promocion/documento/',
+    VIGENCIA :'vigencia/'
 };
 
 export const MESSAGE_SERVICE={
@@ -43,4 +44,13 @@ export const STATUS_SERVICE={
 
 export const DOCUMENTO={
     NOMBRE :'Reporte.xlsx'
+}
+
+export const TERMINOS={
+    TITULO_TERMINOS: 'Terminos',
+    CODIGO_TERMINOS : 'CTERMINOS',
+    TITULO_TRATAMIENTOS: 'Terminos y condiciones',
+    CODIGO_TRATAMIENTOS : 'CTTRATAMIENTO',
+    TITULO_CONDICIONES: 'Terminos y condiciones',
+    CODIGO_CONDICIONES : 'CCONDICIONES'
 }

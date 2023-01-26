@@ -1,4 +1,4 @@
-.mat-button-two {
+.mat-button {
     border-radius: 1ch;
     border-style: solid;
     background: #002361;
@@ -6,15 +6,7 @@
     display: block;
     margin: auto;
     color: white;
-    width: 100%;
+    width: 50%;
     font-size: 100%;
-}
-
-.mat-button-two:hover {
-    background: #385170;
-}
-
-.content {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }

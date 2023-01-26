@@ -1,3 +1,20 @@
-.main-div {
+html,
+body {
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+div {
     background-color: #002361;
+}
+
+app-header {
+    width: 100%;
+    top: 0;
+}
+
+app-footer {
+    bottom: 0;
+    width: 100%;
 }

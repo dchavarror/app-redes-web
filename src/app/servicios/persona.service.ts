@@ -14,4 +14,9 @@ export class PersonaService {
   actualizarPersona(persona: Persona) {
     return this.servicio.put(END_POINT_SERVICE.PERSONA , persona).pipe( map( data => data ));
   }
+
+  getPersonas(cedula: string , nombres:string) {
+    let query = '?cedula=' + cedula + '&nombres=' + nombres;
+    return this.servicio.get(END_POINT_SERVICE.PERSONA , query).pipe( map( data => data ));
+  }
 }

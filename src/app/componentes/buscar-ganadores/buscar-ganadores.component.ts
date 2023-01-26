@@ -5,6 +5,7 @@ import { GanadorService } from '../../servicios/ganador.service';
 import { DialogGanadorComponent } from '../shared/dialog-ganador/dialog-ganador.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PersonaService } from '../../servicios/persona.service';
+import { Persona } from 'src/app/domain/Persona';
 
 @Component({
   selector: 'app-buscar-ganadores',
@@ -16,23 +17,22 @@ export class BuscarGanadoresComponent implements OnInit {
   nombre ='';
   cedula ='';
   response: Response;
-  ganadores : Array<Ganador>;
-  clickedRows = new Set<Ganador>();
-  constructor(private serviceGanador: GanadorService, public dialog: MatDialog, private personaService: PersonaService) { 
+  personas : Array<Persona>;
+  constructor(private servicePersona: PersonaService, public dialog: MatDialog, private personaService: PersonaService) { 
     this.response=new Response();
-    this.ganadores = new Array<Ganador>()
+    this.personas = new Array<Persona>()
   }
 
   ngOnInit(): void {
   }
 
-  getGanadores(){
-    console.log('getGanadores');
+  getPersonas(){
+    console.log('getPersonas');
     if(!this.validarCampos()){
-      this.serviceGanador.getGanadores(this.cedula, this.nombre).subscribe(resp=> {
+      this.servicePersona.getPersonas(this.cedula, this.nombre).subscribe(resp=> {
         this.response=resp;
-        this.ganadores =this.response.objectResponse;
-        console.log(' this.ganadores ' ,  this.ganadores);
+        this.personas =this.response.objectResponse;
+        console.log(' this.personas ' ,  this.personas);
       })
     }
     
