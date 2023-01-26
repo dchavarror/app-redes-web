@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080/v1/',
-  webUrl: 'http://localhost:4200/'
+  apiUrl: 'http://betplay-rrss.complemento360.com:8080/v1/',
+  webUrl: 'http://betplay-rrss.complemento360.com/'
 };
