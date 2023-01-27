@@ -1,4 +1,4 @@
-import { Component, OnInit , Input} from '@angular/core';
+import { Component, OnInit , Input, EventEmitter, Output} from '@angular/core';
 import { PremioService } from '../../../servicios/premio.service';
 import { Premio } from '../../../domain/Premio';
 import { Response } from 'src/app/domain/Response';
@@ -13,6 +13,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 })
 export class PremioComponent implements OnInit {
   @Input() detalle: Detalle = new Detalle(); 
+  @Output()  eventEliminar = new EventEmitter<any>();
 
   premios: Array<Premio> = new Array<Premio>();
   response: Response = new Response();
@@ -25,6 +26,10 @@ export class PremioComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('premio ngOnInit ' , this.detalle);
+  }
+
+  cambiarIcono(){
+
   }
 
   getPremios(){
@@ -49,5 +54,10 @@ export class PremioComponent implements OnInit {
   onCopyLink(){
     console.log('detalle ' , this.detalle)
     this.clipboard.copy(this.detalle.link);
+  }
+
+  onGenerarEvento(){
+    console.log('eliminar ', this.detalle);
+    this.eventEliminar.emit(this.detalle);
   }
 }

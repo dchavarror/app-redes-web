@@ -1,4 +1,4 @@
-mat-card,
+/* mat-card,
 mat-label {
     color: black;
 }
@@ -63,8 +63,44 @@ mat-card-header {
 }
 
 
-/* Font color */
-
 mat-card-content {
     justify-content: center;
+} */
+
+.content {
+    transition: 2s;
+    background-color: white;
+    padding-top: 242px;
+    padding-bottom: 250px;
+}
+
+.mat-card {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.mat-card:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+}
+
+.mat-button {
+    border-radius: 20px;
+    background: #002361;
+    color: white;
+    width: 30%;
+    font-size: 100%;
+    margin-bottom: 20px;
+    transition: 1s;
+}
+
+.mat-button:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    background: #385170;
 }

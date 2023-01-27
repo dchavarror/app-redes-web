@@ -1,54 +1,17 @@
-    .dialog-content {
-        justify-content: center;
-        align-items: center;
-    }
-    
-     ::ng-deep .mat-dialog-container {
-        background-color: #c6d8e8;
-        color: #002361;
-    }
-    /* Border */
-    
-     ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-        color: #002361;
-    }
-    /* Font color */
-    
-     ::ng-deep .input.mat-input-element {
-        color: #002361;
-    }
-    
-     ::ng-deep input.mat-input-element {
-        color: #002361;
-    }
-    
-    .mat-input-element {
-        color: #002361;
-    }
-    
-    .text-area-full-width {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .mat-form-field--inline {
-        flex-direction: row;
-        align-items: center;
-    }
-    
-    .example-full-width {
-        width: 100%;
-    }
-    
-     ::ng-deep .mat-select-value {
-        color: #002361;
-    }
-    
     .mat-button {
-        border-radius: 1ch;
-        border-style: solid;
-        border-color: #002361;
-        border-top-color: #002361;
+        border-radius: 20px;
         background: #002361;
         color: white;
+        margin: 5px;
+        margin-top: -15px;
+    }
+    
+    .mat-button:hover {
+        background: #385170;
+    }
+    
+    .content:hover {
+        -webkit-box-shadow: 0px 1px 56px 5px rgba(242, 242, 242, 1);
+        -moz-box-shadow: 0px 1px 56px 5px rgba(242, 242, 242, 1);
+        box-shadow: 0px 1px 56px 5px rgba(242, 242, 242, 1);
     }

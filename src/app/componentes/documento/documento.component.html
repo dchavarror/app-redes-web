@@ -1,5 +1,5 @@
 <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-    <div fxFlex="40%">
+    <div fxFlex="30%">
         <mat-card class="mat-card">
             <mat-card-header fxLayoutAlign="center">
                 <mat-card-title>Promocionales</mat-card-title>
@@ -8,13 +8,13 @@
                 <form id="form">
                     <p>
                         <mat-form-field appearance="outline" class="mat-form-field-100" fxLayoutAlign="center">
-                            <mat-label class="label">Nombre promoción</mat-label>
+                            <mat-label class="label">Código promoción</mat-label>
                             <input [(ngModel)]="codigoPromocional" matInput placeholder="Codigo Promocional" required [ngModelOptions]="{ standalone: true }" />
                         </mat-form-field>
                     </p>
-                    <div>
+                    <div fxLayoutAlign="center">
                         <button class="mat-button" type="button" (click)="getDocumento()" fxLayoutAlign="center">
-                            Generar Documento
+                            Exportar Documento
                         </button>
 
                     </div>

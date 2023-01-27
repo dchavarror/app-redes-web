@@ -6,7 +6,8 @@ body {
 }
 
 div {
-    background-color: #002361;
+    /* background-color: #002361; */
+    background-color: white;
 }
 
 app-header {
@@ -17,4 +18,14 @@ app-header {
 app-footer {
     bottom: 0;
     width: 100%;
+}
+
+.router,
+.header,
+.footer {
+    background-color: #002361;
+}
+
+.fullscreen {
+    background-color: white;
 }

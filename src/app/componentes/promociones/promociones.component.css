@@ -1,12 +1,11 @@
 .content {
-    background-color: #c6d8e8;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    background-color: white;
+    padding-top: 40px;
+    padding-bottom: 70px;
 }
 
 .mat-button {
-    border-radius: 1ch;
-    border-style: solid;
+    border-radius: 20px;
     background: #002361;
     color: #002361;
     display: block;
@@ -15,20 +14,39 @@
     width: 30%;
     font-size: 100%;
     margin-bottom: 20px;
+    transition: 1s;
 }
 
 .mat-button-ver {
-    border-radius: 200px;
+    border-radius: 50%;
     background: #002361;
     margin: auto;
     color: white;
+    transition: 1s;
 }
 
 .mat-button:hover,
 .mat-button-ver:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
     background: #385170;
 }
 
 mat-label {
     color: #002361;
+}
+
+.mat-card {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.mat-card:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
 }

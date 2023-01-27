@@ -1,27 +1,35 @@
-<div class="dialog-content">
-    <form [formGroup]="ganadorFormGroup">
-        <h1 mat-dialog-title> {{data.name}}</h1>
-        <div mat-dialog-content>
-            <p>Red</p>
-            <mat-form-field appearance="fill">
-                <mat-label>Red</mat-label>
-                <input matInput [(ngModel)]="data.red" required="true" formControlName="fred">
-            </mat-form-field>
-            <p>Premio</p>
-            <mat-form-field appearance="outline" style="margin: 6px;">
-                <mat-label>Premio</mat-label>
-                <mat-select [(ngModel)]="data.premio" required="true" formControlName="fpremio">
-                    <mat-option *ngFor="let premio of premios" [value]="premio.id">
-                        {{premio.descripcion}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div mat-dialog-actions>
-            <button mat-button (click)="onNoClick()">No</button>
-            <button mat-button *ngIf="!ganadorFormGroup.invalid" [mat-dialog-close]="data" cdkFocusInitial>Si</button>
-        </div>
-
-    </form>
-
+<div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <mat-card class="mat-card" fxFlex="100%">
+        <form [formGroup]="ganadorFormGroup">
+            <mat-card-header fxLayoutAlign="center">
+                <mat-card-title>
+                    {{data.name}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Red</p>
+                <mat-form-field appearance="fill" fxLayoutAlign="center">
+                    <mat-label>Red</mat-label>
+                    <input matInput [(ngModel)]="data.red" required="true" formControlName="fred">
+                </mat-form-field>
+                <p>Premio</p>
+                <mat-form-field appearance="outline" style="margin: 6px;" fxLayoutAlign="center">
+                    <mat-label>Premio</mat-label>
+                    <mat-select [(ngModel)]="data.premio" required="true" formControlName="fpremio">
+                        <mat-option *ngFor="let premio of premios" [value]="premio.id">
+                            {{premio.descripcion}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-footer fxLayoutAlign="center">
+                <div>
+                    <button mat-button (click)="onNoClick()">Cancelar</button>
+                </div>
+                <div>
+                    <button mat-button *ngIf="!ganadorFormGroup.invalid" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+                </div>
+            </mat-card-footer>
+        </form>
+    </mat-card>
 </div>

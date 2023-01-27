@@ -14,7 +14,7 @@ export const MESSAGE_SERVICE={
 }
 
 export const TITULOS_MODALES={
-    TITULO_AGREGAR_RED : 'Agregar red',
+    TITULO_AGREGAR_RED : 'Agregar Red',
     INFORMACION : 'Información'
 }
 
@@ -53,4 +53,8 @@ export const TERMINOS={
     CODIGO_TRATAMIENTOS : 'CTTRATAMIENTO',
     TITULO_CONDICIONES: 'Terminos y condiciones',
     CODIGO_CONDICIONES : 'CCONDICIONES'
+}
+
+export const PAGINAS={
+    URL_BETPLAY:"https://betplay.com.co/"
 }

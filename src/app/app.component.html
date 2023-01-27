@@ -9,12 +9,18 @@
 </head>
 
 <body>
-    <mat-sidenav-container fullscreen>
+    <mat-sidenav-container class="fullscreen" fullscreen>
         <div fxLayout="column" fxFlexFill>
             <div>
-                <app-header></app-header>
-                <router-outlet> </router-outlet>
-                <app-footer></app-footer>
+                <div class="header">
+                    <app-header></app-header>
+                </div>
+                <div class="router">
+                    <router-outlet> </router-outlet>
+                </div>
+                <div class="footer">
+                    <app-footer></app-footer>
+                </div>
             </div>
         </div>
     </mat-sidenav-container>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Component({
@@ -9,19 +9,23 @@ import { SnackbarComponent } from '../snackbar/snackbar.component';
 })
 export class MessageUtilsComponent implements OnInit {
 
-  constructor(private snackBar: MatSnackBar) { }
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
+  constructor(private snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
   }
 
-  mostrarMessage(message: string, type: string){
-     this.snackBar.openFromComponent(SnackbarComponent, {
-         duration: 2000,
-         horizontalPosition: 'end',
-         verticalPosition: 'top',
-         data: { message: message, snackType: type },
-         panelClass: ['snackBar']
-       });
+  mostrarMessage(message: string, type: string) {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      duration: 2000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      data: { message: message, snackType: type },
+      panelClass: 'snackBar'
+    });
   }
 
 }

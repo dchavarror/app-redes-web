@@ -16,6 +16,8 @@ import { Detalle } from '../../domain/Detalle';
 import { PersonaService } from '../../servicios/persona.service';
 import { GanadorService } from '../../servicios/ganador.service';
 import { DialogCondicionesComponent } from '../shared/dialog-condiciones/dialog-condiciones.component';
+import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
+import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 
 @Component({
   selector: 'app-ganador',
@@ -39,7 +41,8 @@ export class GanadorComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private dialog: MatDialog,
     private personaService: PersonaService,
-    private ganadorService: GanadorService
+    private ganadorService: GanadorService,
+    private message: MessageUtilsComponent
   ) {
     this.persona = new Persona();
     this.ganador = new Ganador();
@@ -49,18 +52,18 @@ export class GanadorComponent implements OnInit {
     this.getDetalleService(codigo);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  openDialogTerminos(){
-    this.ganador.aceptoTerminos=false;
+  openDialogTerminos() {
+    this.ganador.aceptoTerminos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TERMINOS, TERMINOS.CODIGO_TERMINOS);
   }
-  openDialogCondiciones(){
-    this.ganador.aceptacionPremio=false;
+  openDialogCondiciones() {
+    this.ganador.aceptacionPremio = false;
     this.openDialogGenerico(TERMINOS.TITULO_CONDICIONES, TERMINOS.CODIGO_CONDICIONES);
   }
-  openDialogTratamiento(){
-    this.ganador.tratamientoDatos=false;
+  openDialogTratamiento() {
+    this.ganador.tratamientoDatos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TRATAMIENTOS, TERMINOS.CODIGO_TRATAMIENTOS);
   }
 
@@ -74,18 +77,18 @@ export class GanadorComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if(result != undefined){
-        if(result == TERMINOS.CODIGO_TERMINOS){
-          this.ganador.aceptoTerminos=true;
+      if (result != undefined) {
+        if (result == TERMINOS.CODIGO_TERMINOS) {
+          this.ganador.aceptoTerminos = true;
         }
-        if(result == TERMINOS.CODIGO_CONDICIONES){
-          this.ganador.aceptacionPremio=true;
+        if (result == TERMINOS.CODIGO_CONDICIONES) {
+          this.ganador.aceptacionPremio = true;
         }
-        if(result == TERMINOS.CODIGO_TRATAMIENTOS){
-          this.ganador.tratamientoDatos=true;
+        if (result == TERMINOS.CODIGO_TRATAMIENTOS) {
+          this.ganador.tratamientoDatos = true;
         }
       }
-      
+
       console.log('modal cerrado');
     });
   }
@@ -101,8 +104,8 @@ export class GanadorComponent implements OnInit {
         this.response.statusCode == STATUS_SERVICE.VENCIDO ||
         this.response.statusCode == STATUS_SERVICE.ACCEPTED
       ) {
-        this.indMostrar = false;
-      }
+        this.indMostrar = false; 
+      } 
       console.log('modal cerrado');
     });
   }
@@ -193,15 +196,17 @@ export class GanadorComponent implements OnInit {
             ) {
               this.persona = new Persona();
               this.ganador = new Ganador();
+              window.location.replace(PAGINAS.URL_BETPLAY);
+            }else{
+              this.openDialog(this.response.message);
             }
-            this.openDialog(this.response.message);
           });
         } else {
           this.openDialog(this.response.message);
         }
       });
     } else {
-      this.openDialog(MENSAJE_MODALES.POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS);
+      this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
   }
 
