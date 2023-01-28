@@ -38,7 +38,7 @@ export class BuscarGanadoresComponent implements OnInit {
 
   getPersonas() {
     if (this.validarCampos()) {
-      this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.ERROR);
+      this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
       console.log('getPersonas');
       if (!this.validarCampos()) {
