@@ -1,0 +1,70 @@
+.button-save-one {
+    visibility: hidden;
+}
+
+.content {
+    transition: 2s;
+    background-color: white;
+}
+
+.mat-card-one {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    border-radius: 10px;
+    transition: 3s;
+}
+
+.mat-card-one:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+}
+
+.mat-card-two {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mat-button {
+    border-radius: 20px;
+    background: #002361;
+    color: white;
+    font-size: 100%;
+}
+
+.file-input {
+    visibility: hidden;
+}
+
+.upload-btn {
+    border-radius: 200px;
+    background: #002361;
+    color: white;
+    width: 15%;
+    font-size: 100%;
+    margin-left: 10px;
+    margin-top: -13px;
+}
+
+.mat-button:hover,
+.upload-btn:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    background: #385170;
+}
+
+.link-terminos {
+    text-decoration: none;
+    color: #0000FF;
+}
+
+.file-picture {
+    margin-bottom: 5px;
+    margin-top: -15px;
+}

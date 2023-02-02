@@ -14,7 +14,9 @@ export const END_POINT_SERVICE = {
 };
 
 export const MESSAGE_SERVICE={
-    DATOS_FALTANTES: 'Por favor validar datos requeridos faltantes'
+    DATOS_FALTANTES: 'Por favor validar datos requeridos faltantes',
+    NO_EXISTE_VALOR: 'No hay ningun registro asociado a este filtro',
+    ACTULIZADO_EXITO: 'Registro actualizado con exito!'
 }
 
 export const TITULOS_MODALES={

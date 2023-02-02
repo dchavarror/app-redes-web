@@ -26,7 +26,7 @@ export class BuscarGanadoresComponent implements OnInit {
     private servicePersona: PersonaService,
     public dialog: MatDialog,
     private personaService: PersonaService,
-    private message:MessageUtilsComponent
+    private message: MessageUtilsComponent
   ) {
     this.response = new Response();
     this.personas = new Array<Persona>();
@@ -47,8 +47,14 @@ export class BuscarGanadoresComponent implements OnInit {
           .subscribe((resp) => {
             this.response = resp;
             this.personas = this.response.objectResponse;
-            this.tablaMostrar = true;
-            this.clases = 'content-two';
+            if (this.personas != undefined || this.personas != null) {
+              this.tablaMostrar = true;
+              this.clases = 'content-two';
+            } else {
+              this.tablaMostrar = false;              
+              this.clases = 'content-one';              
+              this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
+            }
             console.log(' this.personas ', this.personas);
           });
       }

@@ -66,6 +66,7 @@ import { MenuadministracionComponent } from './componentes/menuadministracion/me
 import { PersonasComponent } from './componentes/administracion/personas/personas.component';
 import { PremiosComponent } from './componentes/administracion/premios/premios.component';
 import { DialogMessageEliminarComponent } from './componentes/shared/dialog-message-eliminar/dialog-message-eliminar.component';
+import { DialogPersonasActualizarComponent } from './componentes/shared/dialog-personas-actualizar/dialog-personas-actualizar.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -128,7 +129,8 @@ const materialModules = [
     MenuadministracionComponent,
     PersonasComponent,
     PremiosComponent,
-    DialogMessageEliminarComponent
+    DialogMessageEliminarComponent,
+    DialogPersonasActualizarComponent
   ],
   imports: [
     BrowserModule,

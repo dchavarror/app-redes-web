@@ -74,6 +74,7 @@ export class AdministradcionComponent implements AfterViewInit {
             }
           });
       }
+      this.detalles
     }
   }
 
@@ -94,6 +95,7 @@ export class AdministradcionComponent implements AfterViewInit {
             }
           });
       }
+      this.detalles
     }
   }
 
@@ -145,8 +147,6 @@ export class AdministradcionComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      if (result != undefined) {
-      }
       this.getCodigo();
 
     });

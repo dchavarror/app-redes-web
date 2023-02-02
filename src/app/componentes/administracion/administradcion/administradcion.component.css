@@ -19,6 +19,16 @@
     color: white;
     font-size: 100%;
     height: auto;
+    border: none;
+    height: 40%;
+}
+
+.mat-button:hover,
+.mat-button-link:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    background: #385170;
 }
 
 .input-one {
@@ -30,7 +40,6 @@
     background: #002361;
     margin: auto;
     color: white;
-    transition: 1s;
 }
 
 th {
@@ -38,6 +47,7 @@ th {
     margin-top: 20px;
     position: relative;
     text-align: center;
+    padding-right: 0;
 }
 
 .mat-button-two {
@@ -55,21 +65,41 @@ table {
     width: 100%;
 }
 
+.tabla-x {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    background: #385170;
+    transition: 3s;
+}
+
+.tabla-x:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+}
+
 .textarea {
     resize: none;
     width: 100%;
 }
 
-.button-change {
+.button-icon {
     background-color: white;
     border: none;
-    border-radius: 10px;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    margin-left: 10%;
+    color: black;
+    border-radius: 40%;
+    margin-left: 20%;
 }
 
-.button-change:hover {
+.mat-button-ver:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    background: #385170;
+}
+
+.button-icon:hover {
     background-color: #002361;
     color: white;
 }
@@ -90,8 +120,10 @@ table {
         left: 15%;
         width: 100%;
     }
-    .button-change {
-        margin-left: 20%;
+    mat-icon,
+    .button-icon {
+        margin-right: 0;
+        font-size: medium;
     }
     .mat-button-link {
         margin-left: 20%;
@@ -100,4 +132,18 @@ table {
 
 .mat-paginator {
     width: 100%;
+}
+
+.mat-card {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    border-radius: 10px;
+    transition: 3s;
+}
+
+.mat-card:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+    box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
 }

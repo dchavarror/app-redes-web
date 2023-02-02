@@ -12,4 +12,10 @@ export class DialogData {
     indGuardar = false;
     idPromocion = 0;
     idDetallePremio =0;
+    id=0;
+    foto='';
+    usuario='';
+    usuarioModifica='';
+    nombre:'';
+    cedula: '';
   }
