@@ -60,6 +60,12 @@ import { DialogGanadorComponent } from './componentes/shared/dialog-ganador/dial
 import { DocumentoComponent } from './componentes/documento/documento.component';
 import { DialogCondicionesComponent } from './componentes/shared/dialog-condiciones/dialog-condiciones.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DialogPremioFisicoComponent } from './componentes/shared/dialog-premio-fisico/dialog-premio-fisico.component';
+import { AdministradcionComponent } from './componentes/administracion/administradcion/administradcion.component';
+import { MenuadministracionComponent } from './componentes/menuadministracion/menuadministracion.component';
+import { PersonasComponent } from './componentes/administracion/personas/personas.component';
+import { PremiosComponent } from './componentes/administracion/premios/premios.component';
+import { DialogMessageEliminarComponent } from './componentes/shared/dialog-message-eliminar/dialog-message-eliminar.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -116,7 +122,13 @@ const materialModules = [
     DialogMessageComponent,
     DialogGanadorComponent,
     DocumentoComponent,
-    DialogCondicionesComponent
+    DialogCondicionesComponent,
+    DialogPremioFisicoComponent,
+    AdministradcionComponent,
+    MenuadministracionComponent,
+    PersonasComponent,
+    PremiosComponent,
+    DialogMessageEliminarComponent
   ],
   imports: [
     BrowserModule,

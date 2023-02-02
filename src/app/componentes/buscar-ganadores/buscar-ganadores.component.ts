@@ -56,13 +56,10 @@ export class BuscarGanadoresComponent implements OnInit {
   }
 
   validarCampos() {
-    if (this.nombre == undefined || this.nombre == '') {
-      return true;
+    if ((this.nombre != undefined && this.nombre != '') || (this.cedula != undefined && this.cedula != '')) {
+      return false;
     }
-    if (this.cedula == undefined || this.cedula == '') {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   seleccionado(sele: any) {
@@ -75,19 +72,14 @@ export class BuscarGanadoresComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '70%';
-    dialogConfig.height = '60%';
+    dialogConfig.width = '100%';
+    dialogConfig.height = '250px';
 
     dialogConfig.data = sele;
     const dialogRef = this.dialog.open(DialogGanadorComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
-      if (result != undefined) {
-        this.personaService.actualizarPersona(result).subscribe((resp) => {
-          console.log('resp ', resp);
-        });
-      }
     });
   }
 }

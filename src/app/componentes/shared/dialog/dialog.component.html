@@ -10,12 +10,12 @@
                 <p>Red</p>
                 <mat-form-field appearance="fill" fxLayoutAlign="center">
                     <mat-label>Red</mat-label>
-                    <input matInput [(ngModel)]="data.red" required="true" formControlName="fred">
+                    <input matInput [(ngModel)]="data.red" formControlName="fred">
                 </mat-form-field>
                 <p>Premio</p>
                 <mat-form-field appearance="outline" style="margin: 6px;" fxLayoutAlign="center">
                     <mat-label>Premio</mat-label>
-                    <mat-select [(ngModel)]="data.premio" required="true" formControlName="fpremio">
+                    <mat-select [(ngModel)]="data.premio" formControlName="fpremio">
                         <mat-option *ngFor="let premio of premios" [value]="premio.id">
                             {{premio.descripcion}}
                         </mat-option>
@@ -26,8 +26,11 @@
                 <div>
                     <button mat-button (click)="onNoClick()">Cancelar</button>
                 </div>
-                <div>
+                <div *ngIf="!data.indGuardar">
                     <button mat-button *ngIf="!ganadorFormGroup.invalid" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+                </div>
+                <div *ngIf="data.indGuardar">
+                    <button mat-button="data" (click)="guardarDetalle()">Agregar Detalle</button>
                 </div>
             </mat-card-footer>
         </form>

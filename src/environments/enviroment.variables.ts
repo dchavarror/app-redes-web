@@ -3,10 +3,14 @@ export const END_POINT_SERVICE = {
     GET_PREMIO: 'premio',
     POST_PROMOCION: 'promocion',
     DETALLE_PREMIO: 'detalle-premio/',
+    DETALLE_PREMIO_GUARDAR: 'detalle-premio',
     PERSONA: 'persona',
     GANADOR: 'ganador',
     PROMOCION_DOCUMENTO :'promocion/documento/',
-    VIGENCIA :'vigencia/'
+    VIGENCIA :'vigencia/',
+    GET_CODIGO_PROMOCION: 'promocion/',
+    GET_PROMOCION: 'promocion/promocion/',    
+    GET_VALIDAR_PROMOCION: 'promocion/validar/'
 };
 
 export const MESSAGE_SERVICE={
@@ -26,11 +30,12 @@ export const MENSAJE_MODALES={
 export const REDES={
     FACEBOOK : 'FACEBOOK',
     INSTAGRAM : 'INSTAGRAM',
-    TIKTOK : 'TIKTOK'
+    TIKTOK : 'TIKTOK',
+    TWITTER : 'TWITTER'
 }
 export const TYPE_ICON_SNACKBAR={
     INFO :'Info',
-    SUCCES :'Succes',
+    SUCCES :'Success',
     ERROR :'Error',
     WARN :'Warn'
 }
@@ -39,7 +44,8 @@ export const STATUS_SERVICE={
     EXITOSO :200,
     CREACION :201,
     VENCIDO :999,
-    ACCEPTED :202
+    ACCEPTED :202,
+    RECET_CONTENT: 205
 }
 
 export const DOCUMENTO={
@@ -56,5 +62,10 @@ export const TERMINOS={
 }
 
 export const PAGINAS={
-    URL_BETPLAY:"https://betplay.com.co/"
+    URL_BETPLAY:"https://betplay.com.co/"    
+}
+
+export const TABS={
+    ADMINISTRACION :3,
+    PROMOCION :0
 }

@@ -1,0 +1,26 @@
+* {
+    text-align: center;
+}
+
+.title {
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mat-button {
+    border-radius: 1ch;
+    background: #002361;
+    margin: auto;
+    color: white;
+    font-size: larger;
+}
+
+.mat-button:hover {
+    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
+    background: #385170;
+}

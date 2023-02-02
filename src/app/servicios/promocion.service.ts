@@ -12,6 +12,25 @@ export class PromocionService {
   }
 
   guardarPromocion(promocion: Promocion) {
-    return this.servicio.post(END_POINT_SERVICE.POST_PROMOCION , promocion).pipe( map( data => data ));
+    return this.servicio.post(END_POINT_SERVICE.POST_PROMOCION, promocion).pipe(map(data => data));
+  }
+
+  getCodigo(codigo: string) {
+    let query = codigo;
+    return this.servicio.get(END_POINT_SERVICE.GET_CODIGO_PROMOCION, query).pipe(map(data => data));
+  }
+
+  getPromocion(codigo: string) {
+    let query = codigo;
+    return this.servicio.get(END_POINT_SERVICE.GET_PROMOCION, query).pipe(map(data => data));
+  }
+
+  setPromocion(codigo: number, promocion: Promocion) {
+    return this.servicio.put(`${END_POINT_SERVICE.GET_CODIGO_PROMOCION}/${codigo}`, promocion).pipe(map(data => data));
+  }
+
+  getValidarPromocion(codigo: string) {
+    let query = codigo;
+    return this.servicio.get(END_POINT_SERVICE.GET_VALIDAR_PROMOCION, query).pipe(map(data => data));
   }
 }

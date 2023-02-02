@@ -9,5 +9,5 @@ export class Persona {
     usuario ='';
     usuarioModifica ='';
     usuarioCreacion ='';
-    activo = false;
+    activo = true;
 }

@@ -9,3 +9,8 @@
     font-size: 100%;
     margin-bottom: 20px;
 }
+
+p,
+h1 {
+    text-align: center;
+}

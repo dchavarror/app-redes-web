@@ -9,5 +9,5 @@ export class Premio {
     fechaCreacion='';
     usuarioModifica='';
     fechaModifica='';
-    activo=false;
+    activo=true;
 }

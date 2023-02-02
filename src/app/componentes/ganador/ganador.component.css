@@ -55,3 +55,13 @@
     margin-left: 10px;
     margin-top: -13px;
 }
+
+.link-terminos {
+    text-decoration: none;
+    color: #0000FF;
+}
+
+.file-picture {
+    margin-bottom: 5px;
+    margin-top: -15px;
+}

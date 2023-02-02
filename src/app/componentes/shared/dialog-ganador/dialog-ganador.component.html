@@ -1,72 +1,36 @@
-<div class="content-general">
-    <mat-dialog-content fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayout.lg="column">
-        <div fxFlex="100%" class="content" fxLayout="row" fxLayout.xs="row" fxLayout.sm="row" fxLayout.md="colrowumn" fxLayout.lg="row" fxLayout.xl="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-            <mat-card class="mat-card-one">
-                <mat-card-header fxLayoutAlign="center">
-                    <mat-card-title>Actualizar ganador </mat-card-title>
-                    <button (click)="onNoClick()" class="button-change"><mat-icon>clear</mat-icon></button>
-                </mat-card-header>
-                <mat-card-content>
-                    <div fxLayoutAlign="center">
-                        <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
-                            <mat-label class="label">Nombre completo</mat-label>
-                            <input [(ngModel)]="data.nombreCompleto" class="input-one" matInput placeholder="Nombre completo" required />
-                        </mat-form-field>
-                    </div>
-                    <div fxLayoutAlign="center">
-                        <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
-                            <mat-label class="label">Cedula</mat-label>
-                            <input [(ngModel)]="data.cedula" class="input-one" matInput placeholder="Cedula" required />
-                        </mat-form-field>
-                    </div>
-
-                </mat-card-content>
-                <mat-card-footer fxLayoutAlign="center">
-                    <div>
-                        <button *ngIf="valid()" class="mat-button" [mat-dialog-close]="data" cdkFocusInitial>
-                            Actualizar
-                        </button>
-                    </div>
-                </mat-card-footer>
-            </mat-card>
-        </div>
-
-        <div class="content-two">
-            <mat-card>
-                <table mat-table class="mat-elevation-z8 demo-table" [dataSource]="ganadores" fxFlex="100%">
-                    <ng-container matColumnDef="red">
-                        <th mat-header-cell *matHeaderCellDef fxFlex="33%" fxLayoutAlign="center">Red</th>
-                        <td mat-cell *matCellDef="let element" fxFlex="33%" fxLayoutAlign="center">{{ element.detallePremio.red }}</td>
-                    </ng-container>
-
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="premio">
-                        <th mat-header-cell *matHeaderCellDef fxFlex="33%" fxLayoutAlign="center">Premio</th>
-                        <td mat-cell *matCellDef="let element" fxFlex="33%" fxLayoutAlign="center">
-                            {{ element.detallePremio.premio.descripcion }}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="promocion">
-                        <th mat-header-cell *matHeaderCellDef fxFlex="33%" fxLayoutAlign="center">Promoción</th>
-                        <td mat-cell *matCellDef="let element" fxFlex="33%" fxLayoutAlign="center">
-                            {{ element.detallePremio.promocion.nombre }}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="acciones">
-                        <th mat-header-cell *matHeaderCellDef fxFlex="33%" fxLayoutAlign="center">Acciones</th>
-                        <td mat-cell *matCellDef="let element" fxFlex="33%" fxLayoutAlign="center">
-                            <button class="mat-button-two" fxFlex="50%" mat-button type="button">
-                                Copy Link
-                            </button>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr style="justify-content: center" mat-row *matRowDef="let row; columns: displayedColumns" (click)="onCopyLink(row)"></tr>
-                </table>
-            </mat-card>
-        </div>
-    </mat-dialog-content>
+<div>
+    <button (click)="onNoClick()" class="button-change"><mat-icon>clear</mat-icon></button>
 </div>
+<br>
+<table mat-table class="mat-elevation-z8 demo-table" [dataSource]="ganadores">
+    <ng-container matColumnDef="red">
+        <th mat-header-cell *matHeaderCellDef>Red</th>
+        <td mat-cell *matCellDef="let element">{{ element.detallePremio.red }}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="premio">
+        <th mat-header-cell *matHeaderCellDef>Premio</th>
+        <td mat-cell *matCellDef="let element">
+            {{ element.detallePremio.premio.descripcion }}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="promocion">
+        <th mat-header-cell *matHeaderCellDef>Promoción</th>
+        <td mat-cell *matCellDef="let element">
+            {{ element.detallePremio.promocion.nombre }}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+            <button class="mat-button-two" mat-button type="button" fxFlex="50%" fxLayoutAlign="center">
+                Copy Link
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr style="justify-content: center" mat-row *matRowDef="let row; columns: displayedColumns" (click)="onCopyLink(row)"></tr>
+</table>

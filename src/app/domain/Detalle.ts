@@ -15,5 +15,5 @@ export class Detalle {
     vigencia =new Vigencia();
     codigoPromocional = '';
     usuarioCreacion = '';
-    activo = false;
+    activo = true;
 }

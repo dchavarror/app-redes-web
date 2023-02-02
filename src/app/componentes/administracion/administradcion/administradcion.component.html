@@ -1,0 +1,112 @@
+<div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <mat-card fxFlex="20%">
+        <mat-card-header fxLayoutAlign="center">
+            <mat-card-title>Busqueda</mat-card-title>
+        </mat-card-header>
+        <div>
+            <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
+                <mat-label class="label">Codigo</mat-label>
+                <input [(ngModel)]="codigo" class="input-one" matInput placeholder="Codigo de Promoción" />
+            </mat-form-field>
+        </div>
+        <div fxLayoutAlign="center">
+            <button class="mat-button" type="button" (click)="getCodigo()">
+                BUSCAR
+            </button>
+        </div>
+    </mat-card>
+</div>
+<div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <mat-card class="mat-card" fxFlex="20%">
+        <mat-card-header fxLayoutAlign="center">
+            <mat-card-title>Resultado</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Nombre promoción</mat-label>
+                    <input [(ngModel)]="promocion.nombre" matInput placeholder="Nombre promoción" />
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Código promocional</mat-label>
+                    <input [(ngModel)]="promocion.codigo" matInput placeholder="Código promocional">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Link publicación</mat-label>
+                    <input [(ngModel)]="promocion.linkPublicacion" type="text" matInput placeholder="Link publicación" />
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Terminos y condiciones</mat-label>
+                    <textarea [(ngModel)]="promocion.terminos" rows="5" cols="500" class="text-area-full-width" matInput placeholder="Terminos y condiciones"></textarea>
+                </mat-form-field>
+            </p>
+
+            <p fxLayoutAlign="center">
+                <button class="mat-button-ver" (click)="agregarDetallePromocion()" mat-fab aria-label="Agregar premio" fxLayoutAlign="center">
+                    <mat-icon>queue</mat-icon>
+                </button>
+            </p>
+            <div fxLayoutAlign="center">
+                <button class="mat-button" type="button" (click)="setPromocion()">
+                    ACTUALIZAR
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div class="content" fxLayoutAlign="center">
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="data">
+            <ng-container matColumnDef="codigo">
+                <th mat-header-cell *matHeaderCellDef>Red</th>
+                <td mat-cell *matCellDef="let element">{{ element.red }}
+                </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <!-- <ng-container matColumnDef="link" style="visibility: hidden;">
+            <th mat-header-cell *matHeaderCellDef>Link</th>
+            <td mat-cell *matCellDef="let element">
+                <textarea class="textarea" matInput>{{ element.link }}</textarea>
+            </td>
+        </ng-container> -->
+
+            <ng-container matColumnDef="premio">
+                <th mat-header-cell *matHeaderCellDef>Premio</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.premio.descripcion }}
+                </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="eliminar">
+                <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="button-change" type="button" fxLayoutAlign="center" (click)="openDialogEliminar(element)">
+                        <mat-icon class="pre">delete_outline</mat-icon></button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="copyLink">
+                <th mat-header-cell *matHeaderCellDef>Copiar Link</th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="mat-button-link" type="button" fxLayoutAlign="center" (click)="onClickCopyLink()">Copiar Link</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+</div>

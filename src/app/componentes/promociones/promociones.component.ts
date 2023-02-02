@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Detalle } from '../../domain/Detalle';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TITULOS_MODALES, REDES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE } from '../../../environments/enviroment.variables';
+import { TITULOS_MODALES, REDES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TABS } from '../../../environments/enviroment.variables';
 import { Promocion } from '../../domain/Promocion';
 import { environment } from '../../../environments/environment';
 import { PromocionService } from '../../servicios/promocion.service';
@@ -17,6 +17,8 @@ import { DialogMessageComponent } from '../shared/dialog-message/dialog-message.
   styleUrls: ['./promociones.component.css']
 })
 export class PromocionesComponent implements OnInit {
+  @Output() evento = new EventEmitter<number>();
+
   red: string = '';
   idPremio: string = '';
   name: string = TITULOS_MODALES.TITULO_AGREGAR_RED;
@@ -104,7 +106,8 @@ export class PromocionesComponent implements OnInit {
     let facebook = cadena.toUpperCase().indexOf(REDES.FACEBOOK);
     let instagram = cadena.toUpperCase().indexOf(REDES.INSTAGRAM);
     let tiktok = cadena.toUpperCase().indexOf(REDES.TIKTOK);
-    this.detalle.red = this.getRedAplica(facebook, instagram, tiktok);
+    let twitter = cadena.toUpperCase().indexOf(REDES.TWITTER);
+    this.detalle.red = this.getRedAplica(facebook, instagram, tiktok, twitter);
     const date = new Date();
     let codigoPromocional = date.toISOString().substring(0, 10).replace('-', '').replace('-', '') + String(date.getHours()) + String(date.getMinutes()) + String(date.getSeconds()) + cadena.substring(posicionUser + 5, cadena.length);
     console.log('codigoPromocional ', codigoPromocional);
@@ -113,7 +116,7 @@ export class PromocionesComponent implements OnInit {
     this.detalle.persona.usuario = cadena.substring(posicionUser + 5, cadena.length);
   }
 
-  getRedAplica(facebook: number, instagram: number, tiktok: number) {
+  getRedAplica(facebook: number, instagram: number, tiktok: number, twitter: number) {
     if (facebook != -1) {
       return REDES.FACEBOOK;
     }
@@ -123,28 +126,47 @@ export class PromocionesComponent implements OnInit {
     if (tiktok != -1) {
       return REDES.TIKTOK;
     }
+    if (twitter != -1) {
+      return REDES.TWITTER;
+    }
     return 'N/A';
   }
 
   onClickGuardar() {
-    if(this.lstDetalles.length == 0 ){
+    if(this.validarCodigoPromocion()){
       this.message.mostrarMessage("Por favor agregue un premio!", TYPE_ICON_SNACKBAR.WARN)
-    }else{
-    this.promocion.lstDetalles = this.lstDetalles;
-    this.promocion.activo = true;
-    let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
-    this.promocion.usuarioCreacion = String(user);
-    this.promocionService.guardarPromocion(this.promocion).subscribe(resp => {
-      this.response = resp;
-      if (this.response.statusCode === STATUS_SERVICE.CREACION || this.response.statusCode === STATUS_SERVICE.EXITOSO) {
-        this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
-        this.inicializarComponente();
-      } else {
-        this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
-      }
+      this.promocion.lstDetalles = this.lstDetalles;
+      this.promocion.activo = true;
+      let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
+      this.promocion.usuarioCreacion = String(user);
+      this.promocionService.guardarPromocion(this.promocion).subscribe(resp => {
+        this.response = resp;
+        if (this.response.statusCode === STATUS_SERVICE.CREACION || this.response.statusCode === STATUS_SERVICE.EXITOSO) {
+          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
+          this.inicializarComponente();
+          this.evento.emit(TABS.ADMINISTRACION);
+        } else {
+          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+        }
+  
+      })
+    }
+    
 
-    })
   }
+
+  validarCodigoPromocion() {
+    this.promocionService.getValidarPromocion(this.promocion.codigo).subscribe(resp => {
+      this.response = resp;
+      if (this.response.statusCode === STATUS_SERVICE.RECET_CONTENT) {
+        this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+        this.promocion.codigo='';
+        return false;
+      }else{
+        return true;
+      }
+    });
+    return true;
   }
 
   validarCampos() {

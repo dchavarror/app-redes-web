@@ -22,12 +22,18 @@
                         <p class="button-save-one">
                             <input type="file" accept=".jpg,.png" class="file-input" (change)="onFileSelected($event)" #fileUpload />
                         </p>
-                        <div fxLayoutAlign="center">
+                        <div fxLayoutAlign="center" class="file-picture">
                             {{ fileName || "Seleccionar foto" }}
 
                             <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                                 <mat-icon>attach_file</mat-icon>
                             </button>
+                        </div>
+                        <div>
+                            <p class="button-save">
+                                <mat-checkbox [(ngModel)]="ganador.ganastePremioFisico" (click)="abrirDireccion()" disabled="{{ indDisable }}" [ngModelOptions]="{ standalone: true }">Ganaste premio fisico ¿Deseas enviarlo <br>a tu dirección de domicilio?
+                                </mat-checkbox>
+                            </p>
                         </div>
                         <section>
                             <p class="button-save">

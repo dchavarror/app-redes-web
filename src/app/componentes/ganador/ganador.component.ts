@@ -16,8 +16,9 @@ import { Detalle } from '../../domain/Detalle';
 import { PersonaService } from '../../servicios/persona.service';
 import { GanadorService } from '../../servicios/ganador.service';
 import { DialogCondicionesComponent } from '../shared/dialog-condiciones/dialog-condiciones.component';
-import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
+import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR} from '../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
+import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dialog-premio-fisico.component';
 
 @Component({
   selector: 'app-ganador',
@@ -242,5 +243,11 @@ export class GanadorComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  abrirDireccion(){
+    const dialogRef = this.dialog.open(DialogPremioFisicoComponent, {
+    });
+    console.log("Agregar Dirección!!!")
   }
 }

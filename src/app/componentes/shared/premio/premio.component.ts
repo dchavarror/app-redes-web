@@ -51,6 +51,10 @@ export class PremioComponent implements OnInit {
     return '';
   }
 
+  agregraPremio(){
+
+  }
+
   onCopyLink(){
     console.log('detalle ' , this.detalle)
     this.clipboard.copy(this.detalle.link);

@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { ServiceUtils } from './services.utils';
 import { Usuario } from '../domain/Usuario';
 import { END_POINT_SERVICE } from '../../environments/enviroment.variables';
+import { Detalle } from '../domain/Detalle';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,6 @@ export class PremioService {
   }
 
   getPremio() {
-    return this.servicio.get(END_POINT_SERVICE.GET_PREMIO , '').pipe( map( data => data ));
+    return this.servicio.get(END_POINT_SERVICE.GET_PREMIO, '').pipe(map(data => data));
   }
 }

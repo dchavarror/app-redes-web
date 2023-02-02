@@ -13,7 +13,7 @@
             <p>
                 <mat-form-field appearance="outline" fxFlex="100%">
                     <mat-label class="label">Código promocional</mat-label>
-                    <input [(ngModel)]="promocion.codigo" matInput placeholder="Código promocional">
+                    <input (blur)="validarCodigoPromocion()" [(ngModel)]="promocion.codigo" matInput placeholder="Código promocional">
                 </mat-form-field>
             </p>
             <p>
@@ -31,16 +31,16 @@
             </p>
             <p fxLayoutAlign="center">
                 <button class="mat-button-ver" (click)="agregarDetallePromocion()" mat-fab aria-label="Agregar premio" fxLayoutAlign="center">
-                        <mat-icon>queue</mat-icon>
-                    </button>
+                    <mat-icon>queue</mat-icon>
+                </button>
             </p>
             <p *ngFor="let item of lstDetalles">
                 <app-premio (eventEliminar)="eliminarPremio($event)" [detalle]="item"></app-premio>
             </p>
             <p>
                 <button class="mat-button" type="button" (click)="onClickGuardar()">
-                        Guardar
-                    </button>
+                    Guardar
+                </button>
             </p>
         </mat-card-content>
     </mat-card>

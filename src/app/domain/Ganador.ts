@@ -4,13 +4,14 @@ import { Detalle } from './Detalle';
 
 @Injectable()
 export class Ganador {
-    id=0;
+    id = 0;
     persona = new Persona();
     detallePremio = new Detalle();
     aceptoTerminos = false;
     tratamientoDatos = false;
     aceptacionPremio = false;
     usuarioCreacion = '';
-    activo = false;
+    activo = true;
+    ganastePremioFisico = false;
 
 }
