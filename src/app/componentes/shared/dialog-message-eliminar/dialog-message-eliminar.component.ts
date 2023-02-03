@@ -16,6 +16,7 @@ export class DialogMessageEliminarComponent implements OnInit {
 
   item: Detalle = new Detalle();
   response: Response;
+  validar = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private detalleService: DetalleService, private message: MessageUtilsComponent) {
     this.response = new Response();
@@ -26,7 +27,7 @@ export class DialogMessageEliminarComponent implements OnInit {
   }
 
   confirmarEliminar() {
-    console.log('data ' ,  this.item);
+    console.log('data ', this.item);
     this.detalleService.setDetallePremio(this.data.idDetallePremio).subscribe(resp => {
       this.response = resp;
       if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {

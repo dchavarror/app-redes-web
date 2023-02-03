@@ -1,6 +1,8 @@
 export const END_POINT_SERVICE = {
     USUARIO_VALIDAR: 'usuario/validar',
     GET_PREMIO: 'premio',
+    POST_PREMIO_UNITO: 'premio/unico/',    
+    PUT_PREMIO_ELIMINAR: 'premio/',
     POST_PROMOCION: 'promocion',
     DETALLE_PREMIO: 'detalle-premio/',
     DETALLE_PREMIO_GUARDAR: 'detalle-premio',
@@ -16,7 +18,9 @@ export const END_POINT_SERVICE = {
 export const MESSAGE_SERVICE={
     DATOS_FALTANTES: 'Por favor validar datos requeridos faltantes',
     NO_EXISTE_VALOR: 'No hay ningun registro asociado a este filtro',
-    ACTULIZADO_EXITO: 'Registro actualizado con exito!'
+    ACTULIZADO_EXITO: 'Registro actualizado con exito!',    
+    CREADO_PREMIO_EXITO: 'Premio creado con exito!',
+    ELIMINADO_PREMIO_EXITO: 'Premio eliminado con exito'
 }
 
 export const TITULOS_MODALES={

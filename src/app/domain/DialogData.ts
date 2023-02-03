@@ -18,4 +18,7 @@ export class DialogData {
     usuarioModifica='';
     nombre:'';
     cedula: '';
+    idPremio=0;
+    descripcion='';
+
   }

@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ThisReceiver } from '@angular/compiler';
 import { DialogMessageEliminarComponent } from '../../shared/dialog-message-eliminar/dialog-message-eliminar.component';
 import { MatPaginator } from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Utils } from '../../../utils/Utils';
 
 @Component({
@@ -39,13 +39,13 @@ export class AdministradcionComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  
+
 
   constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService, private utils: Utils, public dialog: MatDialog, private detalleService: DetalleService) {
     this.promocion = new Promocion();
     this.response = new Response();
     this.detalles = new Array<Detalle>();
-    
+
   }
 
   ngAfterViewInit() {
@@ -87,7 +87,7 @@ export class AdministradcionComponent implements AfterViewInit {
         this.promocionSevice.getPromocion(this.codigo)
           .subscribe((resp) => {
             this.response = resp;
-            this.data = new MatTableDataSource<Detalle>();
+            this.data;
             if (this.response.statusCode === STATUS_SERVICE.EXITOSO && this.response.objectResponse != null) {
               this.promocion = this.response.objectResponse != null ? this.response.objectResponse : this.promocion;
             } else {
@@ -147,14 +147,17 @@ export class AdministradcionComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.getCodigo();
-
+      this.getCodigo()
     });
   }
 
   openDialogEliminar(item: Detalle): void {
     const dialogRef = this.dialog.open(DialogMessageEliminarComponent, {
-      data: {idDetallePremio : item.id}
+      data: { idDetallePremio: item.id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.getPromocion();
     });
   }
 
@@ -165,7 +168,7 @@ export class AdministradcionComponent implements AfterViewInit {
     return false;
   }
 
-  onClickCopyLink(){
+  onClickCopyLink() {
     this.utils.onCopyLink(this.detalles[0].link, this.detalles[0].vigencia.id);
     console.log("Si copio el link");
   }

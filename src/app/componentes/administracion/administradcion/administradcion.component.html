@@ -62,21 +62,13 @@
     </mat-card>
 </div>
 <div class="content" fxLayoutAlign="center">
-    <div class="mat-elevation-z8 tabla-x">
+    <div class="mat-elevation-z8">
         <table mat-table [dataSource]="data">
             <ng-container matColumnDef="codigo">
                 <th mat-header-cell *matHeaderCellDef>Red</th>
                 <td mat-cell *matCellDef="let element">{{ element.red }}
                 </td>
             </ng-container>
-
-            <!-- Name Column -->
-            <!-- <ng-container matColumnDef="link" style="visibility: hidden;">
-            <th mat-header-cell *matHeaderCellDef>Link</th>
-            <td mat-cell *matCellDef="let element">
-                <textarea class="textarea" matInput>{{ element.link }}</textarea>
-            </td>
-        </ng-container> -->
 
             <ng-container matColumnDef="premio">
                 <th mat-header-cell *matHeaderCellDef>Premio</th>
@@ -85,7 +77,6 @@
                 </td>
             </ng-container>
 
-            <!-- Weight Column -->
             <ng-container matColumnDef="eliminar">
                 <th mat-header-cell *matHeaderCellDef>Eliminar</th>
                 <td mat-cell *matCellDef="let element">

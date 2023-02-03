@@ -21,6 +21,6 @@ export class DetalleService {
   }
 
   setDetallePremio(id:number){
-    return this.servicio.put(`${END_POINT_SERVICE.DETALLE_PREMIO}/${id}`).pipe(map(data => data));
+    return this.servicio.put(`${END_POINT_SERVICE.DETALLE_PREMIO}${id}`).pipe(map(data => data));
   }
 }

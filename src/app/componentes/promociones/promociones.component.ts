@@ -83,20 +83,19 @@ export class PromocionesComponent implements OnInit {
   }
 
   validarPromocion() {
-    if (this.promocion != undefined) {
-      if (this.promocion.codigo == undefined || this.promocion.codigo == '') {
-        return true
-      }
-      if (this.promocion.nombre == undefined || this.promocion.nombre == '') {
-        return true
-      }
-      if (this.promocion.linkPublicacion == undefined || this.promocion.linkPublicacion == '') {
-        return true
-      }
-      if (this.promocion.terminos == undefined || this.promocion.terminos == '') {
-        return true
-      }
+    if (this.promocion.codigo == undefined || this.promocion.codigo == '') {
+      return true
     }
+    if (this.promocion.nombre == undefined || this.promocion.nombre == '') {
+      return true
+    }
+    if (this.promocion.linkPublicacion == undefined || this.promocion.linkPublicacion == '') {
+      return true
+    }
+    if (this.promocion.terminos == undefined || this.promocion.terminos == '') {
+      return true
+    }
+
     return false;
   }
 
@@ -133,7 +132,7 @@ export class PromocionesComponent implements OnInit {
   }
 
   onClickGuardar() {
-    if(this.validarCodigoPromocion()){
+    if (!this.validarCampos()) {
       this.message.mostrarMessage("Por favor agregue un premio!", TYPE_ICON_SNACKBAR.WARN)
       this.promocion.lstDetalles = this.lstDetalles;
       this.promocion.activo = true;
@@ -148,10 +147,12 @@ export class PromocionesComponent implements OnInit {
         } else {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
         }
-  
+
       })
+    } else {
+      this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
-    
+
 
   }
 
@@ -160,9 +161,9 @@ export class PromocionesComponent implements OnInit {
       this.response = resp;
       if (this.response.statusCode === STATUS_SERVICE.RECET_CONTENT) {
         this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
-        this.promocion.codigo='';
+        this.promocion.codigo = '';
         return false;
-      }else{
+      } else {
         return true;
       }
     });

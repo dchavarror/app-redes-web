@@ -34,31 +34,32 @@ export class PersonasComponent implements OnInit {
 
   getPersonas() {
     if (this.validarCampos()) {
-      this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
-    } else {
       console.log('getPersonas');
-      if (!this.validarCampos()) {
-        this.servicePersona
-          .getPersonas(this.cedula, this.nombre)
-          .subscribe((resp) => {
-            this.response = resp;
-            this.personas = this.response.objectResponse;
-            if (this.personas != undefined || this.personas != null) {
-              this.tablaMostrar = true;
-              this.clases = 'content-two';
-            } else {
-              this.tablaMostrar = false;
-              this.clases = 'content-one';
-              this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
-            }
-            console.log(' this.personas ', this.personas);
-          });
-      }
+      this.servicePersona
+        .getPersonas(this.cedula, this.nombre)
+        .subscribe((resp) => {
+          this.response = resp;
+          this.personas = this.response.objectResponse;
+          if (this.personas != undefined || this.personas != null) {
+            this.tablaMostrar = true;
+            this.clases = 'content-two';
+          } else {
+            this.tablaMostrar = false;
+            this.clases = 'content-one';
+            this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
+          }
+          console.log(' this.personas ', this.personas);
+        });
+    } else {
+      this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
   }
 
   validarCampos() {
-    return false;
+    if (this.cedula == '' && this.nombre == '') {
+      return false;
+    }
+    return true
   }
 
   actualizar(persona: Persona) {
