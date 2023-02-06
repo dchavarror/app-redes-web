@@ -5,6 +5,7 @@ import { DialogData } from '../../../domain/DialogData';
 import { STATUS_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 import { Response } from 'src/app/domain/Response';
+import { DetalleService } from '../../../servicios/detalle.service';
 
 @Component({
   selector: 'app-dialog-eliminar-premio',

@@ -17,7 +17,7 @@ import { DialogMessageComponent } from '../shared/dialog-message/dialog-message.
   styleUrls: ['./promociones.component.css']
 })
 export class PromocionesComponent implements OnInit {
-  @Output() evento = new EventEmitter<number>();
+  @Output() evento = new EventEmitter<any>();
 
   red: string = '';
   idPremio: string = '';
@@ -133,16 +133,17 @@ export class PromocionesComponent implements OnInit {
 
   onClickGuardar() {
     if (!this.validarCampos()) {
-      this.message.mostrarMessage("Por favor agregue un premio!", TYPE_ICON_SNACKBAR.WARN)
       this.promocion.lstDetalles = this.lstDetalles;
       this.promocion.activo = true;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
       this.promocion.usuarioCreacion = String(user);
       this.promocionService.guardarPromocion(this.promocion).subscribe(resp => {
         this.response = resp;
-        if (this.response.statusCode === STATUS_SERVICE.CREACION || this.response.statusCode === STATUS_SERVICE.EXITOSO) {
+        console.log('this.response ' , this.response);
+        if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
           this.inicializarComponente();
+          console.log('emit ADMINISTRACION' );
           this.evento.emit(TABS.ADMINISTRACION);
         } else {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);

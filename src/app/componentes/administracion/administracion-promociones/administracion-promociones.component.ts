@@ -18,8 +18,8 @@ import { Utils } from '../../../utils/Utils';
 
 @Component({
   selector: 'app-administradcion',
-  templateUrl: './administradcion.component.html',
-  styleUrls: ['./administradcion.component.css']
+  templateUrl: './administracion-promociones.component.html',
+  styleUrls: ['./administracion-promociones.component.css']
 })
 export class AdministradcionComponent implements AfterViewInit {
 
@@ -155,9 +155,10 @@ export class AdministradcionComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(DialogMessageEliminarComponent, {
       data: { idDetallePremio: item.id }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {  
+      this.data = new MatTableDataSource<Detalle>();
+      this.getCodigo();
       console.log('The dialog was closed', result);
-      this.getPromocion();
     });
   }
 

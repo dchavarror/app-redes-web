@@ -12,6 +12,7 @@ export class AuthService {
     this.router.navigate(['/login']);
     localStorage.setItem('indLogeado', 'false');
     localStorage.setItem('usuario', '');
+    localStorage.setItem('roles', '');
   }
 
 }

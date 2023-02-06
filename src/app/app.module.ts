@@ -61,7 +61,7 @@ import { DocumentoComponent } from './componentes/documento/documento.component'
 import { DialogCondicionesComponent } from './componentes/shared/dialog-condiciones/dialog-condiciones.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogPremioFisicoComponent } from './componentes/shared/dialog-premio-fisico/dialog-premio-fisico.component';
-import { AdministradcionComponent } from './componentes/administracion/administradcion/administradcion.component';
+import { AdministradcionComponent } from './componentes/administracion/administracion-promociones/administracion-promociones.component';
 import { MenuadministracionComponent } from './componentes/menuadministracion/menuadministracion.component';
 import { PersonasComponent } from './componentes/administracion/personas/personas.component';
 import { PremiosComponent } from './componentes/administracion/premios/premios.component';

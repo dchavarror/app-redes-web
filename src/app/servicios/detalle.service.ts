@@ -20,7 +20,11 @@ export class DetalleService {
     return this.servicio.post(END_POINT_SERVICE.DETALLE_PREMIO_GUARDAR, detallePremio).pipe(map(data => data));
   }
 
-  setDetallePremio(id:number){
+  setDetallePremio(id: number) {
     return this.servicio.put(`${END_POINT_SERVICE.DETALLE_PREMIO}${id}`).pipe(map(data => data));
+  }
+
+  getPremioActivo(id: number) {
+    return this.servicio.get(`${END_POINT_SERVICE.DETALLE_PREMIO_ACTIVO}${id}`, '').pipe(map(data => data));
   }
 }

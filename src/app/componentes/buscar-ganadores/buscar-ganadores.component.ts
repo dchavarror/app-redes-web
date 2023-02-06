@@ -68,12 +68,12 @@ export class BuscarGanadoresComponent implements OnInit {
     return true;
   }
 
-  seleccionado(sele: any) {
+  seleccionado(sele: Persona) {
     console.log('Sele ', sele);
     this.openDialog(sele);
   }
 
-  openDialog(sele: any): void {
+  openDialog(sele: Persona): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;

@@ -5,6 +5,7 @@ export const END_POINT_SERVICE = {
     PUT_PREMIO_ELIMINAR: 'premio/',
     POST_PROMOCION: 'promocion',
     DETALLE_PREMIO: 'detalle-premio/',
+    DETALLE_PREMIO_ACTIVO: 'detalle-premio/activo/',
     DETALLE_PREMIO_GUARDAR: 'detalle-premio',
     PERSONA: 'persona',
     GANADOR: 'ganador',
@@ -20,7 +21,8 @@ export const MESSAGE_SERVICE={
     NO_EXISTE_VALOR: 'No hay ningun registro asociado a este filtro',
     ACTULIZADO_EXITO: 'Registro actualizado con exito!',    
     CREADO_PREMIO_EXITO: 'Premio creado con exito!',
-    ELIMINADO_PREMIO_EXITO: 'Premio eliminado con exito'
+    ELIMINADO_PREMIO_EXITO: 'Premio eliminado con exito',    
+    PREMIO_ACTIVO_VALIDACION: 'Premio asociado a una promocion, no se puede eliminar!'
 }
 
 export const TITULOS_MODALES={
@@ -74,4 +76,9 @@ export const PAGINAS={
 export const TABS={
     ADMINISTRACION :3,
     PROMOCION :0
+}
+
+export const ROLES={
+    ROL_ADM :'ROL_ADM',
+    ROL_CONS :'ROL_CONS'
 }

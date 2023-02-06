@@ -8,6 +8,7 @@ import { MessageUtilsComponent } from '../shared/message-utils/message-utils.com
 import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, STATUS_SERVICE } from '../../../environments/enviroment.variables';
 import { Response } from 'src/app/domain/Response';
 import { Router } from '@angular/router';
+import { Rol } from '../../domain/Rol';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +24,12 @@ export class LoginComponent implements OnInit {
 
   usuario: Usuario;
   response: Response;
+  lstRoles: Array<Rol>;
 
   constructor(private serviceUsuario:UsuarioService , private message: MessageUtilsComponent,  private router: Router) { 
     this.usuario = new Usuario();
     this.response = new Response();
+    this.lstRoles = new Array<Rol>();
   }
 
   ngOnInit(): void {
@@ -42,6 +45,17 @@ export class LoginComponent implements OnInit {
         if(this.response.statusCode === STATUS_SERVICE.CREACION || this.response.statusCode === STATUS_SERVICE.EXITOSO){
           localStorage.setItem('indLogeado', 'true');
           localStorage.setItem('usuario', this.usuario.nombre);
+          this.lstRoles = this.response.objectResponse.lstRol;
+          let roles='';
+          for(let i=0;i<this.lstRoles.length;i++){
+            if(i== this.lstRoles.length-1){
+              roles += this.lstRoles[i].codigo;
+            }else{
+              roles += this.lstRoles[i].codigo + ',';
+            }
+            
+          }
+          localStorage.setItem('roles', roles);
           this.router.navigate( ['home']);
         }else{
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);

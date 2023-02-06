@@ -1,15 +1,15 @@
 <div class="container-home">
-    <mat-tab-group class="tap-group" dynamicHeight [selectedIndex]="tabSeleccionado">
-        <mat-tab label="Promocionales">
+    <mat-tab-group class="tap-group" dynamicHeight [selectedIndex]="tabSeleccionado" (selectedIndexChange)="onClickTabSeleccionado($event)">
+        <mat-tab label="Promocionales" *ngIf="indAdmin">
             <app-promociones (evento)="actualizarTab($event)"></app-promociones>
         </mat-tab>
-        <mat-tab label="Buscar ganadores">
+        <mat-tab label="Buscar ganadores" *ngIf="indAdmin || indConsulta">
             <app-buscar-ganadores> </app-buscar-ganadores>
         </mat-tab>
-        <mat-tab label="Documentos">
+        <mat-tab label="Documentos" *ngIf="indAdmin">
             <app-documento></app-documento>
         </mat-tab>
-        <mat-tab acti label="Administración">
+        <mat-tab acti label="Administración" *ngIf="indAdmin">
             <app-menuadministracion></app-menuadministracion>
         </mat-tab>
         <mat-tab disabled>

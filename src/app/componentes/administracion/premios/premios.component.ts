@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { DialogEliminarPremioComponent } from '../../shared/dialog-eliminar-premio/dialog-eliminar-premio.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogActualizarPremioComponent } from '../../shared/dialog-actualizar-premio/dialog-actualizar-premio.component';
+import { DetalleService } from '../../../servicios/detalle.service';
 
 @Component({
   selector: 'app-premios',
@@ -25,7 +26,7 @@ export class PremiosComponent implements AfterViewInit {
   data = new MatTableDataSource<Premio>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private servicePremio: PremioService, private message: MessageUtilsComponent, private dialog: MatDialog) {
+  constructor(private servicePremio: PremioService, private message: MessageUtilsComponent, private dialog: MatDialog, private detalleService: DetalleService) {
   }
 
   ngAfterViewInit() {
@@ -76,12 +77,19 @@ export class PremiosComponent implements AfterViewInit {
   }
 
   eliminar(item: Premio) {
-    const dialogRef = this.dialog.open(DialogEliminarPremioComponent, {
-      data: { idPremio: item.id },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.allPremios();
-      console.log('The dialog was closed', result);
+    this.detalleService.getPremioActivo(item.id).subscribe(resp => {
+      this.response = resp;
+      if (this.response.statusCode == STATUS_SERVICE.ACCEPTED) {
+        this.message.mostrarMessage(MESSAGE_SERVICE.PREMIO_ACTIVO_VALIDACION, TYPE_ICON_SNACKBAR.WARN);
+      } else {
+        const dialogRef = this.dialog.open(DialogEliminarPremioComponent, {
+          data: { idPremio: item.id },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.allPremios();
+          console.log('The dialog was closed', result);
+        });
+      }
     });
   }
 
