@@ -13,11 +13,15 @@ export class GanadorService {
   }
 
   guardarGanador(ganador: Ganador) {
-    return this.servicio.post(END_POINT_SERVICE.GANADOR , ganador).pipe( map( data => data ));
+    return this.servicio.post(END_POINT_SERVICE.GANADOR, ganador).pipe(map(data => data));
   }
 
-  getGanadores(idPersona: number ) {
+  getGanadores(idPersona: number) {
     let query = '?idPersona=' + idPersona;
-    return this.servicio.get(END_POINT_SERVICE.GANADOR , query).pipe( map( data => data ));
+    return this.servicio.get(END_POINT_SERVICE.GANADOR, query).pipe(map(data => data));
+  }
+
+  getValidarDetalleGanador(id: number) {
+    return this.servicio.get(`${END_POINT_SERVICE.GANADOR_DETALLE}${id}`, '').pipe(map(data => data));
   }
 }

@@ -33,4 +33,8 @@ export class PromocionService {
     let query = codigo;
     return this.servicio.get(END_POINT_SERVICE.GET_VALIDAR_PROMOCION, query).pipe(map(data => data));
   }
+
+  getPromociones(){
+    return this.servicio.get(END_POINT_SERVICE.GET_ALL_PROMOCIONES, '').pipe(map(data => data));
+  }
 }

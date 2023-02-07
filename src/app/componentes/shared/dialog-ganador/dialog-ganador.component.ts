@@ -4,11 +4,12 @@ import { Ganador } from 'src/app/domain/Ganador';
 import { Persona } from 'src/app/domain/Persona';
 import { Response } from 'src/app/domain/Response';
 import { GanadorService } from 'src/app/servicios/ganador.service';
-import { STATUS_SERVICE, TITULOS_MODALES } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, TITULOS_MODALES, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
 import { DialogMessageComponent } from '../dialog-message/dialog-message.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { VigenciaService } from '../../../servicios/vigencia.service';
 import { Utils } from '../../../utils/Utils';
+import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 
 @Component({
   selector: 'app-dialog-ganador',
@@ -20,7 +21,7 @@ export class DialogGanadorComponent implements OnInit {
 
   ganadores: Array<Ganador>;
   response: Response;
-  constructor(private clipboard: Clipboard,private utils: Utils, public dialog: MatDialog, public dialogRef: MatDialogRef<DialogGanadorComponent>, @Inject(MAT_DIALOG_DATA) public data: Persona, private serviceGanador: GanadorService, private serviceVigencia: VigenciaService) {
+  constructor(private message: MessageUtilsComponent, private clipboard: Clipboard, private utils: Utils, public dialog: MatDialog, public dialogRef: MatDialogRef<DialogGanadorComponent>, @Inject(MAT_DIALOG_DATA) public data: Persona, private serviceGanador: GanadorService, private serviceVigencia: VigenciaService) {
     this.ganadores = new Array<Ganador>();
     this.response = new Response();
   }
@@ -40,12 +41,18 @@ export class DialogGanadorComponent implements OnInit {
   }
 
   getGanadores() {
-    this.serviceGanador.getGanadores(this.data.id).subscribe(resp => {
-      this.response = resp;
-      if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
-        this.ganadores = this.response.objectResponse;
-      } else {
-        this.openDialog(this.response.message);
+    this.serviceGanador.getGanadores(this.data.id).subscribe({
+      next: (resp: any) => {
+        this.response = resp;
+        if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
+          this.ganadores = this.response.objectResponse;
+        } else {
+          this.openDialog(this.response.message);
+        }
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });
   }
@@ -55,9 +62,15 @@ export class DialogGanadorComponent implements OnInit {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(this.response.statusCode);
-      console.log("modal cerrado");
+    dialogRef.afterClosed().subscribe({
+      next: (resp: any) => {
+        console.log(this.response.statusCode);
+        console.log("modal cerrado");
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
 
 

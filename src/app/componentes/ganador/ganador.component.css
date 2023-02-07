@@ -65,3 +65,8 @@
     margin-bottom: 5px;
     margin-top: -15px;
 }
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}

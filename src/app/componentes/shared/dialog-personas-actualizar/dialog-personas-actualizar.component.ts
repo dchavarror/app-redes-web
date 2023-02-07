@@ -36,14 +36,20 @@ export class DialogPersonasActualizarComponent implements OnInit {
       this.persona.foto = this.base64 != undefined && this.base64 != null && this.base64 != '' ? this.base64.substring(22) : this.data.foto;
       this.persona.usuario = this.data.usuario;
       this.persona.usuarioModifica = String(localStorage.getItem(this.data.usuarioModifica));
-      this.personaService.actualizarPersona(this.persona).subscribe((resp) => {
-        this.response = resp;
-        if (this.response.statusCode === STATUS_SERVICE.EXITOSO) {
-          console.log("Si se actualizo");
-          this.message.mostrarMessage(MESSAGE_SERVICE.ACTULIZADO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
-          this.dialogRef.close();
-        }else{          
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);
+      this.personaService.actualizarPersona(this.persona).subscribe({
+        next: (resp: any) => {
+          this.response = resp;
+          if (this.response.statusCode === STATUS_SERVICE.EXITOSO) {
+            console.log("Si se actualizo");
+            this.message.mostrarMessage(MESSAGE_SERVICE.ACTULIZADO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
+            this.dialogRef.close();
+          } else {
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);
+          }
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
         }
       });
     } else {

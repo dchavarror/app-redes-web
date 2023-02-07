@@ -1,7 +1,7 @@
 <div class="container-home">
     <mat-tab-group class="tap-group" dynamicHeight>
         <mat-tab label="Promociones">
-            <app-administradcion></app-administradcion>
+            <app-administradcion (eventoEmit)="emitirEvento($event)"></app-administradcion>
         </mat-tab>
         <mat-tab label="Persona">
             <app-personas> </app-personas>

@@ -46,15 +46,21 @@ export class PremiosComponent implements AfterViewInit {
       this.premio.descripcion = this.descripcion;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
       this.premio.usuarioCreacion = String(user);
-      this.servicePremio.savePremio(this.premio).subscribe((resp) => {
-        this.response = resp;
-        this.premio = this.response.objectResponse;
-        if (this.response.statusCode == STATUS_SERVICE.CREACION) {
-          this.message.mostrarMessage(MESSAGE_SERVICE.CREADO_PREMIO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
-          this.crearNuevasInstancias();
-        }
+      this.servicePremio.savePremio(this.premio).subscribe({
+        next: (resp: any) => {
+          this.response = resp;
+          this.premio = this.response.objectResponse;
+          if (this.response.statusCode == STATUS_SERVICE.CREACION) {
+            this.message.mostrarMessage(MESSAGE_SERVICE.CREADO_PREMIO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
+            this.crearNuevasInstancias();
+          }
 
-        this.descripcion = '';
+          this.descripcion = '';
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+        }
       });
     } else {
       this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS, TYPE_ICON_SNACKBAR.WARN);
@@ -69,26 +75,44 @@ export class PremiosComponent implements AfterViewInit {
   }
 
   allPremios() {
-    this.servicePremio.getPremio().subscribe(resp => {
-      this.response = resp;
-      this.premios = this.response.objectResponse;
-      this.data.data = this.premios;
+    this.servicePremio.getPremio().subscribe({
+      next: (resp: any) => {
+        this.response = resp;
+        this.premios = this.response.objectResponse;
+        this.data.data = this.premios;
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
   }
 
   eliminar(item: Premio) {
-    this.detalleService.getPremioActivo(item.id).subscribe(resp => {
-      this.response = resp;
-      if (this.response.statusCode == STATUS_SERVICE.ACCEPTED) {
-        this.message.mostrarMessage(MESSAGE_SERVICE.PREMIO_ACTIVO_VALIDACION, TYPE_ICON_SNACKBAR.WARN);
-      } else {
-        const dialogRef = this.dialog.open(DialogEliminarPremioComponent, {
-          data: { idPremio: item.id },
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          this.allPremios();
-          console.log('The dialog was closed', result);
-        });
+    this.detalleService.getPremioActivo(item.id).subscribe({
+      next: (resp: any) => {
+        this.response = resp;
+        if (this.response.statusCode == STATUS_SERVICE.ACCEPTED) {
+          this.message.mostrarMessage(MESSAGE_SERVICE.PREMIO_ACTIVO_VALIDACION, TYPE_ICON_SNACKBAR.WARN);
+        } else {
+          const dialogRef = this.dialog.open(DialogEliminarPremioComponent, {
+            data: { idPremio: item.id },
+          });
+          dialogRef.afterClosed().subscribe({
+            next: (result: any) => {
+              this.allPremios();
+              console.log('The dialog was closed', result);
+            },
+            error: (e) => {
+              console.log('error ', e);
+              this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+            }
+          });
+        }
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });
   }
@@ -97,9 +121,15 @@ export class PremiosComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(DialogActualizarPremioComponent, {
       data: { descripcion: item.descripcion, idPremio: item.id },
     });
-    dialogRef.afterClosed().subscribe(result => {
-      this.allPremios();
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe({
+      next: (result: any) => {
+        this.allPremios();
+        console.log('The dialog was closed', result);
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
   }
 

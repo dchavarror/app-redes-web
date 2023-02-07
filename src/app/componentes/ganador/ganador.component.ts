@@ -16,7 +16,7 @@ import { Detalle } from '../../domain/Detalle';
 import { PersonaService } from '../../servicios/persona.service';
 import { GanadorService } from '../../servicios/ganador.service';
 import { DialogCondicionesComponent } from '../shared/dialog-condiciones/dialog-condiciones.component';
-import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR} from '../../../environments/enviroment.variables';
+import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dialog-premio-fisico.component';
 
@@ -77,20 +77,26 @@ export class GanadorComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result != undefined) {
-        if (result == TERMINOS.CODIGO_TERMINOS) {
-          this.ganador.aceptoTerminos = true;
+    dialogRef.afterClosed().subscribe({
+      next: (result: any) => {
+        if (result != undefined) {
+          if (result == TERMINOS.CODIGO_TERMINOS) {
+            this.ganador.aceptoTerminos = true;
+          }
+          if (result == TERMINOS.CODIGO_CONDICIONES) {
+            this.ganador.aceptacionPremio = true;
+          }
+          if (result == TERMINOS.CODIGO_TRATAMIENTOS) {
+            this.ganador.tratamientoDatos = true;
+          }
         }
-        if (result == TERMINOS.CODIGO_CONDICIONES) {
-          this.ganador.aceptacionPremio = true;
-        }
-        if (result == TERMINOS.CODIGO_TRATAMIENTOS) {
-          this.ganador.tratamientoDatos = true;
-        }
-      }
 
-      console.log('modal cerrado');
+        console.log('modal cerrado');
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
   }
 
@@ -99,21 +105,28 @@ export class GanadorComponent implements OnInit {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(this.response.statusCode);
-      if (
-        this.response.statusCode == STATUS_SERVICE.VENCIDO ||
-        this.response.statusCode == STATUS_SERVICE.ACCEPTED
-      ) {
-        this.indMostrar = false; 
-      } 
-      console.log('modal cerrado');
+    dialogRef.afterClosed().subscribe({
+      next: (resp: any) => {
+        console.log(this.response.statusCode);
+        if (
+          this.response.statusCode == STATUS_SERVICE.VENCIDO ||
+          this.response.statusCode == STATUS_SERVICE.ACCEPTED
+        ) {
+          this.indMostrar = false;
+        }
+        window.location.replace(PAGINAS.URL_BETPLAY);
+        console.log('modal cerrado');
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.openDialog(e.message);
+      }
     });
   }
 
   getDetalleService(codigoPromocional: string) {
-    this.detalleService.getDetallePremio(codigoPromocional).subscribe(
-      (resp) => {
+    this.detalleService.getDetallePremio(codigoPromocional).subscribe({
+      next: (resp: any) => {
         this.response = resp;
         console.log('response ', this.response);
         if (this.response.statusCode == STATUS_SERVICE.VENCIDO) {
@@ -143,11 +156,11 @@ export class GanadorComponent implements OnInit {
         }
         console.log('ind ', this.indDisable);
       },
-      (error) => {
-        console.log('error ', error);
-        this.openDialog(error.message);
+      error: (e) => {
+        console.log('error ', e);
+        this.openDialog(e.message);
       }
-    );
+    });
   }
 
   onFileSelected(event: any) {
@@ -183,27 +196,39 @@ export class GanadorComponent implements OnInit {
       console.log('Guardar ganador ', this.ganador);
       console.log('doc', this.base64.indexOf(','));
       console.log('doc', this.base64.substring(22));
-      this.personaService.actualizarPersona(this.persona).subscribe((resp) => {
-        this.response = resp;
-        if (
-          this.response.statusCode == STATUS_SERVICE.CREACION ||
-          this.response.statusCode == STATUS_SERVICE.EXITOSO
-        ) {
-          this.ganadorService.guardarGanador(this.ganador).subscribe((resp) => {
-            this.response = resp;
-            if (
-              this.response.statusCode == STATUS_SERVICE.CREACION ||
-              this.response.statusCode == STATUS_SERVICE.EXITOSO
-            ) {
-              this.persona = new Persona();
-              this.ganador = new Ganador();
-              window.location.replace(PAGINAS.URL_BETPLAY);
-            }else{
-              this.openDialog(this.response.message);
-            }
-          });
-        } else {
-          this.openDialog(this.response.message);
+      this.personaService.actualizarPersona(this.persona).subscribe({
+        next: (resp: any) => {
+          this.response = resp;
+          if (
+            this.response.statusCode == STATUS_SERVICE.CREACION ||
+            this.response.statusCode == STATUS_SERVICE.EXITOSO
+          ) {
+            this.ganadorService.guardarGanador(this.ganador).subscribe({
+              next: (resp: any) => {
+                this.response = resp;
+                if (
+                  this.response.statusCode == STATUS_SERVICE.CREACION ||
+                  this.response.statusCode == STATUS_SERVICE.EXITOSO
+                ) {
+                  this.persona = new Persona();
+                  this.ganador = new Ganador();
+                  window.location.replace(PAGINAS.URL_BETPLAY);
+                } else {
+                  this.openDialog(this.response.message);
+                }
+              },
+              error: (e) => {
+                console.log('error ', e);
+                this.openDialog(e.message);
+              }
+            });
+          } else {
+            this.openDialog(this.response.message);
+          }
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.openDialog(e.message);
         }
       });
     } else {
@@ -245,7 +270,7 @@ export class GanadorComponent implements OnInit {
     return false;
   }
 
-  abrirDireccion(){
+  abrirDireccion() {
     const dialogRef = this.dialog.open(DialogPremioFisicoComponent, {
     });
     console.log("Agregar Dirección!!!")

@@ -25,11 +25,17 @@ export class DocumentoComponent implements OnInit {
 
   getDocumento() {
     if (!this.validar()) {
-      this.serviceDocumento.getDocumento(this.codigoPromocional).subscribe(resp => {
-        console.log('resp ', resp)
-        this.response = resp;
-        this.downloadPdf(this.response.objectResponse)
-      })
+      this.serviceDocumento.getDocumento(this.codigoPromocional).subscribe({
+        next: (resp: any) => {
+          console.log('resp ', resp)
+          this.response = resp;
+          this.downloadPdf(this.response.objectResponse)
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+        }
+      });
     } else {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
@@ -57,8 +63,14 @@ export class DocumentoComponent implements OnInit {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+    dialogRef.afterClosed().subscribe({
+      next: (result: any) => {
+        console.log(result);
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
   }
 

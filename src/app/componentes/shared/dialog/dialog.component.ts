@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Detalle } from '../../../domain/Detalle';
 import { DetalleService } from '../../../servicios/detalle.service';
 import { Utils } from 'src/app/utils/Utils';
-import { STATUS_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, MESSAGE_SERVICE } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 
 @Component({
@@ -36,10 +36,16 @@ export class DialogComponent {
   }
 
   getPremios() {
-    this.premioService.getPremio().subscribe(responsePremios => {
-      this.response = responsePremios;
-      this.premios = this.response.objectResponse;
-    })
+    this.premioService.getPremio().subscribe({
+      next: (responsePremios: any) => {
+        this.response = responsePremios;
+        this.premios = this.response.objectResponse;
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
+    });
   }
 
   inicializarComponente() {
@@ -57,25 +63,31 @@ export class DialogComponent {
       this.detalle.promocion.id = this.data.idPromocion;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
       this.detalle.usuarioCreacion = String(user);
-      this.serviceDetalle.postDetallePremio(this.detalle).subscribe(resp => {
-        this.response = resp;
-        if (this.response.statusCode == STATUS_SERVICE.CREACION) {
-          this.dialogRef.close();
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
-        } else {
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+      this.serviceDetalle.postDetallePremio(this.detalle).subscribe({
+        next: (resp: any) => {
+          this.response = resp;
+          if (this.response.statusCode == STATUS_SERVICE.CREACION) {
+            this.dialogRef.close();
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
+          } else {
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+          }
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
         }
-      })
+      });
     } else {
       this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS, TYPE_ICON_SNACKBAR.WARN);
     }
   }
 
   validar() {
-    if(this.data.red == undefined || this.data.red == ''){
+    if (this.data.red == undefined || this.data.red == '') {
       return false;
     }
-    if(this.data.premio == undefined || this.data.premio == ''){
+    if (this.data.premio == undefined || this.data.premio == '') {
       return false;
     }
     return true;

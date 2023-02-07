@@ -67,18 +67,23 @@ export class PromocionesComponent implements OnInit {
       data: { name: this.name, red: this.red, premio: this.idPremio },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      if (result != undefined) {
-        this.detalle = new Detalle();
-        this.red = result;
-        this.buscarRed(result.red);
-        this.detalle.premio.id = result.premio;
-        this.lstDetalles.push(this.detalle);
-        this.indVisibilidadGuardar = false;
-        this.red = '';
+    dialogRef.afterClosed().subscribe({
+      next: (result: any) => {
+        console.log('The dialog was closed', result);
+        if (result != undefined) {
+          this.detalle = new Detalle();
+          this.red = result;
+          this.buscarRed(result.red);
+          this.detalle.premio.id = result.premio;
+          this.lstDetalles.push(this.detalle);
+          this.indVisibilidadGuardar = false;
+          this.red = '';
+        }
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
-
     });
   }
 
@@ -137,19 +142,24 @@ export class PromocionesComponent implements OnInit {
       this.promocion.activo = true;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
       this.promocion.usuarioCreacion = String(user);
-      this.promocionService.guardarPromocion(this.promocion).subscribe(resp => {
-        this.response = resp;
-        console.log('this.response ' , this.response);
-        if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
-          this.inicializarComponente();
-          console.log('emit ADMINISTRACION' );
-          this.evento.emit(TABS.ADMINISTRACION);
-        } else {
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+      this.promocionService.guardarPromocion(this.promocion).subscribe({
+        next: (resp: any) => {
+          this.response = resp;
+          console.log('this.response ', this.response);
+          if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
+            this.inicializarComponente();
+            console.log('emit ADMINISTRACION');
+            this.evento.emit(TABS.ADMINISTRACION);
+          } else {
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+          }
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
         }
-
-      })
+      });
     } else {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
@@ -158,14 +168,20 @@ export class PromocionesComponent implements OnInit {
   }
 
   validarCodigoPromocion() {
-    this.promocionService.getValidarPromocion(this.promocion.codigo).subscribe(resp => {
-      this.response = resp;
-      if (this.response.statusCode === STATUS_SERVICE.RECET_CONTENT) {
-        this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
-        this.promocion.codigo = '';
-        return false;
-      } else {
-        return true;
+    this.promocionService.getValidarPromocion(this.promocion.codigo).subscribe({
+      next: (resp: any) => {
+        this.response = resp;
+        if (this.response.statusCode === STATUS_SERVICE.RECET_CONTENT) {
+          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+          this.promocion.codigo = '';
+          return false;
+        } else {
+          return true;
+        }
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });
     return true;

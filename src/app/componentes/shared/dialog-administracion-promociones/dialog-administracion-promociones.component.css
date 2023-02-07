@@ -1,15 +1,8 @@
 .content {
     transition: 2s;
     background-color: white;
-    padding-bottom: 30px;
-    padding-top: 10px;
-}
-
-.content-create {
-    transition: 2s;
-    background-color: white;
-    padding-left: 20px;
-    padding-top: 20px;
+    padding-top: 40px;
+    padding-bottom: 20px;
 }
 
 .mat-button {

@@ -6,11 +6,11 @@
         <mat-tab label="Buscar ganadores" *ngIf="indAdmin || indConsulta">
             <app-buscar-ganadores> </app-buscar-ganadores>
         </mat-tab>
-        <mat-tab label="Documentos" *ngIf="indAdmin">
+        <mat-tab label="Reporte" *ngIf="indAdmin">
             <app-documento></app-documento>
         </mat-tab>
         <mat-tab acti label="Administración" *ngIf="indAdmin">
-            <app-menuadministracion></app-menuadministracion>
+            <app-menuadministracion (eventoEmit)="actualizarTab($event)"></app-menuadministracion>
         </mat-tab>
         <mat-tab disabled>
             <ng-template mat-tab-label>

@@ -44,18 +44,24 @@ export class BuscarGanadoresComponent implements OnInit {
       if (!this.validarCampos()) {
         this.servicePersona
           .getPersonas(this.cedula, this.nombre)
-          .subscribe((resp) => {
-            this.response = resp;
-            this.personas = this.response.objectResponse;
-            if (this.personas != undefined || this.personas != null) {
-              this.tablaMostrar = true;
-              this.clases = 'content-two';
-            } else {
-              this.tablaMostrar = false;              
-              this.clases = 'content-one';              
-              this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
+          .subscribe({
+            next: (resp: any) => {
+              this.response = resp;
+              this.personas = this.response.objectResponse;
+              if (this.personas != undefined || this.personas != null) {
+                this.tablaMostrar = true;
+                this.clases = 'content-two';
+              } else {
+                this.tablaMostrar = false;
+                this.clases = 'content-one';
+                this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
+              }
+              console.log(' this.personas ', this.personas);
+            },
+            error: (e) => {
+              console.log('error ', e);
+              this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
             }
-            console.log(' this.personas ', this.personas);
           });
       }
     }
@@ -84,8 +90,14 @@ export class BuscarGanadoresComponent implements OnInit {
     dialogConfig.data = sele;
     const dialogRef = this.dialog.open(DialogGanadorComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe({
+      next: (result: any) => {
+        console.log('The dialog was closed', result);
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
   }
 }

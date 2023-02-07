@@ -14,7 +14,7 @@
                 <div>
                     <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                         <mat-label class="label">Cedula</mat-label>
-                        <input disabled="{{ indDisablePersona }}" [(ngModel)]="persona.cedula" matInput placeholder="Cedula" [ngModelOptions]="{ standalone: true }" />
+                        <input type="number" class="example-right-align" disabled="{{ indDisablePersona }}" [(ngModel)]="persona.cedula" matInput placeholder="Cedula" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>
                 </div>
                 <div fxLayoutAlign="center">

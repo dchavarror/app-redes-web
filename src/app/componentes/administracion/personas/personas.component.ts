@@ -37,18 +37,24 @@ export class PersonasComponent implements OnInit {
       console.log('getPersonas');
       this.servicePersona
         .getPersonas(this.cedula, this.nombre)
-        .subscribe((resp) => {
-          this.response = resp;
-          this.personas = this.response.objectResponse;
-          if (this.personas != undefined || this.personas != null) {
-            this.tablaMostrar = true;
-            this.clases = 'content-two';
-          } else {
-            this.tablaMostrar = false;
-            this.clases = 'content-one';
-            this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
+        .subscribe({
+          next: (resp: any) => {
+            this.response = resp;
+            this.personas = this.response.objectResponse;
+            if (this.personas != undefined || this.personas != null) {
+              this.tablaMostrar = true;
+              this.clases = 'content-two';
+            } else {
+              this.tablaMostrar = false;
+              this.clases = 'content-one';
+              this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
+            }
+            console.log(' this.personas ', this.personas);
+          },
+          error: (e) => {
+            console.log('error ', e);
+            this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
           }
-          console.log(' this.personas ', this.personas);
         });
     } else {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -66,9 +72,15 @@ export class PersonasComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogPersonasActualizarComponent, {
       data: { id: persona.id, foto: persona.foto, nombre: persona.nombreCompleto, cedula: persona.cedula, usuario: persona.usuario, usuarioModifica: persona.usuarioModifica },
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      this.getPersonas();
+    dialogRef.afterClosed().subscribe({
+      next: (result: any) => {
+        console.log('The dialog was closed', result);
+        this.getPersonas();
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
+      }
     });
   }
 

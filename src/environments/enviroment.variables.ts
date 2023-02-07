@@ -9,11 +9,13 @@ export const END_POINT_SERVICE = {
     DETALLE_PREMIO_GUARDAR: 'detalle-premio',
     PERSONA: 'persona',
     GANADOR: 'ganador',
+    GANADOR_DETALLE: 'ganador/detalle/validar/',
     PROMOCION_DOCUMENTO :'promocion/documento/',
     VIGENCIA :'vigencia/',
     GET_CODIGO_PROMOCION: 'promocion/',
     GET_PROMOCION: 'promocion/promocion/',    
-    GET_VALIDAR_PROMOCION: 'promocion/validar/'
+    GET_VALIDAR_PROMOCION: 'promocion/validar/',
+    GET_ALL_PROMOCIONES: 'promocion/obtener/promociones'
 };
 
 export const MESSAGE_SERVICE={
@@ -22,7 +24,9 @@ export const MESSAGE_SERVICE={
     ACTULIZADO_EXITO: 'Registro actualizado con exito!',    
     CREADO_PREMIO_EXITO: 'Premio creado con exito!',
     ELIMINADO_PREMIO_EXITO: 'Premio eliminado con exito',    
-    PREMIO_ACTIVO_VALIDACION: 'Premio asociado a una promocion, no se puede eliminar!'
+    PREMIO_ACTIVO_VALIDACION: 'Premio asociado a una promocion, no se puede eliminar!',
+    GANADOR_ACTIVO_VALIDACION: 'Ganador asociado a este detalle, no se puede eliminar!',
+    SIN_RESPONSE_SERVICE: 'Ocurrio un inconveniente, por verifiquelo con el administrador o intentelo de nuevo',
 }
 
 export const TITULOS_MODALES={

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Inject, Output, EventEmitter } from '@angular/core';
 import { TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TITULOS_MODALES, REDES, STATUS_SERVICE, TABS } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../../shared/message-utils/message-utils.component';
 import { PersonaService } from '../../../servicios/persona.service';
@@ -9,32 +9,29 @@ import { DetalleService } from '../../../servicios/detalle.service';
 import { Detalle } from '../../../domain/Detalle';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { environment } from '../../../../environments/environment.prod';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ThisReceiver } from '@angular/compiler';
 import { DialogMessageEliminarComponent } from '../../shared/dialog-message-eliminar/dialog-message-eliminar.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Utils } from '../../../utils/Utils';
 import { GanadorService } from '../../../servicios/ganador.service';
-import { DialogAdministracionPromocionesComponent } from '../../shared/dialog-administracion-promociones/dialog-administracion-promociones.component';
+
 
 @Component({
-  selector: 'app-administradcion',
-  templateUrl: './administracion-promociones.component.html',
-  styleUrls: ['./administracion-promociones.component.css']
+  selector: 'app-dialog-administracion-promociones',
+  templateUrl: './dialog-administracion-promociones.component.html',
+  styleUrls: ['./dialog-administracion-promociones.component.css']
 })
-export class AdministradcionComponent implements AfterViewInit {
-  @Output() eventoEmit = new EventEmitter<any>();
+export class DialogAdministracionPromocionesComponent implements AfterViewInit {
 
   codigo = '';
   promocion: Promocion
   response: Response
   detalles: Array<Detalle>
-  promociones: Array<Promocion>
   displayedColumns: string[] = ['codigo', 'premio', 'eliminar', 'copyLink'];
-  displayedColumnsPromociones: string[] = ['nombre', 'codigo', 'link', 'terminos', 'administrar'];
-  data = new MatTableDataSource<Detalle>();
-  dataPromociones = new MatTableDataSource<Promocion>();
+  displayedColumnsPromociones: string[] = ['nombre', 'codigo', 'link', 'terminos'];
+  datas = new MatTableDataSource<Detalle>();
 
   red: string = '';
   idPremio: string = '';
@@ -47,41 +44,32 @@ export class AdministradcionComponent implements AfterViewInit {
 
 
 
-  constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService, private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog, private detalleService: DetalleService) {
-    this.promocion = new Promocion();
+  constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService, private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog, private detalleService: DetalleService, @Inject(MAT_DIALOG_DATA) public data: Promocion) {
     this.response = new Response();
     this.detalles = new Array<Detalle>();
-    this.promociones = new Array<Promocion>();
   }
-
-  crearPromocion() {
-    this.eventoEmit.emit(TABS.PROMOCION);
-  }
-
 
   ngAfterViewInit() {
-    this.data.paginator = this.paginator;
-    this.dataPromociones.paginator = this.paginator;
-
-    this.obtenerPromociones();
+    this.datas.paginator = this.paginator;
+    this.getCodigo();
   }
-
+  
   getCodigo() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
       console.log('getPersonas');
       if (!this.validarCampos()) {
-        this.promocionSevice.getCodigo(this.codigo)
+        this.promocionSevice.getCodigo(this.data.codigo)
           .subscribe({
             next: (resp: any) => {
-              this.data = new MatTableDataSource<Detalle>();
+              this.datas = new MatTableDataSource<Detalle>();
               this.response = resp;
               if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
                 if (this.response.objectResponse != null) {
                   this.detalles = this.response.objectResponse;
-                  this.promocion = this.detalles[0].promocion;
-                  this.data.data = this.detalles;
+                  this.data = this.detalles[0].promocion;
+                  this.datas.data = this.detalles;
                 } else {
                   this.getPromocion();
                 }
@@ -105,12 +93,12 @@ export class AdministradcionComponent implements AfterViewInit {
     } else {
       console.log('getPersonas');
       if (!this.validarCampos()) {
-        this.promocionSevice.getPromocion(this.codigo)
+        this.promocionSevice.getPromocion(this.data.codigo)
           .subscribe({
             next: (resp: any) => {
               this.response = resp;
               if (this.response.statusCode === STATUS_SERVICE.EXITOSO && this.response.objectResponse != null) {
-                this.promocion = this.response.objectResponse != null ? this.response.objectResponse : this.promocion;
+                this.data = this.response.objectResponse != null ? this.response.objectResponse : this.data;
               } else {
                 this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
               }
@@ -131,13 +119,13 @@ export class AdministradcionComponent implements AfterViewInit {
     } else {
       console.log('setPersonas');
       if (!this.validarCampos()) {
-        this.promocionSevice.setPromocion(this.promocion.id, this.promocion)
+        this.promocionSevice.setPromocion(this.data.id, this.data)
           .subscribe({
             next: (resp: any) => {
               this.response = resp;
               this.detalles = this.response.objectResponse;
               this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
-              this.codigo = this.promocion.codigo;
+              this.data.codigo = this.data.codigo;
               this.getCodigo();
             },
             error: (e) => {
@@ -153,7 +141,7 @@ export class AdministradcionComponent implements AfterViewInit {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
-      console.log('promocion ', this.promocion);
+      console.log('promocion ', this.data);
       if (!this.validarCampos()) {
         this.openDialog();
       }
@@ -180,7 +168,7 @@ export class AdministradcionComponent implements AfterViewInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: { name: this.name, red: this.red, premio: this.idPremio, indGuardar: true, idPromocion: this.promocion.id },
+      data: { name: this.name, red: this.red, premio: this.idPremio, indGuardar: true, idPromocion: this.data.id },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -200,7 +188,7 @@ export class AdministradcionComponent implements AfterViewInit {
             data: { idDetallePremio: item.id }
           });
           dialogRef.afterClosed().subscribe(result => {
-            this.data = new MatTableDataSource<Detalle>();
+            this.datas = new MatTableDataSource<Detalle>();
             this.getCodigo();
             console.log('The dialog was closed', result);
           });
@@ -213,22 +201,8 @@ export class AdministradcionComponent implements AfterViewInit {
     });
   }
 
-  obtenerPromociones() {
-    this.promocionSevice.getPromociones().subscribe({
-      next: (resp: any) => {
-        this.response = resp;
-        this.promociones = this.response.objectResponse;
-        this.dataPromociones.data = this.promociones;
-      },
-      error: (e) => {
-        console.log('error ', e);
-        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
-      }
-    });
-  }
-
   validarCampos() {
-    if (this.codigo == undefined || this.codigo == '') {
+    if (this.data.codigo == undefined || this.data.codigo == '') {
       return true;
     }
     return false;
@@ -237,25 +211,6 @@ export class AdministradcionComponent implements AfterViewInit {
   onClickCopyLink() {
     this.utils.onCopyLink(this.detalles[0].link, this.detalles[0].vigencia.id);
     console.log("Si copio el link");
-  }
-
-  openDialogAdministrarPromocion(item: Promocion): void {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '30%';
-    dialogConfig.height = '80%';
-
-    dialogConfig.data = item;
-
-    const dialogRef = this.dialog.open(DialogAdministracionPromocionesComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      this.obtenerPromociones();
-    });
   }
 
 }

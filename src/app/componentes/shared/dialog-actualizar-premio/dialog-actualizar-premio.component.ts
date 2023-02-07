@@ -17,7 +17,7 @@ export class DialogActualizarPremioComponent implements OnInit {
   response: Response
   premio: Premio
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private message: MessageUtilsComponent, private servicePremio: PremioService,  public dialogRef: MatDialogRef<DialogActualizarPremioComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private message: MessageUtilsComponent, private servicePremio: PremioService, public dialogRef: MatDialogRef<DialogActualizarPremioComponent>) {
     this.response = new Response();
     this.premio = new Premio();
   }
@@ -31,24 +31,30 @@ export class DialogActualizarPremioComponent implements OnInit {
       this.premio.descripcion = this.data.descripcion;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
       this.premio.usuarioCreacion = String(user);
-      this.servicePremio.savePremio(this.premio).subscribe(resp => {
-        this.response = resp;
-        if (this.response.statusCode === STATUS_SERVICE.CREACION) {
-          console.log("Si se actualizo");
-          this.message.mostrarMessage(MESSAGE_SERVICE.ACTULIZADO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
-          this.dialogRef.close();
-        }else{
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);
+      this.servicePremio.savePremio(this.premio).subscribe({
+        next: (resp: any) => {
+          this.response = resp;
+          if (this.response.statusCode === STATUS_SERVICE.CREACION) {
+            console.log("Si se actualizo");
+            this.message.mostrarMessage(MESSAGE_SERVICE.ACTULIZADO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
+            this.dialogRef.close();
+          } else {
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);
+          }
+        },
+        error: (e) => {
+          console.log('error ', e);
+          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
         }
       });
-    }else{
+    } else {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
 
   }
 
   valid() {
-    if (this.data.descripcion == '' || this.data.descripcion == undefined ) {
+    if (this.data.descripcion == '' || this.data.descripcion == undefined) {
       return false;
     }
     return true;
