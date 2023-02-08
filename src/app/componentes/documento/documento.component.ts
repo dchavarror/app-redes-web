@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentoService } from '../../servicios/documento.service';
-import { DOCUMENTO, TITULOS_MODALES, MENSAJE_MODALES, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
+import { DOCUMENTO, TITULOS_MODALES, MENSAJE_MODALES, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, STATUS_SERVICE } from '../../../environments/enviroment.variables';
 import { Response } from 'src/app/domain/Response';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMessageComponent } from '../shared/dialog-message/dialog-message.component';
@@ -29,7 +29,11 @@ export class DocumentoComponent implements OnInit {
         next: (resp: any) => {
           console.log('resp ', resp)
           this.response = resp;
-          this.downloadPdf(this.response.objectResponse)
+          if(this.response.statusCode == STATUS_SERVICE.EXITOSO){
+            this.downloadPdf(this.response.objectResponse)
+          }else{
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+          }
         },
         error: (e) => {
           console.log('error ', e);

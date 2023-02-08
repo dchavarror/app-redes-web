@@ -100,6 +100,7 @@ export class PremiosComponent implements AfterViewInit {
           });
           dialogRef.afterClosed().subscribe({
             next: (result: any) => {
+              this.data = new MatTableDataSource<Premio>();
               this.allPremios();
               console.log('The dialog was closed', result);
             },

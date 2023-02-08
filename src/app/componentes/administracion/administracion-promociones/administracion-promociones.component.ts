@@ -84,6 +84,16 @@ export class AdministradcionComponent implements AfterViewInit , OnChanges {
     this.obtenerPromociones();
   }
 
+  inicializarLista(){
+    this.data = new MatTableDataSource<Detalle>();
+    this.data.data = new  Array<Detalle>();
+    this.dataPromociones = new MatTableDataSource<Promocion>();
+    this.dataPromociones.data = new  Array<Promocion>();
+    
+    this.data.paginator = this.paginator;
+    this.dataPromociones.paginator = this.paginator;
+  }
+
   getCodigo() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -93,7 +103,7 @@ export class AdministradcionComponent implements AfterViewInit , OnChanges {
         this.promocionSevice.getCodigo(this.codigo)
           .subscribe({
             next: (resp: any) => {
-              this.data = new MatTableDataSource<Detalle>();
+              this.inicializarLista();
               this.response = resp;
               if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
                 if (this.response.objectResponse != null) {
@@ -105,9 +115,6 @@ export class AdministradcionComponent implements AfterViewInit , OnChanges {
                   this.dataPromociones.data = this.promociones;
                 } else {
                   this.getPromocion();
-                  this.promociones = new Array<Promocion>();
-                  this.promociones.push(this.promocion);
-                  this.dataPromociones.data = this.promociones;
                 }
               } else {
                 this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
@@ -135,6 +142,10 @@ export class AdministradcionComponent implements AfterViewInit , OnChanges {
               this.response = resp;
               if (this.response.statusCode === STATUS_SERVICE.EXITOSO && this.response.objectResponse != null) {
                 this.promocion = this.response.objectResponse != null ? this.response.objectResponse : this.promocion;
+                
+                this.promociones = new Array<Promocion>();
+                this.promociones.push(this.promocion);
+                this.dataPromociones.data = this.promociones;
               } else {
                 this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
               }
