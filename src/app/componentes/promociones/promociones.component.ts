@@ -10,6 +10,8 @@ import { PromocionService } from '../../servicios/promocion.service';
 import { Response } from 'src/app/domain/Response';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { DialogMessageComponent } from '../shared/dialog-message/dialog-message.component';
+import { Utils } from '../../utils/Utils';
+import { AdministradcionComponent } from '../administracion/administracion-promociones/administracion-promociones.component';
 
 @Component({
   selector: 'app-promociones',
@@ -17,7 +19,8 @@ import { DialogMessageComponent } from '../shared/dialog-message/dialog-message.
   styleUrls: ['./promociones.component.css']
 })
 export class PromocionesComponent implements OnInit {
-  @Output() evento = new EventEmitter<any>();
+  @Output() evento = new EventEmitter<any>();  
+  @Output() eventoObtenerPromciones = new EventEmitter<any>();
 
   red: string = '';
   idPremio: string = '';
@@ -26,12 +29,14 @@ export class PromocionesComponent implements OnInit {
   indVisibilidadGuardar = true;
   detalle: Detalle = new Detalle();
   response: Response = new Response();
+  adminComponent: AdministradcionComponent;
 
   promocionalesFormGroup: any;
 
   lstDetalles: Array<Detalle> = new Array<Detalle>();
 
   constructor(public dialog: MatDialog, private promocionService: PromocionService, private message: MessageUtilsComponent) {
+
   }
 
   ngOnInit(): void {
@@ -49,6 +54,10 @@ export class PromocionesComponent implements OnInit {
     this.detalle = new Detalle();
     this.indVisibilidadGuardar = true;
     this.lstDetalles = new Array<Detalle>();
+  }
+
+  emitirEvento(){    
+    this.eventoObtenerPromciones.emit(true);
   }
 
   agregarDetallePromocion() {
@@ -69,12 +78,14 @@ export class PromocionesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
-        console.log('The dialog was closed', result);
+        console.log('Informacion', result);
         if (result != undefined) {
           this.detalle = new Detalle();
-          this.red = result;
-          this.buscarRed(result.red);
           this.detalle.premio.id = result.premio;
+          this.detalle.red = result.red;
+          this.detalle.link = result.link;
+          this.detalle.codigoPromocional = result.codigoPromocional;
+          this.detalle.persona.usuario = result.usuario;
           this.lstDetalles.push(this.detalle);
           this.indVisibilidadGuardar = false;
           this.red = '';
@@ -104,37 +115,7 @@ export class PromocionesComponent implements OnInit {
     return false;
   }
 
-  buscarRed(cadena: string) {
 
-    let posicionUser = cadena.indexOf('.com/');
-    let facebook = cadena.toUpperCase().indexOf(REDES.FACEBOOK);
-    let instagram = cadena.toUpperCase().indexOf(REDES.INSTAGRAM);
-    let tiktok = cadena.toUpperCase().indexOf(REDES.TIKTOK);
-    let twitter = cadena.toUpperCase().indexOf(REDES.TWITTER);
-    this.detalle.red = this.getRedAplica(facebook, instagram, tiktok, twitter);
-    const date = new Date();
-    let codigoPromocional = date.toISOString().substring(0, 10).replace('-', '').replace('-', '') + String(date.getHours()) + String(date.getMinutes()) + String(date.getSeconds()) + cadena.substring(posicionUser + 5, cadena.length);
-    console.log('codigoPromocional ', codigoPromocional);
-    this.detalle.codigoPromocional = codigoPromocional;
-    this.detalle.link = environment.webUrl + codigoPromocional;
-    this.detalle.persona.usuario = cadena.substring(posicionUser + 5, cadena.length);
-  }
-
-  getRedAplica(facebook: number, instagram: number, tiktok: number, twitter: number) {
-    if (facebook != -1) {
-      return REDES.FACEBOOK;
-    }
-    if (instagram != -1) {
-      return REDES.INSTAGRAM;
-    }
-    if (tiktok != -1) {
-      return REDES.TIKTOK;
-    }
-    if (twitter != -1) {
-      return REDES.TWITTER;
-    }
-    return 'N/A';
-  }
 
   onClickGuardar() {
     if (!this.validarCampos()) {
@@ -151,6 +132,7 @@ export class PromocionesComponent implements OnInit {
             this.inicializarComponente();
             console.log('emit ADMINISTRACION');
             this.evento.emit(TABS.ADMINISTRACION);
+            this.eventoObtenerPromciones.emit(true);
           } else {
             this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
           }

@@ -67,3 +67,8 @@ th {
 .mat-card-test {
     margin-bottom: 200px;
 }
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}

@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('roles', roles);
             this.router.navigate(['home']);
           } else {
-            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR);
+            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
           }
         },
         error: (e) => {

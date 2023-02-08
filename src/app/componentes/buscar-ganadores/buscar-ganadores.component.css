@@ -72,3 +72,7 @@ input.example-right-align::-webkit-outer-spin-button,
 input.example-right-align::-webkit-inner-spin-button {
     display: none;
 }
+
+.mat-card-title {
+    text-align: center;
+}

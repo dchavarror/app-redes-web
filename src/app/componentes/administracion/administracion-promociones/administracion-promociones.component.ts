@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TITULOS_MODALES, REDES, STATUS_SERVICE, TABS } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../../shared/message-utils/message-utils.component';
 import { PersonaService } from '../../../servicios/persona.service';
@@ -23,8 +23,9 @@ import { DialogAdministracionPromocionesComponent } from '../../shared/dialog-ad
   templateUrl: './administracion-promociones.component.html',
   styleUrls: ['./administracion-promociones.component.css']
 })
-export class AdministradcionComponent implements AfterViewInit {
+export class AdministradcionComponent implements AfterViewInit , OnChanges {
   @Output() eventoEmit = new EventEmitter<any>();
+  @Input('detectoCambio')  detectoCambio:boolean;
 
   codigo = '';
   promocion: Promocion
@@ -32,7 +33,7 @@ export class AdministradcionComponent implements AfterViewInit {
   detalles: Array<Detalle>
   promociones: Array<Promocion>
   displayedColumns: string[] = ['codigo', 'premio', 'eliminar', 'copyLink'];
-  displayedColumnsPromociones: string[] = ['nombre', 'codigo', 'link', 'terminos', 'administrar'];
+  displayedColumnsPromociones: string[] = ['nombre', 'codigo', 'terminos', 'administrar'];
   data = new MatTableDataSource<Detalle>();
   dataPromociones = new MatTableDataSource<Promocion>();
 
@@ -42,6 +43,7 @@ export class AdministradcionComponent implements AfterViewInit {
   indVisibilidadGuardar = true;
   detalle: Detalle = new Detalle();
   agregar = false;
+  clasesDialogEditar: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -52,14 +54,30 @@ export class AdministradcionComponent implements AfterViewInit {
     this.response = new Response();
     this.detalles = new Array<Detalle>();
     this.promociones = new Array<Promocion>();
+    this.clasesDialogEditar = 'dialog-editar';
+    console.log('constructor');
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.data.paginator = this.paginator;
+    this.dataPromociones.paginator = this.paginator;
+
+    this.obtenerPromociones();
+  }
+
+
+  eventoIngreso(){
+    console.log('Ingreso evento');
+  }
+  
   crearPromocion() {
+    this.obtenerPromociones();
     this.eventoEmit.emit(TABS.PROMOCION);
   }
 
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit');
     this.data.paginator = this.paginator;
     this.dataPromociones.paginator = this.paginator;
 
@@ -82,8 +100,14 @@ export class AdministradcionComponent implements AfterViewInit {
                   this.detalles = this.response.objectResponse;
                   this.promocion = this.detalles[0].promocion;
                   this.data.data = this.detalles;
+                  this.promociones = new Array<Promocion>();
+                  this.promociones.push(this.promocion);
+                  this.dataPromociones.data = this.promociones;
                 } else {
                   this.getPromocion();
+                  this.promociones = new Array<Promocion>();
+                  this.promociones.push(this.promocion);
+                  this.dataPromociones.data = this.promociones;
                 }
               } else {
                 this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
@@ -245,8 +269,8 @@ export class AdministradcionComponent implements AfterViewInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '30%';
-    dialogConfig.height = '80%';
+    dialogConfig.width = "90%";
+    dialogConfig.height = "90%";
 
     dialogConfig.data = item;
 

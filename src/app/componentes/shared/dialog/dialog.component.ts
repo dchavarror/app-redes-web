@@ -16,7 +16,7 @@ import { MessageUtilsComponent } from '../message-utils/message-utils.component'
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit {
 
   premios: Array<Premio> = new Array<Premio>();
   response: Response = new Response();
@@ -27,6 +27,9 @@ export class DialogComponent {
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private premioService: PremioService, private serviceDetalle: DetalleService, private utils: Utils
   ) {
+  }
+
+  ngOnInit(): void {
     this.getPremios();
     this.inicializarComponente();
   }
@@ -59,28 +62,54 @@ export class DialogComponent {
     console.log('dddffggdd');
     if (this.validar()) {
       this.detalle = this.utils.buscarRed(this.data.red);
-      this.detalle.premio.id = Number(this.data.premio);
-      this.detalle.promocion.id = this.data.idPromocion;
-      let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
-      this.detalle.usuarioCreacion = String(user);
-      this.serviceDetalle.postDetallePremio(this.detalle).subscribe({
-        next: (resp: any) => {
-          this.response = resp;
-          if (this.response.statusCode == STATUS_SERVICE.CREACION) {
-            this.dialogRef.close();
-            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
-          } else {
-            this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+      if (!this.redValida(this.detalle.red)) {
+        this.detalle.premio.id = Number(this.data.premio);
+        this.detalle.promocion.id = this.data.idPromocion;
+        let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
+        this.detalle.usuarioCreacion = String(user);
+        this.serviceDetalle.postDetallePremio(this.detalle).subscribe({
+          next: (resp: any) => {
+            this.response = resp;
+            if (this.response.statusCode == STATUS_SERVICE.CREACION) {
+              this.dialogRef.close();
+              this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
+            } else {
+              this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+            }
+          },
+          error: (e) => {
+            console.log('error ', e);
+            this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
           }
-        },
-        error: (e) => {
-          console.log('error ', e);
-          this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
-        }
-      });
+        });
+      }
     } else {
       this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS, TYPE_ICON_SNACKBAR.WARN);
     }
+
+  }
+
+  redValida(red: string) {
+    if (red == 'NA') {
+      return true;
+    }
+    return false;
+  }
+
+  onClickGuardar() {
+    if (this.validar()) {
+      this.detalle = this.utils.buscarRed(this.data.red);
+      this.data.link= this.detalle.link;
+      this.data.codigoPromocional = this.detalle.codigoPromocional;
+      this.data.usuario = this.detalle.persona.usuario;
+      if (!this.redValida(this.detalle.red)) {
+        this.inicializarComponente();
+        this.dialogRef.close(this.data);
+      }
+    } else {
+      this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS, TYPE_ICON_SNACKBAR.WARN);
+    }
+
   }
 
   validar() {

@@ -121,23 +121,23 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="link">
+            <!-- <ng-container matColumnDef="link">
                 <th mat-header-cell *matHeaderCellDef>Link</th>
                 <td mat-cell *matCellDef="let element">
-                    {{ element.linkPublicacion }}
+                    <textarea class="textarea" disabled name="" id="" cols="9" rows="5">{{ element.linkPublicacion }}</textarea>
                 </td>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="terminos">
                 <th mat-header-cell *matHeaderCellDef>Terminos</th>
                 <td mat-cell *matCellDef="let element">
-                    {{ element.terminos }}
+                    <textarea class="textarea" disabled name="" id="" cols="7" rows="5">{{ element.terminos }}</textarea>
                 </td>
             </ng-container>
             <ng-container matColumnDef="administrar">
-                <th mat-header-cell *matHeaderCellDef>Administrar</th>
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
                 <td mat-cell *matCellDef="let element">
-                    <button class="mat-button-link" type="button" fxLayoutAlign="center" (click)="openDialogAdministrarPromocion(element)">Administrar</button>
+                    <button class="mat-button-link" type="button" fxLayoutAlign="center" (click)="openDialogAdministrarPromocion(element)"><mat-icon>edit</mat-icon></button>
                 </td>
             </ng-container>
 

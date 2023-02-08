@@ -21,5 +21,6 @@ export class DialogData {
     cedula: '';
     idPremio=0;
     descripcion='';
+    codigoPromocional='';
 
   }

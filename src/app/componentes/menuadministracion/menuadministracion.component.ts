@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-menuadministracion',
@@ -7,6 +7,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class MenuadministracionComponent implements OnInit {
   @Output() eventoEmit = new EventEmitter<any>();
+  @Input('detectoCambio')  detectoCambio:boolean;
+
 
   constructor() { }
 

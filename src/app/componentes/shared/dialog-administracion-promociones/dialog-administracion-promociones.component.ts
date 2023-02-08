@@ -208,9 +208,8 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     return false;
   }
 
-  onClickCopyLink() {
-    this.utils.onCopyLink(this.detalles[0].link, this.detalles[0].vigencia.id);
-    console.log("Si copio el link");
+  onClickCopyLink(item: Detalle) {
+    this.utils.onCopyLink(item.link, item.vigencia.id);
   }
 
 }

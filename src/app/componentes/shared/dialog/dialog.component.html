@@ -27,7 +27,7 @@
                     <button mat-button (click)="onNoClick()">Cancelar</button>
                 </div>
                 <div *ngIf="!data.indGuardar">
-                    <button mat-button *ngIf="!ganadorFormGroup.invalid" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+                    <button mat-button (click)="onClickGuardar()" cdkFocusInitial>Guardar</button>
                 </div>
                 <div *ngIf="data.indGuardar">
                     <button mat-button="data" (click)="guardarDetalle()">Agregar Detalle</button>

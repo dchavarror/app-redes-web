@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { AuthService } from '../../utils/AuthService';
@@ -14,15 +14,18 @@ export class HomeComponent implements OnInit {
   background: ThemePalette = undefined;
   roles: string;
   tabSeleccionado: number;
+  obtenerPromciones: boolean;
   lstRoles: string[];
   indAdmin = false;
   indConsulta = false;
+  detectoCambio:boolean;
+
 
   constructor(private serviceLogin: AuthService) {
     this.accordion = new MatAccordion();
     this.lstRoles = new Array<string>();
     this.roles = String(localStorage.getItem("roles"));
-    this.tabSeleccionado = TABS.ADMINISTRACION;
+    
   }
 
   ngOnInit(): void {
@@ -36,7 +39,12 @@ export class HomeComponent implements OnInit {
   actualizarTab(event: any) {
     console.log('actualizarTab ', event);
     this.tabSeleccionado = event;
-    console.log('this.tabSeleccionado ' , this.tabSeleccionado);
+    this.detectoCambio = !this.detectoCambio;
+    console.log('this.tabSeleccionado ', this.tabSeleccionado);
+  }
+
+  obtenerPromociones(event: any) {
+    this.obtenerPromciones = event;
   }
 
   validarRoles() {
@@ -49,9 +57,15 @@ export class HomeComponent implements OnInit {
       }
       console.log('this.lstRoles codigo ', this.lstRoles[i]);
     }
+
+    if(this.indConsulta && !this.indAdmin){
+      this.tabSeleccionado = TABS.PROMOCION;
+    }else if(this.indAdmin){
+      this.tabSeleccionado = TABS.ADMINISTRACION;
+    }
   }
 
-  onClickTabSeleccionado(event: any){
+  onClickTabSeleccionado(event: any) {
     this.tabSeleccionado = event;
   }
 

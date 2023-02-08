@@ -10,7 +10,7 @@
             <app-documento></app-documento>
         </mat-tab>
         <mat-tab acti label="Administración" *ngIf="indAdmin">
-            <app-menuadministracion (eventoEmit)="actualizarTab($event)"></app-menuadministracion>
+            <app-menuadministracion (eventoEmit)="actualizarTab($event)" [detectoCambio]="detectoCambio"></app-menuadministracion>
         </mat-tab>
         <mat-tab disabled>
             <ng-template mat-tab-label>
