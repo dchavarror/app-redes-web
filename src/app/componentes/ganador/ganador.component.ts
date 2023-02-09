@@ -135,15 +135,18 @@ export class GanadorComponent implements OnInit {
         this.response = resp;
         console.log('response ', this.response);
         if (this.response.statusCode == STATUS_SERVICE.VENCIDO) {
-          this.openDialog(
-            MENSAJE_MODALES.POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO
-          );
-          window.location.replace(PAGINAS.URL_BETPLAY);
+          this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO, TYPE_ICON_SNACKBAR.WARN);
+          setTimeout(() => {
+            debugger
+            window.location.replace(PAGINAS.URL_BETPLAY);
+          }, 3000);
         }
         if (
           this.response.statusCode == STATUS_SERVICE.ACCEPTED) {
-          this.openDialog(this.response.message);
-          window.location.replace(PAGINAS.URL_BETPLAY);
+          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
+          setTimeout(() => {
+            window.location.replace(PAGINAS.URL_BETPLAY);
+          }, 3000);
         }
         if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.detalle = this.response.objectResponse;
@@ -157,7 +160,7 @@ export class GanadorComponent implements OnInit {
             this.persona.cedula = this.detalle.persona.cedula;
             this.base64 = 'YA EXISTE';
           }
-        } else {
+        } else if (this.response.statusCode != STATUS_SERVICE.VENCIDO && this.response.statusCode != STATUS_SERVICE.ACCEPTED) {
           this.openDialog(this.response.message);
         }
         console.log('ind ', this.indDisable);
