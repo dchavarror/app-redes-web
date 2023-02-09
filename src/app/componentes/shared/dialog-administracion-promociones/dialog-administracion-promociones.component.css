@@ -1,6 +1,6 @@
 .content {
     transition: 2s;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
     padding-top: 10px;
     padding-bottom: 20px;
 }

@@ -9,7 +9,7 @@ import { DetalleService } from '../../../servicios/detalle.service';
 import { Detalle } from '../../../domain/Detalle';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { environment } from '../../../../environments/environment.prod';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ThisReceiver } from '@angular/compiler';
 import { DialogMessageEliminarComponent } from '../../shared/dialog-message-eliminar/dialog-message-eliminar.component';
 import { MatPaginator } from '@angular/material/paginator';
@@ -44,7 +44,10 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
 
 
 
-  constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService, private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog, private detalleService: DetalleService, @Inject(MAT_DIALOG_DATA) public data: Promocion) {
+  constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService, 
+    private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog, 
+    private detalleService: DetalleService, @Inject(MAT_DIALOG_DATA) public data: Promocion,
+    public dialogRef: MatDialogRef<DialogAdministracionPromocionesComponent>) {
     this.response = new Response();
     this.detalles = new Array<Detalle>();
   }
@@ -128,6 +131,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
               this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
               this.data.codigo = this.data.codigo;
               this.getCodigo();
+              if(this.response.statusCode == STATUS_SERVICE.CREACION){
+              this.dialogRef.close();
+              }
             },
             error: (e) => {
               console.log('error ', e);
@@ -201,7 +207,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
   }
 
   validarCampos() {
-    if (this.data.codigo == undefined || this.data.codigo == '') {
+    if (this.data.nombre == '' || this.data.codigo == ''|| this.data.linkPublicacion == ''|| this.data.terminos == '') {
       return true;
     }
     return false;

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ganador } from 'src/app/domain/Ganador';
 import { Response } from 'src/app/domain/Response';
-import { GanadorService } from '../../servicios/ganador.service';
 import { DialogGanadorComponent } from '../shared/dialog-ganador/dialog-ganador.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PersonaService } from '../../servicios/persona.service';
@@ -15,13 +13,16 @@ import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/envir
   styleUrls: ['./buscar-ganadores.component.css'],
 })
 export class BuscarGanadoresComponent implements OnInit {
+
   displayedColumns: string[] = ['cedula', 'nombre', 'acciones'];
+  personas: Array<Persona>;
+
   nombre = '';
   cedula = '';
   response: Response;
-  personas: Array<Persona>;
   clases: string = '';
   tablaMostrar = false;
+  
   constructor(
     private servicePersona: PersonaService,
     public dialog: MatDialog,
@@ -36,7 +37,8 @@ export class BuscarGanadoresComponent implements OnInit {
     this.clases = 'content-one';
   }
 
-  getPersonas() {
+  //Método que permite obtener una(s) persona(s) mediante el nombre o la cedula
+  obtenerPersonas() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
@@ -74,17 +76,13 @@ export class BuscarGanadoresComponent implements OnInit {
     return true;
   }
 
-  seleccionado(sele: Persona) {
-    console.log('Sele ', sele);
-    this.openDialog(sele);
-  }
-
-  openDialog(sele: Persona): void {
+  //Método que abre un dialog, este permite obtener el(los) detalles asociados a una persona
+  openDialogDetalleDePersona(sele: Persona): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '100%';
+    dialogConfig.width = '90%';
     dialogConfig.height = '250px';
 
     dialogConfig.data = sele;

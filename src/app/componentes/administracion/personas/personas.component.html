@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div fxLayoutAlign="center">
-                <button mat-button class="mat-button mat-form-field-100" type="button" (click)="getPersonas()">
+                <button mat-button class="mat-button mat-form-field-100" type="button" (click)="obtenerPersonas()">
                     BUSCAR
                 </button>
             </div>
@@ -52,7 +52,7 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="actualizar(row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="actualizarPersonaDialog(row)"></tr>
         </table>
     </mat-card>
 </div>

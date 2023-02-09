@@ -35,6 +35,11 @@
     height: auto;
     border: none;
     height: 40%;
+    padding-left: 20%;
+}
+
+textarea[disabled] {
+    background-color: white;
 }
 
 .mat-button-link:hover {
@@ -128,7 +133,8 @@ table {
 }
 
 @media screen and (max-width: 425px) {
-    td {
+    td,
+    .textarea {
         font-size: 10px;
         padding-right: 15px;
     }

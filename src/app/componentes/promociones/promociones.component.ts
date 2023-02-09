@@ -2,15 +2,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Detalle } from '../../domain/Detalle';
 import { DialogComponent } from '../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TITULOS_MODALES, REDES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TABS } from '../../../environments/enviroment.variables';
 import { Promocion } from '../../domain/Promocion';
-import { environment } from '../../../environments/environment';
 import { PromocionService } from '../../servicios/promocion.service';
 import { Response } from 'src/app/domain/Response';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
-import { DialogMessageComponent } from '../shared/dialog-message/dialog-message.component';
-import { Utils } from '../../utils/Utils';
 import { AdministradcionComponent } from '../administracion/administracion-promociones/administracion-promociones.component';
 
 @Component({
@@ -19,7 +16,7 @@ import { AdministradcionComponent } from '../administracion/administracion-promo
   styleUrls: ['./promociones.component.css']
 })
 export class PromocionesComponent implements OnInit {
-  @Output() evento = new EventEmitter<any>();  
+  @Output() evento = new EventEmitter<any>();
   @Output() eventoObtenerPromciones = new EventEmitter<any>();
 
   red: string = '';
@@ -35,7 +32,8 @@ export class PromocionesComponent implements OnInit {
 
   lstDetalles: Array<Detalle> = new Array<Detalle>();
 
-  constructor(public dialog: MatDialog, private promocionService: PromocionService, private message: MessageUtilsComponent) {
+  constructor(public dialog: MatDialog, private promocionService: PromocionService, 
+    private message: MessageUtilsComponent, public dialogRef: MatDialogRef<PromocionesComponent>,) {
 
   }
 
@@ -56,7 +54,7 @@ export class PromocionesComponent implements OnInit {
     this.lstDetalles = new Array<Detalle>();
   }
 
-  emitirEvento(){    
+  emitirEvento() {
     this.eventoObtenerPromciones.emit(true);
   }
 
@@ -131,8 +129,8 @@ export class PromocionesComponent implements OnInit {
             this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
             this.inicializarComponente();
             console.log('emit ADMINISTRACION');
-            this.evento.emit(TABS.ADMINISTRACION);
             this.eventoObtenerPromciones.emit(true);
+            this.dialogRef.close();
           } else {
             this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
           }

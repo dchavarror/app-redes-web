@@ -16,10 +16,10 @@
     border: none;
     background: #002361;
     color: white;
-    width: 100%;
+    width: 30%;
     height: 50%;
     margin-top: 5%;
-    margin-left: 25%;
+    margin-left: 35%;
 }
 
 .mat-button-two:hover,
@@ -76,6 +76,9 @@ td {
     }
     .mat-button-two {
         margin-top: 9%;
+        width: 90%;
+        height: 30%;
+        margin-left: 20%;
     }
     table {
         left: 15%;

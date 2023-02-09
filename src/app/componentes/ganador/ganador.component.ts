@@ -19,6 +19,7 @@ import { DialogCondicionesComponent } from '../shared/dialog-condiciones/dialog-
 import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dialog-premio-fisico.component';
+import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ganador',
@@ -26,6 +27,7 @@ import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dial
   styleUrls: ['./ganador.component.css'],
 })
 export class GanadorComponent implements OnInit {
+
   persona: Persona;
   ganador: Ganador;
   detalle: Detalle;
@@ -33,7 +35,6 @@ export class GanadorComponent implements OnInit {
   indMostrar = true;
   indDisable = false;
   indDisablePersona = false;
-
   fileName = '';
   base64 = '';
 
@@ -55,6 +56,8 @@ export class GanadorComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  //*
+  //Métodos que abren un dialog el cual contiene información sobre los terminos, condiciones y tratamientos que debe aceptar el ganador
   openDialogTerminos() {
     this.ganador.aceptoTerminos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TERMINOS, TERMINOS.CODIGO_TERMINOS);
@@ -67,7 +70,9 @@ export class GanadorComponent implements OnInit {
     this.ganador.tratamientoDatos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TRATAMIENTOS, TERMINOS.CODIGO_TRATAMIENTOS);
   }
+  //*
 
+  //Método que abre un dialog, este contiene información la cual puede variar
   openDialogGenerico(titulo: string, codigo: string) {
     const dialogRef = this.dialog.open(DialogCondicionesComponent, {
       data: {
@@ -100,6 +105,7 @@ export class GanadorComponent implements OnInit {
     });
   }
 
+  //Método que abre un dialog, este contiene información de posibles excepciones
   openDialog(mensaje: string) {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
@@ -114,8 +120,6 @@ export class GanadorComponent implements OnInit {
         ) {
           this.indMostrar = false;
         }
-        window.location.replace(PAGINAS.URL_BETPLAY);
-        console.log('modal cerrado');
       },
       error: (e) => {
         console.log('error ', e);
@@ -124,6 +128,7 @@ export class GanadorComponent implements OnInit {
     });
   }
 
+  //Método que permite obtener el detalle de un ganador
   getDetalleService(codigoPromocional: string) {
     this.detalleService.getDetallePremio(codigoPromocional).subscribe({
       next: (resp: any) => {
@@ -133,13 +138,12 @@ export class GanadorComponent implements OnInit {
           this.openDialog(
             MENSAJE_MODALES.POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO
           );
+          window.location.replace(PAGINAS.URL_BETPLAY);
         }
         if (
-          this.response.statusCode != STATUS_SERVICE.EXITOSO &&
-          this.response.statusCode != STATUS_SERVICE.VENCIDO
-        ) {
-          this.indDisable = true;
+          this.response.statusCode == STATUS_SERVICE.ACCEPTED) {
           this.openDialog(this.response.message);
+          window.location.replace(PAGINAS.URL_BETPLAY);
         }
         if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.detalle = this.response.objectResponse;
@@ -153,6 +157,8 @@ export class GanadorComponent implements OnInit {
             this.persona.cedula = this.detalle.persona.cedula;
             this.base64 = 'YA EXISTE';
           }
+        } else {
+          this.openDialog(this.response.message);
         }
         console.log('ind ', this.indDisable);
       },
@@ -163,24 +169,67 @@ export class GanadorComponent implements OnInit {
     });
   }
 
+  imageSizeValidator(minSize: number, maxSize: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value) {
+        const file = control.value;
+        const fileSize = file.size / 1024 / 1024; // Convertir a MB
+        if (fileSize < minSize || fileSize > maxSize) {
+          return {
+            imageSize: {
+              minSize: minSize,
+              maxSize: maxSize,
+              actualSize: fileSize
+            }
+          };
+        }
+      }
+      return null;
+    };
+  }
+
+  //Método que permite subir una imagen relacionada a un ganador
   onFileSelected(event: any) {
-    console.log('event.target ', event.target);
     const file: File = event.target.files[0];
-
+    this.fileName = '';
+    this.base64 = '';
     if (file) {
-      this.fileName = file.name;
-      const formData = new FormData();
-      console.log('FILE ', file);
 
-      var reader = new FileReader();
-      reader.onload = (e: any) => {
-        console.log('Got here: ', e.target.result);
-        this.base64 = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      if (file.type == 'image/jpeg' || file.type == 'image/png') {
+        let tamañoFile = file.size / 1000 / 1000;
+        if (tamañoFile <= 1) {
+          this.fileName = file.name;
+          const formData = new FormData();
+          console.log('FILE ', file);
+
+          var reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.base64 = this.validarDocumento(file.type, e.target.result);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.message.mostrarMessage(MENSAJE_MODALES.PESO_VALIDO_IMAGEN, TYPE_ICON_SNACKBAR.WARN);
+        }
+      } else {
+        this.message.mostrarMessage(MENSAJE_MODALES.POR_VALIDAR_EL_FORMATO, TYPE_ICON_SNACKBAR.WARN);
+      }
     }
   }
 
+  validarDocumento(type: string, base: string) {
+    switch (type) {
+      case 'image/jpeg':
+        return base.substring(23);
+      case 'image/png':
+        return base.substring(22);
+      default: {
+        console.log('doc no encontrado');
+        return ''
+      }
+    }
+  }
+
+  //Método el cual guarda la información de un ganador 
   guardar() {
     if (!this.validarCampos()) {
       this.persona.id = this.detalle.persona.id;
@@ -188,14 +237,9 @@ export class GanadorComponent implements OnInit {
       this.ganador.persona.id = this.detalle.persona.id;
       this.ganador.usuarioCreacion = String(localStorage.getItem('usuario'));
       this.ganador.activo = true;
-
-      this.persona.foto = this.base64.substring(22);
+      this.persona.foto = this.base64;
       this.persona.usuario = this.detalle.persona.usuario;
       this.persona.usuarioModifica = String(localStorage.getItem('usuario'));
-      console.log('Guardar persona ', this.persona);
-      console.log('Guardar ganador ', this.ganador);
-      console.log('doc', this.base64.indexOf(','));
-      console.log('doc', this.base64.substring(22));
       this.personaService.actualizarPersona(this.persona).subscribe({
         next: (resp: any) => {
           this.response = resp;
@@ -270,6 +314,7 @@ export class GanadorComponent implements OnInit {
     return false;
   }
 
+  //Método que abre un dialog, este contiene información sobre la direccion de un ganador
   abrirDireccion() {
     const dialogRef = this.dialog.open(DialogPremioFisicoComponent, {
     });

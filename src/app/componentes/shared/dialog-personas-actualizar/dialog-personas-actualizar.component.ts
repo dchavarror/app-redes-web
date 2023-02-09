@@ -64,21 +64,42 @@ export class DialogPersonasActualizarComponent implements OnInit {
     return true;
   }
 
+  //Método que permite subir una imagen relacionada a un ganador
   onFileSelected(event: any) {
-    console.log('event.target ', event.target);
+    console.log('event.target ', event);
     const file: File = event.target.files[0];
-
+    this.fileName = '';
+    this.base64 = '';
     if (file) {
-      this.fileName = file.name;
-      const formData = new FormData();
-      console.log('FILE ', file);
 
-      var reader = new FileReader();
-      reader.onload = (e: any) => {
-        console.log('Got here: ', e.target.result);
-        this.base64 = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      if (file.type == 'image/jpeg' || file.type == 'image/png' && file.size == 1000) {
+        this.fileName = file.name;
+        const formData = new FormData();
+        console.log('FILE ', file);
+
+        var reader = new FileReader();
+        reader.onload = (e: any) => {
+          console.log('Got here: ', e.target.result);
+          this.base64 = this.validarDocumento(file.type, e.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.message.mostrarMessage('Ey, qué es lo que pasa my crazy', TYPE_ICON_SNACKBAR.WARN);
+      }
+    }
+  }
+
+  validarDocumento(type: string, base: string) {
+    debugger
+    switch (type) {
+      case 'image/jpeg':
+        return base.substring(23);
+      case 'image/png':
+        return base.substring(22);
+      default: {
+        console.log('doc no encontrado');
+        return ''
+      }
     }
   }
 }

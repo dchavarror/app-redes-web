@@ -14,7 +14,7 @@
             </div>
         </mat-card-content>
         <div fxLayoutAlign="center">
-            <button class="mat-button" type="button" (click)="guardarPremio()">
+            <button class="mat-button" type="button" (click)="guardarNuevoPremio()">
             Agregar
         </button>
         </div>
@@ -43,7 +43,7 @@
             <ng-container matColumnDef="editar">
                 <th mat-header-cell *matHeaderCellDef>Editar</th>
                 <td mat-cell *matCellDef="let element">
-                    <button class="mat-button-link" type="button" fxLayoutAlign="center" (click)="editar(element)">Editar</button>
+                    <button class="mat-button-link" type="button" fxLayoutAlign="center" (click)="editarPremio(element)">Editar</button>
                 </td>
             </ng-container>
 

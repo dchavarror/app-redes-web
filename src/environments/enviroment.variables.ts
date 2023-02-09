@@ -37,7 +37,9 @@ export const TITULOS_MODALES = {
 export const MENSAJE_MODALES = {
     POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO: 'Por favor validar ya se vencio el tiempo de diligenciar datos',
     POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS: 'Por favor validar datos incompletos',
-    LINK_COPIADO: 'Link copiado!'
+    LINK_COPIADO: 'Link copiado!',
+    POR_VALIDAR_EL_FORMATO: 'Por favor ingresa una imagen con uno de los formatos permitidos (Jpg, Png)',
+    PESO_VALIDO_IMAGEN: 'Por favor ingrese una imagen con tamaño menor a 1 MB'
 }
 
 export const REDES = {
@@ -79,8 +81,8 @@ export const PAGINAS = {
 }
 
 export const TABS = {
-    CONSULTA: 1,
-    ADMINISTRACION: 3,
+    CONSULTA: 0,
+    ADMINISTRACION: 2,
     PROMOCION: 0,
 }
 

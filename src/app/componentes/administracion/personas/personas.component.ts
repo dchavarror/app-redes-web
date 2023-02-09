@@ -13,6 +13,7 @@ import { DialogPersonasActualizarComponent } from '../../shared/dialog-personas-
   styleUrls: ['./personas.component.css']
 })
 export class PersonasComponent implements OnInit {
+
   displayedColumns: string[] = ['cedula', 'nombre', 'acciones'];
   nombre = '';
   cedula = '';
@@ -32,9 +33,9 @@ export class PersonasComponent implements OnInit {
     this.clases = 'content-one';
   }
 
-  getPersonas() {
+  //Método que permite obtener una(s) persona(s) mediante la cedula o nombre
+  obtenerPersonas() {
     if (this.validarCampos()) {
-      console.log('getPersonas');
       this.servicePersona
         .getPersonas(this.cedula, this.nombre)
         .subscribe({
@@ -49,7 +50,6 @@ export class PersonasComponent implements OnInit {
               this.clases = 'content-one';
               this.message.mostrarMessage(MESSAGE_SERVICE.NO_EXISTE_VALOR, TYPE_ICON_SNACKBAR.WARN)
             }
-            console.log(' this.personas ', this.personas);
           },
           error: (e) => {
             console.log('error ', e);
@@ -68,14 +68,14 @@ export class PersonasComponent implements OnInit {
     return true
   }
 
-  actualizar(persona: Persona) {
+  //Método que abre un dialog, este permitira actualizar una persona
+  actualizarPersonaDialog(persona: Persona) {
     const dialogRef = this.dialog.open(DialogPersonasActualizarComponent, {
       data: { id: persona.id, foto: persona.foto, nombre: persona.nombreCompleto, cedula: persona.cedula, usuario: persona.usuario, usuarioModifica: persona.usuarioModifica },
     });
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
-        console.log('The dialog was closed', result);
-        this.getPersonas();
+        this.obtenerPersonas();
       },
       error: (e) => {
         console.log('error ', e);

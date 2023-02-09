@@ -21,6 +21,7 @@ export class PremiosComponent implements AfterViewInit {
   premio: Premio;
   response: Response;
   descripcion: string;
+
   displayedColumns: string[] = ['descripcion', 'editar', 'eliminar'];
   premios: Array<Premio>;
   data = new MatTableDataSource<Premio>();
@@ -41,7 +42,8 @@ export class PremiosComponent implements AfterViewInit {
     this.allPremios();
   }
 
-  guardarPremio() {
+  //Método que permite guardar un nuevo premio
+  guardarNuevoPremio() {
     if (this.valid()) {
       this.premio.descripcion = this.descripcion;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
@@ -74,6 +76,7 @@ export class PremiosComponent implements AfterViewInit {
     return true;
   }
 
+  //Método que permite obtener el listado de premios existentes (activos)
   allPremios() {
     this.servicePremio.getPremio().subscribe({
       next: (resp: any) => {
@@ -88,6 +91,7 @@ export class PremiosComponent implements AfterViewInit {
     });
   }
 
+  //Método que abre un dialog, este permite eliminar un premio
   eliminar(item: Premio) {
     this.detalleService.getPremioActivo(item.id).subscribe({
       next: (resp: any) => {
@@ -118,7 +122,8 @@ export class PremiosComponent implements AfterViewInit {
     });
   }
 
-  editar(item: Premio) {
+  //Método que abre un dialog, este permite editar un premio
+  editarPremio(item: Premio) {
     const dialogRef = this.dialog.open(DialogActualizarPremioComponent, {
       data: { descripcion: item.descripcion, idPremio: item.id },
     });
