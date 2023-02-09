@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DialogData } from '../../../domain/DialogData';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Detalle } from '../../../domain/Detalle';
 import { Response } from 'src/app/domain/Response';
 import { DetalleService } from '../../../servicios/detalle.service';
@@ -18,7 +18,7 @@ export class DialogMessageEliminarComponent implements OnInit {
   response: Response;
   validar = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private detalleService: DetalleService, private message: MessageUtilsComponent) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private detalleService: DetalleService, private message: MessageUtilsComponent,  public dialogRef: MatDialogRef<DialogMessageEliminarComponent>) {
     this.response = new Response();
   }
 
@@ -33,6 +33,7 @@ export class DialogMessageEliminarComponent implements OnInit {
         this.response = resp;
         if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES)
+          this.dialogRef.close();
         } else {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR)
         }

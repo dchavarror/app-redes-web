@@ -50,7 +50,6 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.datas.paginator = this.paginator;
     this.getCodigo();
   }
 
@@ -65,7 +64,6 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
-      console.log('getPersonas');
       if (!this.validarCampos()) {
         this.promocionSevice.getCodigo(this.data.codigo)
           .subscribe({
@@ -96,7 +94,6 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
-      console.log('getPersonas');
       if (!this.validarCampos()) {
         this.promocionSevice.getPromocion(this.data.codigo)
           .subscribe({
@@ -122,7 +119,6 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
-      console.log('setPersonas');
       if (!this.validarCampos()) {
         this.promocionSevice.setPromocion(this.data.id, this.data)
           .subscribe({
@@ -146,7 +142,6 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
-      console.log('promocion ', this.data);
       if (!this.validarCampos()) {
         this.openDialog();
       }
