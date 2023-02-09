@@ -53,6 +53,13 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     this.datas.paginator = this.paginator;
     this.getCodigo();
   }
+
+  inicializarLista(){
+    this.datas = new MatTableDataSource<Detalle>();
+    this.datas.data = new  Array<Detalle>();
+    
+    this.datas.paginator = this.paginator;
+  }
   
   getCodigo() {
     if (this.validarCampos()) {
@@ -63,7 +70,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
         this.promocionSevice.getCodigo(this.data.codigo)
           .subscribe({
             next: (resp: any) => {
-              this.datas = new MatTableDataSource<Detalle>();
+              this.inicializarLista();
               this.response = resp;
               if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
                 if (this.response.objectResponse != null) {
@@ -83,7 +90,6 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
             }
           });
       }
-      this.detalles
     }
   }
 
@@ -96,6 +102,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
         this.promocionSevice.getPromocion(this.data.codigo)
           .subscribe({
             next: (resp: any) => {
+              this.inicializarLista();
               this.response = resp;
               if (this.response.statusCode === STATUS_SERVICE.EXITOSO && this.response.objectResponse != null) {
                 this.data = this.response.objectResponse != null ? this.response.objectResponse : this.data;
@@ -188,7 +195,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
             data: { idDetallePremio: item.id }
           });
           dialogRef.afterClosed().subscribe(result => {
-            this.datas = new MatTableDataSource<Detalle>();
+            this.inicializarLista();
             this.getCodigo();
             console.log('The dialog was closed', result);
           });
