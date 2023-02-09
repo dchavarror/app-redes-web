@@ -7,6 +7,7 @@ import { Detalle } from '../../../domain/Detalle';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
+import { Utils } from '../../../utils/Utils';
 
 @Component({
   selector: 'app-premio',
@@ -20,7 +21,7 @@ export class PremioComponent implements OnInit {
   premios: Array<Premio> = new Array<Premio>();
   response: Response = new Response();
 
-  constructor(private message: MessageUtilsComponent, private premioService: PremioService, public dialog: MatDialog, private clipboard: Clipboard) {
+  constructor(private message: MessageUtilsComponent, private premioService: PremioService, public dialog: MatDialog, private utils: Utils) {
     this.getPremios();
     console.log('premio constructor', this.detalle);
 
@@ -64,8 +65,7 @@ export class PremioComponent implements OnInit {
   }
 
   onCopyLink() {
-    console.log('detalle ', this.detalle)
-    this.clipboard.copy(this.detalle.link);
+    this.utils.onCopyLink(this.detalle.link, -1);
   }
 
   onGenerarEvento() {

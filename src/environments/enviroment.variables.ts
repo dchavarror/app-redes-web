@@ -36,7 +36,8 @@ export const TITULOS_MODALES = {
 
 export const MENSAJE_MODALES = {
     POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO: 'Por favor validar ya se vencio el tiempo de diligenciar datos',
-    POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS: 'Por favor validar datos incompletos'
+    POR_FAVOR_VALIDAR_DATOS_INCOMPLETOS: 'Por favor validar datos incompletos',
+    LINK_COPIADO: 'Link copiado!'
 }
 
 export const REDES = {
@@ -80,7 +81,7 @@ export const PAGINAS = {
 export const TABS = {
     CONSULTA: 1,
     ADMINISTRACION: 3,
-    PROMOCION: 0,    
+    PROMOCION: 0,
 }
 
 export const ROLES = {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Detalle } from '../domain/Detalle';
 import { environment } from '../../environments/environment';
-import { REDES, TYPE_ICON_SNACKBAR } from '../../environments/enviroment.variables';
+import { REDES, TYPE_ICON_SNACKBAR, MENSAJE_MODALES } from '../../environments/enviroment.variables';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { VigenciaService } from '../servicios/vigencia.service';
 import { MessageUtilsComponent } from '../componentes/shared/message-utils/message-utils.component';
@@ -25,7 +25,7 @@ export class Utils {
         this.detalle.red = this.getRedAplica(facebook, instagram, tiktok, twitter);
         if (this.detalle.red == 'NA') {
             this.message.mostrarMessage("Red no valida", TYPE_ICON_SNACKBAR.WARN);
-        }else{
+        } else {
             const date = new Date();
             let codigoPromocional = date.toISOString().substring(0, 10).replace('-', '').replace('-', '') + String(date.getHours()) + String(date.getMinutes()) + String(date.getSeconds()) + cadena.substring(posicionUser + 5, cadena.length);
             console.log('codigoPromocional ', codigoPromocional);
@@ -33,8 +33,8 @@ export class Utils {
             this.detalle.link = environment.webUrl + codigoPromocional;
             this.detalle.persona.usuario = cadena.substring(posicionUser + 5, cadena.length);
         }
-            return this.detalle;
-        
+        return this.detalle;
+
     }
 
     getRedAplica(facebook: number, instagram: number, tiktok: number, twitter: number) {
@@ -56,7 +56,10 @@ export class Utils {
     onCopyLink(link: string, idVigencia: number) {
         console.log('sele ', idVigencia);
         this.clipboard.copy(link);
-        this.actualizarVigencia(idVigencia);
+        if (idVigencia != -1) {
+            this.actualizarVigencia(idVigencia);
+        }
+        this.message.mostrarMessage(MENSAJE_MODALES.LINK_COPIADO, TYPE_ICON_SNACKBAR.SUCCES)
     }
 
     actualizarVigencia(id: number) {
