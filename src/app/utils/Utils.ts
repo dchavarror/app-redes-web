@@ -5,14 +5,17 @@ import { REDES, TYPE_ICON_SNACKBAR, MENSAJE_MODALES } from '../../environments/e
 import { Clipboard } from '@angular/cdk/clipboard';
 import { VigenciaService } from '../servicios/vigencia.service';
 import { MessageUtilsComponent } from '../componentes/shared/message-utils/message-utils.component';
+import { FileDomain } from '../domain/FileDomain';
 
 @Injectable({
     providedIn: 'root'
 })
 export class Utils {
     detalle: Detalle;
+    fileDomain: FileDomain;
     constructor(private clipboard: Clipboard, private serviceVigencia: VigenciaService, private message: MessageUtilsComponent) {
         this.detalle = new Detalle();
+        this.fileDomain = new FileDomain();
     }
 
     buscarRed(cadena: string) {
@@ -68,4 +71,47 @@ export class Utils {
             console.log('resp vigencia ', resp);
         })
     }
+
+    //Método que permite subir una imagen relacionada a un ganador
+    onFileSelected(event: any) {
+        const file: File = event.target.files[0];
+        if (file) {
+
+            if (file.type == 'image/jpeg' || file.type == 'image/png') {
+                let tamañoFile = file.size / 1000 / 1000;
+                if (tamañoFile <= 1) {
+                    this.fileDomain.nombre = file.name;
+                    const formData = new FormData();
+                    console.log('FILE ', file);
+
+                    var reader = new FileReader();
+                    reader.onload = (e: any) => {
+                        this.fileDomain.base64 = this.validarDocumento(file.type, e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    this.message.mostrarMessage(MENSAJE_MODALES.PESO_VALIDO_IMAGEN, TYPE_ICON_SNACKBAR.WARN);
+                }
+            } else {
+                this.message.mostrarMessage(MENSAJE_MODALES.POR_VALIDAR_EL_FORMATO, TYPE_ICON_SNACKBAR.WARN);
+            }
+        }
+
+        return this.fileDomain;
+    }
+
+    validarDocumento(type: string, base: string) {
+        debugger
+        switch (type) {
+            case 'image/jpeg':
+                return base.substring(23);
+            case 'image/png':
+                return base.substring(22);
+            default: {
+                console.log('doc no encontrado');
+                return ''
+            }
+        }
+    }
+
 }

@@ -23,7 +23,7 @@
                             <input type="file" accept=".jpg,.png" class="file-input" (change)="onFileSelected($event)" #fileUpload />
                         </p>
                         <div fxLayoutAlign="center" class="file-picture">
-                            {{ fileName || "Seleccionar foto" }}
+                            {{ fileDomain.nombre || "Seleccionar foto" }}
 
                             <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                                 <mat-icon>attach_file</mat-icon>

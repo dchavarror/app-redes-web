@@ -20,6 +20,8 @@ import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environme
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dialog-premio-fisico.component';
 import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/forms';
+import { FileDomain } from '../../domain/FileDomain';
+import { Utils } from '../../utils/Utils';
 
 @Component({
   selector: 'app-ganador',
@@ -35,8 +37,7 @@ export class GanadorComponent implements OnInit {
   indMostrar = true;
   indDisable = false;
   indDisablePersona = false;
-  fileName = '';
-  base64 = '';
+  fileDomain: FileDomain;
 
   constructor(
     private detalleService: DetalleService,
@@ -44,7 +45,8 @@ export class GanadorComponent implements OnInit {
     private dialog: MatDialog,
     private personaService: PersonaService,
     private ganadorService: GanadorService,
-    private message: MessageUtilsComponent
+    private message: MessageUtilsComponent,
+    private utils: Utils
   ) {
     this.persona = new Persona();
     this.ganador = new Ganador();
@@ -52,6 +54,7 @@ export class GanadorComponent implements OnInit {
     this.detalle = new Detalle();
     let codigo = this.activateRoute.snapshot.params['codigoPromocion'];
     this.getDetalleService(codigo);
+    this.fileDomain = new FileDomain();
   }
 
   ngOnInit(): void { }
@@ -158,7 +161,7 @@ export class GanadorComponent implements OnInit {
             this.persona.nombreCompleto =
               this.detalle.persona.nombreCompleto.toUpperCase();
             this.persona.cedula = this.detalle.persona.cedula;
-            this.base64 = 'YA EXISTE';
+            this.fileDomain.base64 = 'YA EXISTE';
           }
         } else if (this.response.statusCode != STATUS_SERVICE.VENCIDO && this.response.statusCode != STATUS_SERVICE.ACCEPTED) {
           this.openDialog(this.response.message);
@@ -193,43 +196,7 @@ export class GanadorComponent implements OnInit {
 
   //Método que permite subir una imagen relacionada a un ganador
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    this.fileName = '';
-    this.base64 = '';
-    if (file) {
-
-      if (file.type == 'image/jpeg' || file.type == 'image/png') {
-        let tamañoFile = file.size / 1000 / 1000;
-        if (tamañoFile <= 1) {
-          this.fileName = file.name;
-          const formData = new FormData();
-          console.log('FILE ', file);
-
-          var reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.base64 = this.validarDocumento(file.type, e.target.result);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.message.mostrarMessage(MENSAJE_MODALES.PESO_VALIDO_IMAGEN, TYPE_ICON_SNACKBAR.WARN);
-        }
-      } else {
-        this.message.mostrarMessage(MENSAJE_MODALES.POR_VALIDAR_EL_FORMATO, TYPE_ICON_SNACKBAR.WARN);
-      }
-    }
-  }
-
-  validarDocumento(type: string, base: string) {
-    switch (type) {
-      case 'image/jpeg':
-        return base.substring(23);
-      case 'image/png':
-        return base.substring(22);
-      default: {
-        console.log('doc no encontrado');
-        return ''
-      }
-    }
+    this.fileDomain = this.utils.onFileSelected(event);
   }
 
   //Método el cual guarda la información de un ganador 
@@ -240,7 +207,7 @@ export class GanadorComponent implements OnInit {
       this.ganador.persona.id = this.detalle.persona.id;
       this.ganador.usuarioCreacion = String(localStorage.getItem('usuario'));
       this.ganador.activo = true;
-      this.persona.foto = this.base64;
+      this.persona.foto = this.fileDomain.base64;
       this.persona.usuario = this.detalle.persona.usuario;
       this.persona.usuarioModifica = String(localStorage.getItem('usuario'));
       this.personaService.actualizarPersona(this.persona).subscribe({
@@ -293,7 +260,7 @@ export class GanadorComponent implements OnInit {
     ) {
       return true;
     }
-    if (this.base64 == undefined || this.base64 == '') {
+    if (this.fileDomain.base64 == undefined || this.fileDomain.base64 == '') {
       return true;
     }
     if (

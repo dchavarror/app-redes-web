@@ -4,8 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Persona } from '../../../domain/Persona';
 import { PersonaService } from '../../../servicios/persona.service';
 import { Response } from '../../../domain/Response';
-import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
+import { Utils } from '../../../utils/Utils';
+import { FileDomain } from '../../../domain/FileDomain';
 
 @Component({
   selector: 'app-dialog-personas-actualizar',
@@ -16,13 +18,13 @@ export class DialogPersonasActualizarComponent implements OnInit {
 
   persona: Persona;
   response: Response;
-  fileName = '';
-  base64 = '';
+  fileDomain: FileDomain;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private message: MessageUtilsComponent,
-    private personaService: PersonaService, public dialogRef: MatDialogRef<DialogPersonasActualizarComponent>) {
+    private personaService: PersonaService, public dialogRef: MatDialogRef<DialogPersonasActualizarComponent>, private utils: Utils) {
     this.persona = new Persona();
     this.response = new Response();
+    this.fileDomain = new FileDomain();
   }
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
       this.persona.id = this.data.id;
       this.persona.nombreCompleto = this.data.nombre;
       this.persona.cedula = this.data.cedula;
-      this.persona.foto = this.base64 != undefined && this.base64 != null && this.base64 != '' ? this.base64.substring(22) : this.data.foto;
+      this.persona.foto = this.fileDomain.base64;
       this.persona.usuario = this.data.usuario;
       this.persona.usuarioModifica = String(localStorage.getItem(this.data.usuarioModifica));
       this.personaService.actualizarPersona(this.persona).subscribe({
@@ -64,42 +66,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
     return true;
   }
 
-  //Método que permite subir una imagen relacionada a un ganador
   onFileSelected(event: any) {
-    console.log('event.target ', event);
-    const file: File = event.target.files[0];
-    this.fileName = '';
-    this.base64 = '';
-    if (file) {
-
-      if (file.type == 'image/jpeg' || file.type == 'image/png' && file.size == 1000) {
-        this.fileName = file.name;
-        const formData = new FormData();
-        console.log('FILE ', file);
-
-        var reader = new FileReader();
-        reader.onload = (e: any) => {
-          console.log('Got here: ', e.target.result);
-          this.base64 = this.validarDocumento(file.type, e.target.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        this.message.mostrarMessage('Ey, qué es lo que pasa my crazy', TYPE_ICON_SNACKBAR.WARN);
-      }
-    }
-  }
-
-  validarDocumento(type: string, base: string) {
-    debugger
-    switch (type) {
-      case 'image/jpeg':
-        return base.substring(23);
-      case 'image/png':
-        return base.substring(22);
-      default: {
-        console.log('doc no encontrado');
-        return ''
-      }
-    }
+    this.fileDomain= this.utils.onFileSelected(event);
   }
 }
