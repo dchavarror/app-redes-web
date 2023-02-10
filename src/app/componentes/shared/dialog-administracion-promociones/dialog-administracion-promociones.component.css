@@ -156,11 +156,10 @@ table {
     border-radius: 10px;
     background-color: white;
     border: none;
-    transition: 1s;
     display: inline;
     float: right;
 }
 
 .close:hover {
-    background-color: rgba(198, 216, 232, 1);
+    color: darkgray;
 }

@@ -48,12 +48,10 @@ table {
     background-color: white;
     border: none;
     border-radius: 10px;
-    transition: 1s;
 }
 
 .button-change:hover {
-    background-color: #002361;
-    color: white;
+    color: darkgray;
 }
 
 th {
