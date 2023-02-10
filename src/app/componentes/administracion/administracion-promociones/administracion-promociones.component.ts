@@ -18,7 +18,7 @@ import { PromocionesComponent } from '../../promociones/promociones.component';
 })
 export class AdministradcionComponent implements AfterViewInit, OnChanges {
 
-  @Input('detectoCambio') detectoCambio: boolean;  
+  @Input('detectoCambio') detectoCambio: boolean;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   codigo = '';
@@ -57,7 +57,8 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     this.obtenerPromociones();
     const dialogRef = this.dialog.open(PromocionesComponent, {
       panelClass: 'custom-dialog-container',
-      width:'600px'      
+      width: '600px',
+      height: '90%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -177,6 +178,7 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "600px";
+    dialogConfig.height = '90%';
 
     dialogConfig.data = item;
 
