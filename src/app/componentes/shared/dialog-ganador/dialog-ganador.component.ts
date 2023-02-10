@@ -17,17 +17,19 @@ import { MessageUtilsComponent } from '../message-utils/message-utils.component'
   styleUrls: ['./dialog-ganador.component.css']
 })
 export class DialogGanadorComponent implements OnInit {
+
   displayedColumns: string[] = ['red', 'premio', 'promocion', 'acciones'];
 
   ganadores: Array<Ganador>;
   response: Response;
+
   constructor(private message: MessageUtilsComponent, private clipboard: Clipboard, private utils: Utils, public dialog: MatDialog, public dialogRef: MatDialogRef<DialogGanadorComponent>, @Inject(MAT_DIALOG_DATA) public data: Persona, private serviceGanador: GanadorService, private serviceVigencia: VigenciaService) {
     this.ganadores = new Array<Ganador>();
     this.response = new Response();
   }
 
   ngOnInit(): void {
-    this.getGanadores();
+    this.obtenerGanadores();
   }
 
   valid() {
@@ -40,14 +42,15 @@ export class DialogGanadorComponent implements OnInit {
     return true;
   }
 
-  getGanadores() {
+  //Método encargado de obtener los ganadores mediante la cedula o codigo
+  obtenerGanadores() {
     this.serviceGanador.getGanadores(this.data.id).subscribe({
       next: (resp: any) => {
         this.response = resp;
         if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.ganadores = this.response.objectResponse;
         } else {
-          this.openDialog(this.response.message);
+          this.openDialogDetalles(this.response.message);
         }
       },
       error: (e) => {
@@ -57,18 +60,17 @@ export class DialogGanadorComponent implements OnInit {
     });
   }
 
-  openDialog(mensaje: string) {
+  //Método que abre un dialog, este muestra posible información sobre el estado de un detalle(premio) 
+  openDialogDetalles(mensaje: string) {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
     });
 
     dialogRef.afterClosed().subscribe({
       next: (resp: any) => {
-        console.log(this.response.statusCode);
         console.log("modal cerrado");
       },
       error: (e) => {
-        console.log('error ', e);
         this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });
@@ -76,7 +78,7 @@ export class DialogGanadorComponent implements OnInit {
 
   }
 
-  onNoClick(): void {
+  onCloseClick(): void {
     this.dialogRef.close();
   }
 

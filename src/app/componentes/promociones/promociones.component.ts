@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Detalle } from '../../domain/Detalle';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { TITULOS_MODALES, REDES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TABS } from '../../../environments/enviroment.variables';
+import { TITULOS_MODALES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE } from '../../../environments/enviroment.variables';
 import { Promocion } from '../../domain/Promocion';
 import { PromocionService } from '../../servicios/promocion.service';
 import { Response } from 'src/app/domain/Response';
@@ -16,6 +16,7 @@ import { AdministradcionComponent } from '../administracion/administracion-promo
   styleUrls: ['./promociones.component.css']
 })
 export class PromocionesComponent implements OnInit {
+
   @Output() evento = new EventEmitter<any>();
   @Output() eventoObtenerPromciones = new EventEmitter<any>();
 
@@ -27,12 +28,10 @@ export class PromocionesComponent implements OnInit {
   detalle: Detalle = new Detalle();
   response: Response = new Response();
   adminComponent: AdministradcionComponent;
-
   promocionalesFormGroup: any;
-
   lstDetalles: Array<Detalle> = new Array<Detalle>();
 
-  constructor(public dialog: MatDialog, private promocionService: PromocionService, 
+  constructor(public dialog: MatDialog, private promocionService: PromocionService,
     private message: MessageUtilsComponent, public dialogRef: MatDialogRef<PromocionesComponent>,) {
 
   }
@@ -64,12 +63,13 @@ export class PromocionesComponent implements OnInit {
     } else {
       console.log('promocion ', this.promocion);
       if (!this.validarPromocion()) {
-        this.openDialog();
+        this.openDialogPromocion();
       }
     }
   }
 
-  openDialog(): void {
+  //Método que abre un dialog, este permite agregar un detalle a una promocion
+  openDialogPromocion(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: { name: this.name, red: this.red, premio: this.idPremio },
     });
@@ -114,8 +114,8 @@ export class PromocionesComponent implements OnInit {
   }
 
 
-
-  onClickGuardar() {
+  //Método encargado de guardar una promocion
+  onClickGuardarPromocion() {
     if (!this.validarCampos()) {
       this.promocion.lstDetalles = this.lstDetalles;
       this.promocion.activo = true;
@@ -143,7 +143,6 @@ export class PromocionesComponent implements OnInit {
     } else {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     }
-
 
   }
 

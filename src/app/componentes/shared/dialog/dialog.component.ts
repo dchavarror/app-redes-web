@@ -30,15 +30,16 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPremios();
+    this.obtenerPremio();
     this.inicializarComponente();
   }
 
-  onNoClick(): void {
+  onCloseClick(): void {
     this.dialogRef.close();
   }
 
-  getPremios() {
+  //Método que permite obtener los detalles(premios) de una promocion
+  obtenerPremio() {
     this.premioService.getPremio().subscribe({
       next: (responsePremios: any) => {
         this.response = responsePremios;
@@ -58,8 +59,8 @@ export class DialogComponent implements OnInit {
     });
   }
 
+  //Método que guarda un detalle a una promocion ya existente
   guardarDetalle() {
-    console.log('dddffggdd');
     if (this.validar()) {
       this.detalle = this.utils.buscarRed(this.data.red);
       if (!this.redValida(this.detalle.red)) {
@@ -78,7 +79,6 @@ export class DialogComponent implements OnInit {
             }
           },
           error: (e) => {
-            console.log('error ', e);
             this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
           }
         });
@@ -96,6 +96,7 @@ export class DialogComponent implements OnInit {
     return false;
   }
 
+  //Método que guarda un detalle a una nueva promoción
   onClickGuardar() {
     if (this.validar()) {
       this.detalle = this.utils.buscarRed(this.data.red);

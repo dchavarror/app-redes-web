@@ -44,8 +44,8 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
 
 
 
-  constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService, 
-    private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog, 
+  constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService,
+    private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog,
     private detalleService: DetalleService, @Inject(MAT_DIALOG_DATA) public data: Promocion,
     public dialogRef: MatDialogRef<DialogAdministracionPromocionesComponent>) {
     this.response = new Response();
@@ -53,16 +53,17 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getCodigo();
+    this.obtenerPromocionPorCodigo();
   }
 
-  inicializarLista(){
+  inicializarLista() {
     this.datas = new MatTableDataSource<Detalle>();
-    this.datas.data = new  Array<Detalle>();    
+    this.datas.data = new Array<Detalle>();
     this.datas.paginator = this.paginator;
   }
-  
-  getCodigo() {
+
+  //Método encargado de obtener una promocion mediante el codigo y sus respectivos detalles
+  obtenerPromocionPorCodigo() {
     this.inicializarLista();
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -78,7 +79,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
                   this.data = this.detalles[0].promocion;
                   this.datas.data = this.detalles;
                 } else {
-                  this.getPromocion();
+                  this.obtenerPromocion();
                 }
               } else {
                 this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
@@ -93,7 +94,8 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
-  getPromocion() {
+  //Método que permite obtener una promoción mediante el código
+  obtenerPromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
@@ -118,7 +120,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
-  setPromocion() {
+  actulizarPromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {
@@ -130,9 +132,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
               this.detalles = this.response.objectResponse;
               this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES);
               this.data.codigo = this.data.codigo;
-              this.getCodigo();
-              if(this.response.statusCode == STATUS_SERVICE.CREACION){
-              this.dialogRef.close();
+              this.obtenerPromocionPorCodigo();
+              if (this.response.statusCode == STATUS_SERVICE.CREACION) {
+                this.dialogRef.close();
               }
             },
             error: (e) => {
@@ -144,6 +146,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
+  //Método que permite agregar un detalle nuevo a una promocion ya existente
   agregarDetallePromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -160,7 +163,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
         this.response = resp;
         if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES)
-          this.getCodigo();
+          this.obtenerPromocionPorCodigo();
         } else {
           this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR)
         }
@@ -179,11 +182,11 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.getCodigo()
+      this.obtenerPromocionPorCodigo()
     });
   }
 
-  openDialogEliminar(item: Detalle): void {
+  openDialogEliminarDetallePrmocion(item: Detalle): void {
     this.serviceGanadores.getValidarDetalleGanador(item.id).subscribe({
       next: (reps: any) => {
         this.response = reps;
@@ -194,7 +197,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
             data: { idDetallePremio: item.id }
           });
           dialogRef.afterClosed().subscribe(result => {
-            this.getCodigo();
+            this.obtenerPromocionPorCodigo();
             console.log('The dialog was closed', result);
           });
         }
@@ -207,7 +210,7 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
   }
 
   validarCampos() {
-    if (this.data.nombre == '' || this.data.codigo == ''|| this.data.linkPublicacion == ''|| this.data.terminos == '') {
+    if (this.data.nombre == '' || this.data.codigo == '' || this.data.linkPublicacion == '' || this.data.terminos == '') {
       return true;
     }
     return false;

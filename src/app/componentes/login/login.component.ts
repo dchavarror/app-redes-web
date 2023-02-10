@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { Usuario } from '../../domain/Usuario';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, STATUS_SERVICE } from '../../../environments/enviroment.variables';
 import { Response } from 'src/app/domain/Response';

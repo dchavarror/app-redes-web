@@ -30,8 +30,8 @@ export class DialogPersonasActualizarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  actualizar() {
-    if (this.valid()) {
+  actualizarPersona() {
+    if (this.validar()) {
       this.persona.id = this.data.id;
       this.persona.nombreCompleto = this.data.nombre;
       this.persona.cedula = this.data.cedula;
@@ -59,7 +59,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
     }
   }
 
-  valid() {
+  validar() {
     if (this.data.nombre == '' || this.data.cedula == '' || this.data.foto == '') {
       return false;
     }
@@ -67,6 +67,6 @@ export class DialogPersonasActualizarComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.fileDomain= this.utils.onFileSelected(event);
+    this.fileDomain = this.utils.onFileSelected(event);
   }
 }

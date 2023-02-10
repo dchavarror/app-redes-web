@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { AuthService } from '../../utils/AuthService';
 import { TABS, ROLES } from '../../../environments/enviroment.variables';
@@ -10,8 +9,9 @@ import { TABS, ROLES } from '../../../environments/enviroment.variables';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  background: ThemePalette = undefined;
+  
   roles: string;
   tabSeleccionado: number;
   obtenerPromciones: boolean;

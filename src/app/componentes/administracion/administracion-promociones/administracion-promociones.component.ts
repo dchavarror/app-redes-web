@@ -102,7 +102,7 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
                   this.promociones.push(this.promocion);
                   this.dataPromociones.data = this.promociones;
                 } else {
-                  this.obtenerPromcion();
+                  this.obtenerPromocion();
                 }
               } else {
                 this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
@@ -119,7 +119,7 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
   }
 
   //Método que permite obtener una promoción mediante el código
-  obtenerPromcion() {
+  obtenerPromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
     } else {

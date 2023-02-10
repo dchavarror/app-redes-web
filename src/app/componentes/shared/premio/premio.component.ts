@@ -4,7 +4,6 @@ import { Premio } from '../../../domain/Premio';
 import { Response } from 'src/app/domain/Response';
 import { MatDialog } from '@angular/material/dialog';
 import { Detalle } from '../../../domain/Detalle';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 import { Utils } from '../../../utils/Utils';
@@ -22,7 +21,7 @@ export class PremioComponent implements OnInit {
   response: Response = new Response();
 
   constructor(private message: MessageUtilsComponent, private premioService: PremioService, public dialog: MatDialog, private utils: Utils) {
-    this.getPremios();
+    this.obtenerTodosPremios();
     console.log('premio constructor', this.detalle);
 
   }
@@ -35,12 +34,13 @@ export class PremioComponent implements OnInit {
 
   }
 
-  getPremios() {
+  //Método encargado de obtener el listado de premios que existe (activos)
+  obtenerTodosPremios() {
     this.premioService.getPremio().subscribe({
       next: (responsePremios: any) => {
         this.response = responsePremios;
         this.premios = this.response.objectResponse;
-        this.detalle.premio.descripcion = this.getDescrionPremio(this.detalle.premio.id);
+        this.detalle.premio.descripcion = this.obtenerDescripcionPremio(this.detalle.premio.id);
       },
       error: (e) => {
         console.log('error ', e);
@@ -49,10 +49,10 @@ export class PremioComponent implements OnInit {
     });
   }
 
-  getDescrionPremio(idPremio: number) {
+  //Método que permite obtener la descripcion de un premio en especifico
+  obtenerDescripcionPremio(idPremio: number) {
     for (let i = 0; i < this.premios.length; i++) {
       if (this.premios[i].id == idPremio) {
-        console.log('premio ', this.premios[i]);
         return this.premios[i].descripcion;
       }
     }
@@ -69,7 +69,6 @@ export class PremioComponent implements OnInit {
   }
 
   onGenerarEvento() {
-    console.log('eliminar ', this.detalle);
     this.eventEliminar.emit(this.detalle);
   }
 }
