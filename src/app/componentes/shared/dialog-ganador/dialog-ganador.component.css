@@ -18,8 +18,9 @@
     color: white;
     width: 30%;
     height: 50%;
-    margin-top: 5%;
-    margin-left: 35%;
+    margin-left: 25%;
+    margin-top: 10%;
+    margin-bottom: 20px;
 }
 
 .mat-button-two:hover,
@@ -39,15 +40,16 @@
     height: 100%;
 }
 
-table {
-    padding-bottom: 10px;
+table.mat-table {
     width: 100%;
+    border-spacing: 0;
+    padding-bottom: 50px;
+    margin-top: -20px;
 }
 
 .button-change {
     background-color: white;
     border: none;
-    border-radius: 10px;
 }
 
 .button-change:hover {
@@ -73,10 +75,10 @@ td {
         font-size: 9px;
     }
     .mat-button-two {
-        margin-top: 9%;
-        width: 90%;
-        height: 30%;
+        margin-bottom: 23px;
         margin-left: 20%;
+        font-size: 9px;
+        margin-top: 30%;
     }
     table {
         left: 15%;

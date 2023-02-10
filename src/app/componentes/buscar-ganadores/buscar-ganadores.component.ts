@@ -82,11 +82,11 @@ export class BuscarGanadoresComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '90%';
-    dialogConfig.height = '250px';
+    dialogConfig.width = '700px';
+    dialogConfig.height = '600px'
 
     dialogConfig.data = sele;
-    const dialogRef = this.dialog.open(DialogGanadorComponent, dialogConfig);
+    const dialogRef = this.dialog.open(DialogGanadorComponent, dialogConfig,);
 
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
