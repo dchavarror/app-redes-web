@@ -87,20 +87,6 @@ table {
     width: 100%;
 }
 
-.tabla-x {
-    -webkit-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
-    -moz-box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
-    box-shadow: 0px 1px 56px 5px rgba(230, 230, 230, 1);
-    background: #385170;
-    transition: 3s;
-}
-
-.tabla-x:hover {
-    -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
-    -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
-    box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
-}
-
 .textarea {
     resize: none;
     width: 100%;
@@ -132,6 +118,10 @@ table {
     color: white;
 }
 
+.mat-paginator {
+    width: 800px;
+}
+
 @media screen and (max-width: 425px) {
     td,
     .textarea {
@@ -160,10 +150,9 @@ table {
     .dialog-editar {
         width: 100%;
     }
-}
-
-.mat-paginator {
-    width: 100%;
+    .mat-paginator {
+        width: 100%;
+    }
 }
 
 .mat-card {
@@ -178,4 +167,52 @@ table {
     -webkit-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
     -moz-box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
     box-shadow: 0px 1px 56px 5px rgba(198, 216, 232, 1);
+}
+
+
+/* Structure */
+
+.example-container {
+    position: relative;
+}
+
+.example-table-container {
+    position: relative;
+    min-height: 200px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}
+
+.example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-rate-limit-reached {
+    max-width: 360px;
+    text-align: center;
+}
+
+
+/* Column Widths */
+
+.mat-column-number,
+.mat-column-state {
+    max-width: 64px;
+}
+
+.mat-column-created {
+    max-width: 124px;
 }

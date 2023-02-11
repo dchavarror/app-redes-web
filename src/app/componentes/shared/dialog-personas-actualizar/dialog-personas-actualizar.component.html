@@ -19,15 +19,16 @@
                 </div>
                 <div fxLayoutAlign="center">
                     <mat-card class="mat-card-two">
-                        <div class="button-save-one">
-                            <input type="file" accept=".jpg,.png" class="file-input" (change)="onFileSelected($event)" #fileUpload />
-                        </div>
-                        <div fxLayoutAlign="center" class="file-picture">
-                            {{ this.fileDomain.nombre || "Seleccionar foto" }}
+                        <p class="button-save-one">
+                            <input type="file" accept=".jpeg,.jpg,.png" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+                        </p>
 
+                        <div fxLayoutAlign="center" class="file-picture">
+                            <p *ngIf="fileDomain.imageSource == undefined and fileDomain.imageSource == ''">Adjuntar Imagen</p>
                             <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                                 <mat-icon>attach_file</mat-icon>
                             </button>
+                            <button (click)="verImagen()" class="upload-btn" *ngIf="fileDomain.imageSource != undefined and fileDomain.imageSource != ''"><mat-icon>remove_red_eye</mat-icon></button>
                         </div>
                         <section>
                             <div class="button-save" fxLayoutAlign="center">

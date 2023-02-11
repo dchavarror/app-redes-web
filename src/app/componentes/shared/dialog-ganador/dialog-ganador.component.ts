@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Ganador } from 'src/app/domain/Ganador';
 import { Persona } from 'src/app/domain/Persona';
@@ -10,26 +10,36 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { VigenciaService } from '../../../servicios/vigencia.service';
 import { Utils } from '../../../utils/Utils';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-dialog-ganador',
   templateUrl: './dialog-ganador.component.html',
   styleUrls: ['./dialog-ganador.component.css']
 })
-export class DialogGanadorComponent implements OnInit {
+export class DialogGanadorComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['red', 'premio', 'promocion', 'acciones'];
 
   ganadores: Array<Ganador>;
   response: Response;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  datas = new MatTableDataSource<Ganador>();
 
   constructor(private message: MessageUtilsComponent, private clipboard: Clipboard, private utils: Utils, public dialog: MatDialog, public dialogRef: MatDialogRef<DialogGanadorComponent>, @Inject(MAT_DIALOG_DATA) public data: Persona, private serviceGanador: GanadorService, private serviceVigencia: VigenciaService) {
     this.ganadores = new Array<Ganador>();
     this.response = new Response();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
     this.obtenerGanadores();
+  }
+
+  inicializarListas() {
+    this.datas = new MatTableDataSource<Ganador>();
+    this.datas.data = new Array<Ganador>();
+    this.datas.paginator = this.paginator;
   }
 
   valid() {
@@ -44,11 +54,13 @@ export class DialogGanadorComponent implements OnInit {
 
   //Método encargado de obtener los ganadores mediante la cedula o codigo
   obtenerGanadores() {
+    this.inicializarListas();
     this.serviceGanador.getGanadores(this.data.id).subscribe({
       next: (resp: any) => {
         this.response = resp;
         if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.ganadores = this.response.objectResponse;
+          this.datas.data = this.ganadores
         } else {
           this.openDialogDetalles(this.response.message);
         }

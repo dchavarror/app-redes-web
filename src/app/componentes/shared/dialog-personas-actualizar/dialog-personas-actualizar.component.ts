@@ -4,10 +4,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Persona } from '../../../domain/Persona';
 import { PersonaService } from '../../../servicios/persona.service';
 import { Response } from '../../../domain/Response';
-import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, TYPE_IMG } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 import { Utils } from '../../../utils/Utils';
 import { FileDomain } from '../../../domain/FileDomain';
+import { Observable, Observer } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dialog-personas-actualizar',
@@ -19,6 +21,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
   persona: Persona;
   response: Response;
   fileDomain: FileDomain;
+  imageSource: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private message: MessageUtilsComponent,
     private personaService: PersonaService, public dialogRef: MatDialogRef<DialogPersonasActualizarComponent>, private utils: Utils) {
@@ -28,6 +31,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fileDomain.imageSource = this.utils.leerImage(this.data.foto);
   }
 
   actualizarPersona() {
@@ -60,7 +64,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
   }
 
   validar() {
-    if (this.data.nombre == '' || this.data.cedula == '' || this.data.foto == '') {
+    if (this.data.nombre == '' || this.data.cedula == '') {
       return false;
     }
     return true;
@@ -68,5 +72,9 @@ export class DialogPersonasActualizarComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.fileDomain = this.utils.onFileSelected(event);
+  }
+
+  verImagen() {
+    this.utils.verImagen(this.fileDomain)
   }
 }

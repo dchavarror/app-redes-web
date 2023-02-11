@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Detalle } from '../domain/Detalle';
 import { environment } from '../../environments/environment';
-import { REDES, TYPE_ICON_SNACKBAR, MENSAJE_MODALES } from '../../environments/enviroment.variables';
+import { REDES, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, TYPE_IMG } from '../../environments/enviroment.variables';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { VigenciaService } from '../servicios/vigencia.service';
 import { MessageUtilsComponent } from '../componentes/shared/message-utils/message-utils.component';
 import { FileDomain } from '../domain/FileDomain';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogImagenComponent } from '../componentes/shared/dialog-imagen/dialog-imagen.component';
 
 @Injectable({
     providedIn: 'root'
 })
 export class Utils {
+
     detalle: Detalle;
     fileDomain: FileDomain;
-    constructor(private clipboard: Clipboard, private serviceVigencia: VigenciaService, private message: MessageUtilsComponent) {
+    constructor(private clipboard: Clipboard,
+        private dialog: MatDialog, private serviceVigencia: VigenciaService, private message: MessageUtilsComponent, private sanitizer: DomSanitizer) {
         this.detalle = new Detalle();
         this.fileDomain = new FileDomain();
     }
@@ -87,6 +92,8 @@ export class Utils {
                     var reader = new FileReader();
                     reader.onload = (e: any) => {
                         this.fileDomain.base64 = this.validarDocumento(file.type, e.target.result);
+                        this.leerImage(this.fileDomain.base64);
+                        
                     };
                     reader.readAsDataURL(file);
                 } else {
@@ -100,8 +107,16 @@ export class Utils {
         return this.fileDomain;
     }
 
+    leerImage(foto: any) {
+        this.fileDomain.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl(TYPE_IMG.CADENA_PNG + foto);
+        if (this.fileDomain.imageSource == TYPE_IMG.CADENA_PNG) {
+            this.fileDomain.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl(TYPE_IMG.CADENA_JPG + foto);
+        }
+
+        return this.fileDomain.imageSource;
+    }
+
     validarDocumento(type: string, base: string) {
-        debugger
         switch (type) {
             case 'image/jpeg':
                 return base.substring(23);
@@ -112,6 +127,14 @@ export class Utils {
                 return ''
             }
         }
+    }
+
+    verImagen(img: any) {
+        const dialogRef = this.dialog.open(DialogImagenComponent, {
+            panelClass: 'custom-dialog-container',
+            data: img
+        });
+
     }
 
 }

@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogAdministracionPromocionesComponent } from '../../shared/dialog-administracion-promociones/dialog-administracion-promociones.component';
 import { PromocionesComponent } from '../../promociones/promociones.component';
+import { FileDomain } from '../../../domain/FileDomain';
 
 @Component({
   selector: 'app-administradcion',
@@ -58,7 +59,7 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     const dialogRef = this.dialog.open(PromocionesComponent, {
       panelClass: 'custom-dialog-container',
       width: '600px',
-      height: '90%'
+      height: '90%',
     });
 
     dialogRef.afterClosed().subscribe(result => {

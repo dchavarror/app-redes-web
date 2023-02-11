@@ -70,6 +70,7 @@ import { DialogPersonasActualizarComponent } from './componentes/shared/dialog-p
 import { DialogEliminarPremioComponent } from './componentes/shared/dialog-eliminar-premio/dialog-eliminar-premio.component';
 import { DialogActualizarPremioComponent } from './componentes/shared/dialog-actualizar-premio/dialog-actualizar-premio.component';
 import { DialogAdministracionPromocionesComponent } from './componentes/shared/dialog-administracion-promociones/dialog-administracion-promociones.component';
+import { DialogImagenComponent } from './componentes/shared/dialog-imagen/dialog-imagen.component';
 
 const materialModules = [
   CdkTreeModule,
@@ -136,7 +137,8 @@ const materialModules = [
     DialogPersonasActualizarComponent,
     DialogEliminarPremioComponent,
     DialogActualizarPremioComponent,
-    DialogAdministracionPromocionesComponent
+    DialogAdministracionPromocionesComponent,
+    DialogImagenComponent
   ],
   imports: [
     BrowserModule,

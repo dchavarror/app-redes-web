@@ -38,7 +38,7 @@
 .mat-button-ver {
     border-radius: 50%;
     background: #002361;
-    margin: auto;
+    margin-top: 10px;
     color: white;
 }
 
@@ -127,7 +127,6 @@ table {
     mat-icon,
     .button-icon {
         margin-right: 0;
-        font-size: medium;
     }
     .mat-button-link {
         margin-left: 20%;
@@ -162,4 +161,22 @@ table {
 
 .close:hover {
     color: darkgray;
+}
+
+p {
+    word-wrap: break-word;
+    width: 10px;
+}
+
+.textarea {
+    background-color: initial;
+    border: none;
+    box-shadow: none;
+    font-size: inherit;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    resize: none;
+    width: 100%;
+    padding-left: 0%;
 }

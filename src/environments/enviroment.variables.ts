@@ -90,3 +90,8 @@ export const ROLES = {
     ROL_ADM: 'ROL_ADM',
     ROL_CONS: 'ROL_CONS'
 }
+
+export const TYPE_IMG={
+   CADENA_PNG : 'data:image/png;base64,',
+   CADENA_JPG : 'data:image/jpj;base64,'
+}

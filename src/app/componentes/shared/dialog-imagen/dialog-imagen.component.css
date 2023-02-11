@@ -1,0 +1,8 @@
+.button-change {
+    background-color: white;
+    border: none;
+}
+
+.button-change:hover {
+    color: darkgray;
+}

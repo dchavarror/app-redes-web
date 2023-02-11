@@ -26,9 +26,9 @@
         </mat-card-content>
     </mat-card>
 </div>
-<div fxLayoutAlign="center" class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap fxLayoutGap="0.5%" *ngIf="tablaMostrar">
-    <mat-card class="mat-card mat-card-test" fxFlex="60%">
-        <table mat-table class="mat-elevation-z8 demo-table" [dataSource]="personas" fxFlex="100%">
+<div class="content-table" fxLayoutAlign="center" *ngIf="tablaMostrar">
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="datas">
             <ng-container matColumnDef="cedula">
                 <th mat-header-cell *matHeaderCellDef fxFlex="33%" fxLayoutAlign="center">Cedula</th>
                 <td mat-cell *matCellDef="let element" fxFlex="33%" fxLayoutAlign="center">{{ element.cedula }}
@@ -47,12 +47,14 @@
             <ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef fxFlex="33%" fxLayoutAlign="center">Acciones</th>
                 <td mat-cell *matCellDef="let element" fxFlex="33%" fxLayoutAlign="center">
-                    <button class="mat-button-ver" fxFlex="50%" type="button">Ver</button>
+                    <button class="mat-button-ver" fxFlex="50%" type="button" (click)="openDialogDetalleDePersona(element)">Ver</button>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="openDialogDetalleDePersona(row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-    </mat-card>
+        <mat-paginator id="tblPrueba" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
 </div>

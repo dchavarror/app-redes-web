@@ -5,6 +5,13 @@
     transition: 1s;
 }
 
+.content-table {
+    transition: 2s;
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 253px;
+}
+
 .content-two {
     transition: 1s;
     background-color: white;
@@ -75,4 +82,8 @@ input.example-right-align::-webkit-inner-spin-button {
 
 .mat-card-title {
     text-align: center;
+}
+
+table {
+    width: 100%;
 }

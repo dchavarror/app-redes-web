@@ -7,37 +7,38 @@
             <mat-card-title>Resultado</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p>
+            <div>
                 <mat-form-field appearance="outline" fxFlex="100%">
                     <mat-label class="label">Nombre promoción</mat-label>
                     <input [(ngModel)]="data.nombre" matInput placeholder="Nombre promoción" />
                 </mat-form-field>
-            </p>
-            <p>
+            </div>
+            <div>
                 <mat-form-field appearance="outline" fxFlex="100%">
                     <mat-label class="label">Código promocional</mat-label>
                     <input [(ngModel)]="data.codigo" matInput placeholder="Código promocional">
                 </mat-form-field>
-            </p>
-            <p>
+            </div>
+            <div>
                 <mat-form-field appearance="outline" fxFlex="100%">
                     <mat-label class="label">Link publicación</mat-label>
                     <input [(ngModel)]="data.linkPublicacion" type="text" matInput placeholder="Link publicación" />
                 </mat-form-field>
-            </p>
+            </div>
 
-            <p>
+            <div>
                 <mat-form-field appearance="outline" fxFlex="100%">
                     <mat-label class="label">Terminos y condiciones</mat-label>
                     <textarea [(ngModel)]="data.terminos" rows="5" cols="500" class="text-area-full-width" matInput placeholder="Terminos y condiciones"></textarea>
                 </mat-form-field>
-            </p>
+            </div>
 
-            <p fxLayoutAlign="center">
+            <div fxLayoutAlign="center">
                 <button class="mat-button-ver" (click)="agregarDetallePromocion()" mat-fab aria-label="Agregar premio" fxLayoutAlign="center">
                     <mat-icon>queue</mat-icon>
                 </button>
-            </p>
+            </div>
+            <br>
             <div fxLayoutAlign="center">
                 <button class="mat-button" type="button" (click)="actulizarPromocion()">
                     ACTUALIZAR
@@ -51,15 +52,15 @@
         <table mat-table [dataSource]="datas">
             <ng-container matColumnDef="codigo">
                 <th mat-header-cell *matHeaderCellDef>Red</th>
-                <td mat-cell *matCellDef="let element">{{ element.red }}
+                <td mat-cell *matCellDef="let element">
+                    <textarea class="textarea" disabled name="" id="" cols="5" rows="2"> {{ element.red }}</textarea>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="premio">
                 <th mat-header-cell *matHeaderCellDef>Premio</th>
                 <td mat-cell *matCellDef="let element">
-                    {{ element.premio.descripcion }}
-                </td>
+                    <textarea class="textarea" disabled name="" id="" cols="5" rows="2"> {{ element.premio.descripcion }}</textarea>
             </ng-container>
 
             <ng-container matColumnDef="eliminar">
@@ -81,6 +82,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+        <mat-paginator id="tbl2" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator>
 
     </div>
 </div>

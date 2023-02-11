@@ -16,10 +16,9 @@
     border: none;
     background: #002361;
     color: white;
-    width: 30%;
+    width: 100%;
     height: 50%;
-    margin-left: 25%;
-    margin-top: 15%;
+    margin-top: 20%;
     margin-bottom: 20px;
 }
 
@@ -43,7 +42,6 @@
 table.mat-table {
     width: 100%;
     border-spacing: 0;
-    padding-bottom: 50px;
     margin-top: -20px;
 }
 
@@ -57,12 +55,14 @@ table.mat-table {
 }
 
 th {
-    font-size: large;
     margin-top: 20px;
+    position: relative;
     text-align: center;
+    padding-right: 0;
 }
 
 td {
+    position: relative;
     text-align: center;
 }
 
@@ -71,16 +71,22 @@ td {
         font-size: 10px;
         padding-right: 15px;
     }
-    th {
+    th.mat-header-cell {
         font-size: 9px;
+        text-align: center;
     }
     .mat-button-two {
         margin-bottom: 23px;
         margin-left: 20%;
-        font-size: 9px;
         margin-top: 30%;
+        font-size: 10px;
     }
     table {
         left: 15%;
     }
+}
+
+p {
+    word-wrap: break-word;
+    width: 120px;
 }

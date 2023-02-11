@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Response } from 'src/app/domain/Response';
 import { DialogGanadorComponent } from '../shared/dialog-ganador/dialog-ganador.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -6,35 +6,61 @@ import { PersonaService } from '../../servicios/persona.service';
 import { Persona } from 'src/app/domain/Persona';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-buscar-ganadores',
   templateUrl: './buscar-ganadores.component.html',
   styleUrls: ['./buscar-ganadores.component.css'],
 })
-export class BuscarGanadoresComponent implements OnInit {
+export class BuscarGanadoresComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['cedula', 'nombre', 'acciones'];
   personas: Array<Persona>;
 
-  nombre = '';
-  cedula = '';
+  nombre: string;
+  cedula: string;
   response: Response;
   clases: string = '';
-  tablaMostrar = false;
-  
+  tablaMostrar: boolean;
+
+  datas = new MatTableDataSource<Persona>();
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    if (mp) {
+      this.paginator = mp;
+      this.datas = new MatTableDataSource<Persona>(this.personas);
+      this.datas.paginator = this.paginator;
+      this.cdRef.detectChanges();
+    }
+  }
+
   constructor(
     private servicePersona: PersonaService,
     public dialog: MatDialog,
     private personaService: PersonaService,
-    private message: MessageUtilsComponent
+    private message: MessageUtilsComponent,
+    private cdRef: ChangeDetectorRef
   ) {
     this.response = new Response();
     this.personas = new Array<Persona>();
+
+    this.clases = 'content-one';
+    this.tablaMostrar = false;
+    this.cedula = '';
+    this.nombre = '';
   }
 
-  ngOnInit(): void {
-    this.clases = 'content-one';
+  ngAfterViewInit() {
+    this.inicilizarListas();
+  }
+
+  inicilizarListas() {
+    this.datas = new MatTableDataSource<Persona>();
+    this.datas.data = new Array<Persona>();
+    this.datas.paginator = this.paginator;
   }
 
   //Método que permite obtener una(s) persona(s) mediante el nombre o la cedula
@@ -48,8 +74,10 @@ export class BuscarGanadoresComponent implements OnInit {
           .getPersonas(this.cedula, this.nombre)
           .subscribe({
             next: (resp: any) => {
+              console.log('resp ', resp);
               this.response = resp;
               this.personas = this.response.objectResponse;
+              this.datas.data = this.personas
               if (this.personas != undefined || this.personas != null) {
                 this.tablaMostrar = true;
                 this.clases = 'content-two';
@@ -79,11 +107,7 @@ export class BuscarGanadoresComponent implements OnInit {
   //Método que abre un dialog, este permite obtener el(los) detalles asociados a una persona
   openDialogDetalleDePersona(sele: Persona): void {
     const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '700px';
-    dialogConfig.height = '300px'
+    dialogConfig.width = "600px";
 
     dialogConfig.data = sele;
     const dialogRef = this.dialog.open(DialogGanadorComponent, dialogConfig,);

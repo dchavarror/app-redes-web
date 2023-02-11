@@ -22,6 +22,7 @@ import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dial
 import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/forms';
 import { FileDomain } from '../../domain/FileDomain';
 import { Utils } from '../../utils/Utils';
+import { DialogImagenComponent } from '../shared/dialog-imagen/dialog-imagen.component';
 
 @Component({
   selector: 'app-ganador',
@@ -57,7 +58,9 @@ export class GanadorComponent implements OnInit {
     this.fileDomain = new FileDomain();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  
+  }
 
   //*
   //Métodos que abren un dialog el cual contiene información sobre los terminos, condiciones y tratamientos que debe aceptar el ganador
@@ -140,7 +143,6 @@ export class GanadorComponent implements OnInit {
         if (this.response.statusCode == STATUS_SERVICE.VENCIDO) {
           this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO, TYPE_ICON_SNACKBAR.WARN);
           setTimeout(() => {
-            debugger
             window.location.replace(PAGINAS.URL_BETPLAY);
           }, 3000);
         }
@@ -159,9 +161,9 @@ export class GanadorComponent implements OnInit {
           ) {
             this.indDisablePersona = true;
             this.persona.nombreCompleto =
-              this.detalle.persona.nombreCompleto.toUpperCase();
+            this.detalle.persona.nombreCompleto.toUpperCase();
             this.persona.cedula = this.detalle.persona.cedula;
-            this.fileDomain.base64 = 'YA EXISTE';
+            this.fileDomain.imageSource = this.utils.leerImage(this.detalle.persona.foto);
           }
         } else if (this.response.statusCode != STATUS_SERVICE.VENCIDO && this.response.statusCode != STATUS_SERVICE.ACCEPTED) {
           this.openDialog(this.response.message);
@@ -173,6 +175,11 @@ export class GanadorComponent implements OnInit {
         this.openDialog(e.message);
       }
     });
+  }
+
+  //Método encargado de redirir la vista al componente donde se crean las promociones
+  verImagen() {
+    this.utils.verImagen(this.fileDomain)
   }
 
   imageSizeValidator(minSize: number, maxSize: number): ValidatorFn {

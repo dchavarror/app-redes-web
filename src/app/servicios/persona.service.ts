@@ -16,7 +16,9 @@ export class PersonaService {
   }
 
   getPersonas(cedula: string , nombres:string) {
-    let query = '?cedula=' + cedula + '&nombres=' + nombres;
+    let pCedula = cedula != null ? cedula:"" ;
+    let pNombres = nombres != null ? nombres:"" ;
+    let query = '?cedula=' +pCedula + '&nombres=' + pNombres;
     return this.servicio.get(END_POINT_SERVICE.PERSONA , query).pipe( map( data => data ));
   }
 }
