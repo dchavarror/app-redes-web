@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Detalle } from '../domain/Detalle';
 import { environment } from '../../environments/environment';
 import { REDES, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, TYPE_IMG } from '../../environments/enviroment.variables';
@@ -14,6 +14,12 @@ import { DialogImagenComponent } from '../componentes/shared/dialog-imagen/dialo
     providedIn: 'root'
 })
 export class Utils {
+    
+  evento = new EventEmitter<any>();
+
+  enviarEvento(data: any) {
+    this.evento.emit(data);
+  }
 
     detalle: Detalle;
     fileDomain: FileDomain;
@@ -79,9 +85,9 @@ export class Utils {
 
     //Método que permite subir una imagen relacionada a un ganador
     onFileSelected(event: any) {
+        debugger
         const file: File = event.target.files[0];
         if (file) {
-
             if (file.type == 'image/jpeg' || file.type == 'image/png') {
                 let tamañoFile = file.size / 1000 / 1000;
                 if (tamañoFile <= 1) {
@@ -93,7 +99,7 @@ export class Utils {
                     reader.onload = (e: any) => {
                         this.fileDomain.base64 = this.validarDocumento(file.type, e.target.result);
                         this.leerImage(this.fileDomain.base64);
-                        
+
                     };
                     reader.readAsDataURL(file);
                 } else {

@@ -8,8 +8,6 @@ import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, T
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 import { Utils } from '../../../utils/Utils';
 import { FileDomain } from '../../../domain/FileDomain';
-import { Observable, Observer } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dialog-personas-actualizar',
@@ -39,7 +37,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
       this.persona.id = this.data.id;
       this.persona.nombreCompleto = this.data.nombre;
       this.persona.cedula = this.data.cedula;
-      this.persona.foto = this.fileDomain.base64;
+      this.persona.foto = this.fileDomain.base64 != undefined && this.fileDomain.base64 != '' ? this.fileDomain.base64 : this.data.foto;
       this.persona.usuario = this.data.usuario;
       this.persona.usuarioModifica = String(localStorage.getItem(this.data.usuarioModifica));
       this.personaService.actualizarPersona(this.persona).subscribe({

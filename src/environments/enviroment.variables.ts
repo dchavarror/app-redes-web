@@ -27,6 +27,7 @@ export const MESSAGE_SERVICE = {
     PREMIO_ACTIVO_VALIDACION: 'Premio asociado a una promocion, no se puede eliminar!',
     GANADOR_ACTIVO_VALIDACION: 'Ganador asociado a este detalle, no se puede eliminar!',
     SIN_RESPONSE_SERVICE: 'Ocurrio un inconveniente, por verifiquelo con el administrador o intentelo de nuevo',
+    SIN_RESPONSE_SERVICE_MESSAGE: 'Ocurrio un inconveniente, por verifiquelo con el administrador',
 }
 
 export const TITULOS_MODALES = {

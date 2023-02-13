@@ -39,6 +39,7 @@ export class PremiosComponent implements AfterViewInit {
     this.premio = new Premio();
     this.response = new Response();
     this.premios = new Array<Premio>();
+    this.data = new MatTableDataSource<Premio>();
     this.allPremios();
   }
 
@@ -54,7 +55,7 @@ export class PremiosComponent implements AfterViewInit {
           this.premio = this.response.objectResponse;
           if (this.response.statusCode == STATUS_SERVICE.CREACION) {
             this.message.mostrarMessage(MESSAGE_SERVICE.CREADO_PREMIO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
-            this.crearNuevasInstancias();
+            this.allPremios();
           }
 
           this.descripcion = '';
@@ -85,7 +86,6 @@ export class PremiosComponent implements AfterViewInit {
         this.data.data = this.premios;
       },
       error: (e) => {
-        console.log('error ', e);
         this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });
@@ -104,9 +104,7 @@ export class PremiosComponent implements AfterViewInit {
           });
           dialogRef.afterClosed().subscribe({
             next: (result: any) => {
-              this.data = new MatTableDataSource<Premio>();
-              this.allPremios();
-              console.log('The dialog was closed', result);
+              this.crearNuevasInstancias();
             },
             error: (e) => {
               console.log('error ', e);
@@ -129,11 +127,9 @@ export class PremiosComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
-        this.allPremios();
-        console.log('The dialog was closed', result);
+        this.crearNuevasInstancias();
       },
       error: (e) => {
-        console.log('error ', e);
         this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });

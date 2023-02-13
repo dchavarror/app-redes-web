@@ -1,6 +1,6 @@
 <div class="container-home">
     <mat-tab-group class="tap-group" dynamicHeight [selectedIndex]="tabSeleccionado" (selectedIndexChange)="onClickTabSeleccionado($event)">
-        <mat-tab label="Buscar ganadores" *ngIf="indAdmin || indConsulta">
+        <mat-tab label="Buscar Ganadores" *ngIf="indAdmin || indConsulta">
             <app-buscar-ganadores> </app-buscar-ganadores>
         </mat-tab>
         <mat-tab label="Reporte" *ngIf="indAdmin">

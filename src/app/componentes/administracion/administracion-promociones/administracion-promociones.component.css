@@ -183,10 +183,6 @@ table {
     overflow: auto;
 }
 
-table {
-    width: 100%;
-}
-
 .example-loading-shade {
     position: absolute;
     top: 0;

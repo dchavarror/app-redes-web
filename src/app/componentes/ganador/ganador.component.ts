@@ -23,6 +23,7 @@ import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/
 import { FileDomain } from '../../domain/FileDomain';
 import { Utils } from '../../utils/Utils';
 import { DialogImagenComponent } from '../shared/dialog-imagen/dialog-imagen.component';
+import { DialogMessageServiceComponent } from '../shared/dialog-message-service/dialog-message-service.component';
 
 @Component({
   selector: 'app-ganador',
@@ -59,7 +60,7 @@ export class GanadorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
   }
 
   //*
@@ -101,7 +102,6 @@ export class GanadorComponent implements OnInit {
             this.ganador.tratamientoDatos = true;
           }
         }
-
         console.log('modal cerrado');
       },
       error: (e) => {
@@ -126,10 +126,35 @@ export class GanadorComponent implements OnInit {
         ) {
           this.indMostrar = false;
         }
+        window.location.replace(PAGINAS.URL_BETPLAY);
       },
       error: (e) => {
         console.log('error ', e);
-        this.openDialog(e.message);
+        this.openDialogServiceMessage(e.message);
+      }
+    });
+  }
+  //Método que abre un dialog, este contiene información de posibles excepciones en los servicios o errores no controlados
+  openDialogServiceMessage(mensaje: string) {
+    const dialogRef = this.dialog.open(DialogMessageServiceComponent, {
+      data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (resp: any) => {
+        console.log(this.response.statusCode);
+        if (
+          this.response.statusCode == STATUS_SERVICE.VENCIDO ||
+          this.response.statusCode == STATUS_SERVICE.ACCEPTED
+        ) {
+          this.indMostrar = false;
+        }
+        location.reload();
+      },
+      error: (e) => {
+        console.log('error ', e);
+        this.openDialogServiceMessage(e.message);
+        location.reload();
       }
     });
   }
@@ -141,17 +166,11 @@ export class GanadorComponent implements OnInit {
         this.response = resp;
         console.log('response ', this.response);
         if (this.response.statusCode == STATUS_SERVICE.VENCIDO) {
-          this.message.mostrarMessage(MENSAJE_MODALES.POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO, TYPE_ICON_SNACKBAR.WARN);
-          setTimeout(() => {
-            window.location.replace(PAGINAS.URL_BETPLAY);
-          }, 3000);
+          this.openDialog(MENSAJE_MODALES.POR_FAVOR_VALIDAR_YA_SE_VENCIO_TIEMPO);
         }
         if (
           this.response.statusCode == STATUS_SERVICE.ACCEPTED) {
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.WARN);
-          setTimeout(() => {
-            window.location.replace(PAGINAS.URL_BETPLAY);
-          }, 3000);
+          this.openDialog(this.response.message);
         }
         if (this.response.statusCode == STATUS_SERVICE.EXITOSO) {
           this.detalle = this.response.objectResponse;
@@ -161,7 +180,7 @@ export class GanadorComponent implements OnInit {
           ) {
             this.indDisablePersona = true;
             this.persona.nombreCompleto =
-            this.detalle.persona.nombreCompleto.toUpperCase();
+              this.detalle.persona.nombreCompleto.toUpperCase();
             this.persona.cedula = this.detalle.persona.cedula;
             this.fileDomain.imageSource = this.utils.leerImage(this.detalle.persona.foto);
           }
@@ -172,7 +191,7 @@ export class GanadorComponent implements OnInit {
       },
       error: (e) => {
         console.log('error ', e);
-        this.openDialog(e.message);
+        this.openDialogServiceMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE_MESSAGE);
       }
     });
   }
@@ -214,7 +233,7 @@ export class GanadorComponent implements OnInit {
       this.ganador.persona.id = this.detalle.persona.id;
       this.ganador.usuarioCreacion = String(localStorage.getItem('usuario'));
       this.ganador.activo = true;
-      this.persona.foto = this.fileDomain.base64;
+      this.persona.foto = this.fileDomain.base64 != undefined && this.fileDomain.base64 != '' ? this.fileDomain.base64 : this.detalle.persona.foto;
       this.persona.usuario = this.detalle.persona.usuario;
       this.persona.usuarioModifica = String(localStorage.getItem('usuario'));
       this.personaService.actualizarPersona(this.persona).subscribe({
@@ -233,14 +252,14 @@ export class GanadorComponent implements OnInit {
                 ) {
                   this.persona = new Persona();
                   this.ganador = new Ganador();
-                  window.location.replace(PAGINAS.URL_BETPLAY);
+                  this.openDialog('Ganador guardado con exito!');
                 } else {
                   this.openDialog(this.response.message);
                 }
               },
               error: (e) => {
                 console.log('error ', e);
-                this.openDialog(e.message);
+                this.openDialogServiceMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE_MESSAGE);
               }
             });
           } else {
@@ -249,7 +268,7 @@ export class GanadorComponent implements OnInit {
         },
         error: (e) => {
           console.log('error ', e);
-          this.openDialog(e.message);
+          this.openDialogServiceMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE_MESSAGE);
         }
       });
     } else {
@@ -267,7 +286,7 @@ export class GanadorComponent implements OnInit {
     ) {
       return true;
     }
-    if (this.fileDomain.base64 == undefined || this.fileDomain.base64 == '') {
+    if ((this.fileDomain.base64 == undefined || this.fileDomain.base64 == '') && (this.detalle.persona.foto == '' || this.detalle.persona.foto == undefined)) {
       return true;
     }
     if (

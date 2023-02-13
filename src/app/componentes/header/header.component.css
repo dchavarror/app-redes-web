@@ -2,3 +2,8 @@ div {
     padding-left: 20px;
     padding-top: 10px;
 }
+
+button {
+    background-color: #002361;
+    border: none;
+}

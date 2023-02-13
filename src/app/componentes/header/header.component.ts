@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Utils } from '../../utils/Utils';
+import { TABS } from '../../../environments/enviroment.variables';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private utils: Utils) { }
 
   ngOnInit(): void {
   }
 
+  evento(){
+      this.utils.enviarEvento(TABS.ADMINISTRACION);
+  }
 }

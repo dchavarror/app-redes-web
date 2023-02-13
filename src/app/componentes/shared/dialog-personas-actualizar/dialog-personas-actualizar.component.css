@@ -28,6 +28,7 @@
     border-radius: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .mat-button {
@@ -47,8 +48,8 @@
     color: white;
     width: 15%;
     font-size: 100%;
-    margin-left: 10px;
     margin-top: -13px;
+    border: none;
 }
 
 .mat-button:hover,

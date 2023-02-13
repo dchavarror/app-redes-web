@@ -20,7 +20,7 @@ export class MessageUtilsComponent implements OnInit {
 
   mostrarMessage(message: string, type: string) {
     this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 2000,
+      duration: 3000,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       data: { message: message, snackType: type },

@@ -24,11 +24,11 @@
                         </p>
 
                         <div fxLayoutAlign="center" class="file-picture">
-                            <p *ngIf="fileDomain.imageSource == undefined and fileDomain.imageSource == ''">Adjuntar Imagen</p>
+                            <p *ngIf="fileDomain != undefined && fileDomain.imageSource == undefined && fileDomain.imageSource == ''">Adjuntar Imagen</p>
                             <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                                 <mat-icon>attach_file</mat-icon>
                             </button>
-                            <button (click)="verImagen()" class="upload-btn" *ngIf="fileDomain.imageSource != undefined and fileDomain.imageSource != ''"><mat-icon>remove_red_eye</mat-icon></button>
+                            <button (click)="verImagen()" class="upload-btn" *ngIf=" fileDomain != undefined && fileDomain.imageSource != undefined && fileDomain.imageSource != ''"><mat-icon>remove_red_eye</mat-icon></button>
                         </div>
                         <section>
                             <div class="button-save" fxLayoutAlign="center">
