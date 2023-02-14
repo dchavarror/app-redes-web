@@ -11,6 +11,13 @@ import { Utils } from 'src/app/utils/Utils';
 import { STATUS_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, MESSAGE_SERVICE } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite crear un nuevo detalle (premio) en una promocion, este se comporta como un dialog.
+ */
+
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -23,22 +30,34 @@ export class DialogComponent implements OnInit {
   ganadorFormGroup: any;
   detalle: Detalle = new Detalle();
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(private message: MessageUtilsComponent,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private premioService: PremioService, private serviceDetalle: DetalleService, private utils: Utils
   ) {
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
     this.obtenerPremio();
     this.inicializarComponente();
   }
 
+  /**
+   * Método que permite cerrar el dialogo, en esta caso este componente.
+   */
   onCloseClick(): void {
     this.dialogRef.close();
   }
 
-  //Método que permite obtener los detalles(premios) de una promocion
+  /**
+   * Método que permite obtener los detalles(premios) de una promocion
+   */
   obtenerPremio() {
     this.premioService.getPremio().subscribe({
       next: (responsePremios: any) => {
@@ -52,6 +71,9 @@ export class DialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que permite crear nuevas instancias del atributo ganadorFormGroup.
+   */
   inicializarComponente() {
     this.ganadorFormGroup = new FormGroup({
       fred: new FormControl('', Validators.required),
@@ -59,7 +81,9 @@ export class DialogComponent implements OnInit {
     });
   }
 
-  //Método que guarda un detalle a una promocion ya existente
+  /**
+   * Método que guarda el detalle de una promoción ya existente.
+   */
   guardarDetalle() {
     if (this.validar()) {
       this.detalle = this.utils.buscarRed(this.data.red);
@@ -89,6 +113,10 @@ export class DialogComponent implements OnInit {
 
   }
 
+  /**
+   * Método que valida si la red es valida, para controlar la entrada de datos incorrectos o que no tienen
+   * relacion alguna con una red de valida.
+   */
   redValida(red: string) {
     if (red == 'NA') {
       return true;
@@ -96,11 +124,13 @@ export class DialogComponent implements OnInit {
     return false;
   }
 
-  //Método que guarda un detalle a una nueva promoción
+  /**
+   * Método que guarda un detalle a una nueva promoción.
+   */
   onClickGuardar() {
     if (this.validar()) {
       this.detalle = this.utils.buscarRed(this.data.red);
-      this.data.link= this.detalle.link;
+      this.data.link = this.detalle.link;
       this.data.codigoPromocional = this.detalle.codigoPromocional;
       this.data.usuario = this.detalle.persona.usuario;
       if (!this.redValida(this.detalle.red)) {
@@ -113,6 +143,10 @@ export class DialogComponent implements OnInit {
 
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validar() {
     if (this.data.red == undefined || this.data.red == '') {
       return false;

@@ -11,6 +11,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogActualizarPremioComponent } from '../../shared/dialog-actualizar-premio/dialog-actualizar-premio.component';
 import { DetalleService } from '../../../servicios/detalle.service';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite administrar un premio.
+ * (listar premios,crear, editar y eliminar)
+ */
+
 @Component({
   selector: 'app-premios',
   templateUrl: './premios.component.html',
@@ -27,23 +35,35 @@ export class PremiosComponent implements AfterViewInit {
   data = new MatTableDataSource<Premio>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(private servicePremio: PremioService, private message: MessageUtilsComponent, private dialog: MatDialog, private detalleService: DetalleService) {
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngAfterViewInit() {
     this.data.paginator = this.paginator;
     this.crearNuevasInstancias();
   }
 
+  /**
+   * Método que permite crear nuevas instancias de los atributos cuando se es necesario dentro del componente.
+   */
   crearNuevasInstancias() {
     this.premio = new Premio();
     this.response = new Response();
     this.premios = new Array<Premio>();
     this.data = new MatTableDataSource<Premio>();
-    this.allPremios();
+    this.obtenerAllPremios();
   }
 
-  //Método que permite guardar un nuevo premio
+  /**
+   * Método que permite guardar un nuevo premio.
+   */
   guardarNuevoPremio() {
     if (this.valid()) {
       this.premio.descripcion = this.descripcion;
@@ -55,7 +75,7 @@ export class PremiosComponent implements AfterViewInit {
           this.premio = this.response.objectResponse;
           if (this.response.statusCode == STATUS_SERVICE.CREACION) {
             this.message.mostrarMessage(MESSAGE_SERVICE.CREADO_PREMIO_EXITO, TYPE_ICON_SNACKBAR.SUCCES);
-            this.allPremios();
+            this.obtenerAllPremios();
           }
 
           this.descripcion = '';
@@ -70,6 +90,10 @@ export class PremiosComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   valid() {
     if (this.descripcion == undefined || this.descripcion == null || this.descripcion == '') {
       return false;
@@ -77,8 +101,10 @@ export class PremiosComponent implements AfterViewInit {
     return true;
   }
 
-  //Método que permite obtener el listado de premios existentes (activos)
-  allPremios() {
+  /**
+   * Método que permite obtener el listado de premios existentes (activos).
+   */
+  obtenerAllPremios() {
     this.servicePremio.getPremio().subscribe({
       next: (resp: any) => {
         this.response = resp;
@@ -91,7 +117,9 @@ export class PremiosComponent implements AfterViewInit {
     });
   }
 
-  //Método que abre un dialog, este permite eliminar un premio
+  /**
+   * Método que abre un dialog, este permite eliminar un premio.
+   */
   eliminar(item: Premio) {
     this.detalleService.getPremioActivo(item.id).subscribe({
       next: (resp: any) => {
@@ -120,7 +148,9 @@ export class PremiosComponent implements AfterViewInit {
     });
   }
 
-  //Método que abre un dialog, este permite editar un premio
+  /**
+   * Método que abre un dialog, este permite editar un premio.
+   */
   editarPremio(item: Premio) {
     const dialogRef = this.dialog.open(DialogActualizarPremioComponent, {
       data: { descripcion: item.descripcion, idPremio: item.id },

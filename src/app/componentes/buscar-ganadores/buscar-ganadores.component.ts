@@ -9,6 +9,13 @@ import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/envir
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite buscar ganadores y ver los detalles (premios) asociados a un ganador.
+ */
+
 @Component({
   selector: 'app-buscar-ganadores',
   templateUrl: './buscar-ganadores.component.html',
@@ -37,6 +44,10 @@ export class BuscarGanadoresComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(
     private servicePersona: PersonaService,
     public dialog: MatDialog,
@@ -53,17 +64,25 @@ export class BuscarGanadoresComponent implements AfterViewInit {
     this.nombre = '';
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngAfterViewInit() {
     this.inicilizarListas();
   }
 
+  /**
+   * Método que permite crear nuevas instancias de los atributos cuando se es necesario dentro del componente.
+   */
   inicilizarListas() {
     this.datas = new MatTableDataSource<Persona>();
     this.datas.data = new Array<Persona>();
     this.datas.paginator = this.paginator;
   }
 
-  //Método que permite obtener una(s) persona(s) mediante el nombre o la cedula
+  /**
+   * Método que permite obtener una(s) persona(s) mediante el nombre o la cedula.
+   */
   obtenerPersonas() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -97,6 +116,10 @@ export class BuscarGanadoresComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validarCampos() {
     if ((this.nombre != undefined && this.nombre != '') || (this.cedula != undefined && this.cedula != '')) {
       return false;
@@ -104,7 +127,9 @@ export class BuscarGanadoresComponent implements AfterViewInit {
     return true;
   }
 
-  //Método que abre un dialog, este permite obtener el(los) detalles asociados a una persona
+  /**
+   * Método que abre un dialog, este permite obtener el(los) detalles asociados a una persona.
+   */
   openDialogDetalleDePersona(sele: Persona): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "600px";

@@ -7,6 +7,13 @@ import { PremioService } from '../../../servicios/premio.service';
 import { Response } from 'src/app/domain/Response';
 import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite actualizar un premio, este se comporta como un dialog.
+ */
+
 @Component({
   selector: 'app-dialog-actualizar-premio',
   templateUrl: './dialog-actualizar-premio.component.html',
@@ -17,14 +24,24 @@ export class DialogActualizarPremioComponent implements OnInit {
   response: Response
   premio: Premio
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private message: MessageUtilsComponent, private servicePremio: PremioService, public dialogRef: MatDialogRef<DialogActualizarPremioComponent>) {
     this.response = new Response();
     this.premio = new Premio();
   }
 
+  /**
+   * Método que permite detectar cambios dentro de las propiedades de entrada del componente.
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Método que permite actualizar un premio.
+   */
   actualizarPremio() {
     if (this.valid()) {
       this.premio.id = this.data.idPremio;
@@ -53,6 +70,10 @@ export class DialogActualizarPremioComponent implements OnInit {
 
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   valid() {
     if (this.data.descripcion == '' || this.data.descripcion == undefined) {
       return false;

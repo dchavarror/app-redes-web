@@ -22,8 +22,14 @@ import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dial
 import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/forms';
 import { FileDomain } from '../../domain/FileDomain';
 import { Utils } from '../../utils/Utils';
-import { DialogImagenComponent } from '../shared/dialog-imagen/dialog-imagen.component';
 import { DialogMessageServiceComponent } from '../shared/dialog-message-service/dialog-message-service.component';
+
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que contiene el formulario que se le muestra al ganador cuando va a reclamar un premio.
+ */
 
 @Component({
   selector: 'app-ganador',
@@ -41,6 +47,10 @@ export class GanadorComponent implements OnInit {
   indDisablePersona = false;
   fileDomain: FileDomain;
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(
     private detalleService: DetalleService,
     private activateRoute: ActivatedRoute,
@@ -59,12 +69,16 @@ export class GanadorComponent implements OnInit {
     this.fileDomain = new FileDomain();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
 
   }
 
-  //*
-  //Métodos que abren un dialog el cual contiene información sobre los terminos, condiciones y tratamientos que debe aceptar el ganador
+  /**
+   * Métodos que abren un dialogo el cual contiene información sobre los terminos, condiciones y tratamientos que debe aceptar el ganador.
+   */
   openDialogTerminos() {
     this.ganador.aceptoTerminos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TERMINOS, TERMINOS.CODIGO_TERMINOS);
@@ -77,9 +91,10 @@ export class GanadorComponent implements OnInit {
     this.ganador.tratamientoDatos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TRATAMIENTOS, TERMINOS.CODIGO_TRATAMIENTOS);
   }
-  //*
 
-  //Método que abre un dialog, este contiene información la cual puede variar
+  /**
+   * Método que abre un dialogo, este contiene información la cual puede variar.
+   */
   openDialogGenerico(titulo: string, codigo: string) {
     const dialogRef = this.dialog.open(DialogCondicionesComponent, {
       data: {
@@ -111,7 +126,9 @@ export class GanadorComponent implements OnInit {
     });
   }
 
-  //Método que abre un dialog, este contiene información de posibles excepciones
+  /**
+   * Método que abre un dialogo, este contiene información de posibles excepciones.
+   */
   openDialog(mensaje: string) {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
@@ -134,7 +151,10 @@ export class GanadorComponent implements OnInit {
       }
     });
   }
-  //Método que abre un dialog, este contiene información de posibles excepciones en los servicios o errores no controlados
+
+  /**
+   * Método que abre un dialog, este contiene información de posibles excepciones en los servicios o errores no controlados.
+   */
   openDialogServiceMessage(mensaje: string) {
     const dialogRef = this.dialog.open(DialogMessageServiceComponent, {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },
@@ -159,7 +179,9 @@ export class GanadorComponent implements OnInit {
     });
   }
 
-  //Método que permite obtener el detalle de un ganador
+  /**
+   * Método que permite obtener el detalle de un ganador.
+   */
   getDetalleService(codigoPromocional: string) {
     this.detalleService.getDetallePremio(codigoPromocional).subscribe({
       next: (resp: any) => {
@@ -196,36 +218,24 @@ export class GanadorComponent implements OnInit {
     });
   }
 
-  //Método encargado de redirir la vista al componente donde se crean las promociones
+  /**
+   * Método que permite leer la imagen y de esta manera pueda ser mostrada al usuario.
+   */
   verImagen() {
     this.utils.verImagen(this.fileDomain)
   }
 
-  imageSizeValidator(minSize: number, maxSize: number): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      if (control.value) {
-        const file = control.value;
-        const fileSize = file.size / 1024 / 1024; // Convertir a MB
-        if (fileSize < minSize || fileSize > maxSize) {
-          return {
-            imageSize: {
-              minSize: minSize,
-              maxSize: maxSize,
-              actualSize: fileSize
-            }
-          };
-        }
-      }
-      return null;
-    };
-  }
-
-  //Método que permite subir una imagen relacionada a un ganador
+  /**
+   * Método que permite subir una imagen relacionada a un ganador.
+   * Asigna la imagen al atributo que se pasara como dato (imagen) a un ganador.
+   */
   onFileSelected(event: any) {
     this.fileDomain = this.utils.onFileSelected(event);
   }
 
-  //Método el cual guarda la información de un ganador 
+  /**
+   * Método el cual guarda la información de un ganador.
+   */
   guardar() {
     if (!this.validarCampos()) {
       this.persona.id = this.detalle.persona.id;
@@ -276,6 +286,10 @@ export class GanadorComponent implements OnInit {
     }
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validarCampos() {
     if (this.persona.cedula == undefined || this.persona.cedula == '') {
       return true;
@@ -310,7 +324,9 @@ export class GanadorComponent implements OnInit {
     return false;
   }
 
-  //Método que abre un dialog, este contiene información sobre la direccion de un ganador
+  /**
+   * Método que abre un dialogo, este contiene información sobre la dirección de un ganador.
+   */
   abrirDireccion() {
     const dialogRef = this.dialog.open(DialogPremioFisicoComponent, {
     });

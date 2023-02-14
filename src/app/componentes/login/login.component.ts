@@ -8,6 +8,13 @@ import { Response } from 'src/app/domain/Response';
 import { Router } from '@angular/router';
 import { Rol } from '../../domain/Rol';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que contiene el formulario que le permite al usuario iniciar sesion en la app.
+ */
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -24,15 +31,25 @@ export class LoginComponent implements OnInit {
   response: Response;
   lstRoles: Array<Rol>;
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(private serviceUsuario: UsuarioService, private message: MessageUtilsComponent, private router: Router) {
     this.usuario = new Usuario();
     this.response = new Response();
     this.lstRoles = new Array<Rol>();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Método que permite validar los datos de inicio de sesion. 
+   */
   autenticar() {
     if (!this.validarDatos()) {
       this.usuario.nombre = String(this.loginFormGroup.get('username')?.value);
@@ -70,6 +87,10 @@ export class LoginComponent implements OnInit {
 
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */ 
   validarDatos() {
     if (this.loginFormGroup.get('username')?.value == undefined || this.loginFormGroup.get('username')?.value == "") {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);

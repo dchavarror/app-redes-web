@@ -5,6 +5,18 @@ import { Response } from 'src/app/domain/Response';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite generar el reporte una promoción.
+ * Este contiene tola información de una promocion. 
+ * (numero de identificacion de los ganadores, nombre de la promoción, 
+ * red social de donde se gano esta promoción, premio ganado,
+ * el link de la publicación que contiene la promoción, el link que se
+ * le entraga al ganador y finalmente el usuario que reclamo el premio)
+ */
+
 @Component({
   selector: 'app-documento',
   templateUrl: './documento.component.html',
@@ -15,14 +27,23 @@ export class DocumentoComponent implements OnInit {
   codigoPromocional = ''
   response: Response;
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(private serviceDocumento: DocumentoService, private dialog: MatDialog, private message: MessageUtilsComponent) {
     this.response = new Response();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
   }
 
-  //Método que permite generar el reporte (.xlsx)de un promoción
+  /**
+   * Método que permite generar el reporte (.xlsx)de un promoción.
+   */
   generarReporte() {
     if (!this.validar()) {
       this.serviceDocumento.getDocumento(this.codigoPromocional).subscribe({
@@ -46,7 +67,9 @@ export class DocumentoComponent implements OnInit {
 
   }
 
-  //Método que ejecuta la descarga del reporte de una promoción
+  /**
+   * Método que ejecuta la descarga del reporte de una promoción.
+   */
   downloadPdf(base64String: any) {
     const source = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${base64String}`;
     const link = document.createElement("a");
@@ -56,6 +79,10 @@ export class DocumentoComponent implements OnInit {
     link.click();
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validar() {
     if (this.codigoPromocional == '') {
       return true;

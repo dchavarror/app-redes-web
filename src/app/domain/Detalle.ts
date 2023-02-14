@@ -4,6 +4,13 @@ import { Persona } from './Persona';
 import { Promocion } from "./Promocion";
 import { Vigencia } from './Vigencia';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Clase de modelo que representa un detalle.
+ */
+
 @Injectable()
 export class Detalle {
     id =0;

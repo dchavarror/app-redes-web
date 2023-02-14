@@ -9,6 +9,14 @@ import { DialogPersonasActualizarComponent } from '../../shared/dialog-personas-
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite administrar la información de una persona.
+ * (obtener lista de personas asociadas a un filtro, actualizar una persona)
+ */
+
 @Component({
   selector: 'app-personas',
   templateUrl: './personas.component.html',
@@ -27,6 +35,10 @@ export class PersonasComponent implements AfterViewInit {
   datas = new MatTableDataSource<Persona>();
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
+  /**
+   * Detecta los cambios que le ocurren al paginador.
+   * El paginador esta asociado a los datos (lista de personas).
+   */
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     if (mp) {
       this.paginator = mp;
@@ -35,8 +47,11 @@ export class PersonasComponent implements AfterViewInit {
       this.cdRef.detectChanges();
     }
   }
-  
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(
     private servicePersona: PersonaService,
     private message: MessageUtilsComponent, private dialog: MatDialog, private cdRef: ChangeDetectorRef) {
@@ -44,16 +59,24 @@ export class PersonasComponent implements AfterViewInit {
     this.personas = new Array<Persona>();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngAfterViewInit(): void {
     this.datas.paginator = this.paginator;
     this.clases = 'content-one';
   }
 
-  obtenerInstancias() {
+  /**
+   * Método que asigna el paginador de la lista al paginador de la pagina, para que la informacion coincida. 
+   */
+  asignarPaginador() {
     this.datas.paginator = this.paginator;
   }
 
-  //Método que permite obtener una(s) persona(s) mediante la cedula o nombre
+  /**
+   * Método que permite obtener una(s) persona(s) mediante la cedula o nombre.
+   */
   obtenerPersonas() {
     if (!this.validarCampos()) {
       console.log("Nada")
@@ -67,7 +90,7 @@ export class PersonasComponent implements AfterViewInit {
             if (this.personas != undefined || this.personas != null) {
               this.tablaMostrar = true;
               this.clases = 'content-two';
-              this.obtenerInstancias();
+              this.asignarPaginador();
             } else {
               this.tablaMostrar = false;
               this.clases = 'content-one';
@@ -85,6 +108,10 @@ export class PersonasComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validarCampos() {
     if (this.cedula == '' && this.nombre == '' || this.cedula == undefined && this.nombre == undefined) {
       return true;
@@ -92,7 +119,9 @@ export class PersonasComponent implements AfterViewInit {
     return false;
   }
 
-  //Método que abre un dialog, este permitira actualizar una persona
+  /**
+   * Método que abre un dialog, este permitira actualizar los datos de una persona.
+   */
   actualizarPersonaDialog(persona: Persona) {
     const dialogRef = this.dialog.open(DialogPersonasActualizarComponent, {
       data: { id: persona.id, foto: persona.foto, nombre: persona.nombreCompleto, cedula: persona.cedula, usuario: persona.usuario, usuarioModifica: persona.usuarioModifica },

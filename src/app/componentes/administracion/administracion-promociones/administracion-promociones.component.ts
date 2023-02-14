@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, ViewChild, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TITULOS_MODALES, REDES, STATUS_SERVICE, TABS } from '../../../../environments/enviroment.variables';
+import { Component, AfterViewInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, STATUS_SERVICE } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../../shared/message-utils/message-utils.component';
 import { PromocionService } from '../../../servicios/promocion.service';
 import { Promocion } from '../../../domain/Promocion';
@@ -10,7 +10,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogAdministracionPromocionesComponent } from '../../shared/dialog-administracion-promociones/dialog-administracion-promociones.component';
 import { PromocionesComponent } from '../../promociones/promociones.component';
-import { FileDomain } from '../../../domain/FileDomain';
+
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permiten administrar una promoción.
+ * (crear, buscar, obtener lista y editar promocion).
+ */
 
 @Component({
   selector: 'app-administradcion',
@@ -37,6 +44,10 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
 
 
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService,
     public dialog: MatDialog) {
     this.promocion = new Promocion();
@@ -47,13 +58,18 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     console.log('constructor');
   }
 
+  /**
+   * Método que permite detectar cambios dentro de las propiedades de entrada del componente.
+   */
   ngOnChanges(changes: SimpleChanges) {
     this.data.paginator = this.paginator;
     this.dataPromociones.paginator = this.paginator;
     this.obtenerPromociones();
   }
 
-  //Método encargado de redirir la vista al componente donde se crean las promociones
+  /**
+  Método encargado de cargar un dialogo donde se crean las promociones.
+   */
   crearPromocion() {
     this.obtenerPromociones();
     const dialogRef = this.dialog.open(PromocionesComponent, {
@@ -68,6 +84,9 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
   }
 
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     this.data.paginator = this.paginator;
@@ -75,6 +94,9 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     this.obtenerPromociones();
   }
 
+  /**
+   * Método que permite crear nuevas instancias de los atributos cuando se es necesario dentro del componente.
+   */
   inicializarAndAsignar() {
     this.data = new MatTableDataSource<Detalle>();
     this.data.data = new Array<Detalle>();
@@ -84,7 +106,9 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     this.dataPromociones.paginator = this.paginator;
   }
 
-  //Método encargado de obtener una promocion mediante el codigo y sus respectivos detalles
+  /**
+   * Método encargado de obtener una promocion mediante el código, este obtiene también sus respectivos detalles.
+   */
   obtenerPromocionPorCodigo() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -120,7 +144,9 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  //Método que permite obtener una promoción mediante el código
+  /**
+   * Método que permite obtener una promoción mediante el código.
+   */
   obtenerPromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -149,7 +175,9 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  //Metodo encargado de obtener el listado de promociones
+  /**
+   * Método encargado de obtener el listado de promociones.
+   */
   obtenerPromociones() {
     this.promocionSevice.getPromociones().subscribe({
       next: (resp: any) => {
@@ -164,6 +192,10 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     });
   }
 
+  /**
+   * Método que valida el campo de entrada del codigo, de esta manera no se ejecuta el método
+   * obtenerPromocionPorCodigo() innecesariamente, y permite evitar anomalias cuando se ejecuta un método. 
+   */
   validarCampos() {
     if (this.codigo == undefined || this.codigo == '') {
       return true;
@@ -171,7 +203,10 @@ export class AdministradcionComponent implements AfterViewInit, OnChanges {
     return false;
   }
 
-  //Metodo que abre un dialogo el cual permite administrar una promocion
+  /**
+   * Método que abre un dialogo el cual permite administrar una promoción.
+   * (modificar, agregar un detalle(premio), eliminar un detalle(premio)).
+   */
   openDialogAdministrarPromocion(item: Promocion): void {
 
     const dialogConfig = new MatDialogConfig();

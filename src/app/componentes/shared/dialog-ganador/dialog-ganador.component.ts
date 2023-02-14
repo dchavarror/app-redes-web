@@ -13,6 +13,13 @@ import { MessageUtilsComponent } from '../message-utils/message-utils.component'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite ver los detalles (premios) asociados a un ganador, este se comporta como un dialog.
+ */
+
 @Component({
   selector: 'app-dialog-ganador',
   templateUrl: './dialog-ganador.component.html',
@@ -27,21 +34,35 @@ export class DialogGanadorComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datas = new MatTableDataSource<Ganador>();
 
+  /**
+     * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+     * Usado para inicializar propiedades y dependencias.
+     */
   constructor(private message: MessageUtilsComponent, private clipboard: Clipboard, private utils: Utils, public dialog: MatDialog, public dialogRef: MatDialogRef<DialogGanadorComponent>, @Inject(MAT_DIALOG_DATA) public data: Persona, private serviceGanador: GanadorService, private serviceVigencia: VigenciaService) {
     this.ganadores = new Array<Ganador>();
     this.response = new Response();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngAfterViewInit() {
     this.obtenerGanadores();
   }
 
+  /**
+   * Método que permite crear nuevas instancias de los atributos cuando se es necesario dentro del componente.
+   */
   inicializarListas() {
     this.datas = new MatTableDataSource<Ganador>();
     this.datas.data = new Array<Ganador>();
     this.datas.paginator = this.paginator;
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   valid() {
     if (this.data.nombreCompleto == '') {
       return false;
@@ -52,7 +73,9 @@ export class DialogGanadorComponent implements AfterViewInit {
     return true;
   }
 
-  //Método encargado de obtener los ganadores mediante la cedula o codigo
+  /**
+   * Método encargado de obtener los ganadores.
+   */
   obtenerGanadores() {
     this.inicializarListas();
     this.serviceGanador.getGanadores(this.data.id).subscribe({
@@ -72,7 +95,9 @@ export class DialogGanadorComponent implements AfterViewInit {
     });
   }
 
-  //Método que abre un dialog, este muestra posible información sobre el estado de un detalle(premio) 
+  /**
+   * Método que abre un dialog, este muestra posible información sobre el estado de un detalle(premio). 
+   */
   openDialogDetalles(mensaje: string) {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: { titulo: TITULOS_MODALES.INFORMACION, contenido: mensaje },

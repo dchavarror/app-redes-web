@@ -10,6 +10,13 @@ import { Response } from 'src/app/domain/Response';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { AdministradcionComponent } from '../administracion/administracion-promociones/administracion-promociones.component';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite crear una promoción, este se comporta como un dialog.
+ */
+
 @Component({
   selector: 'app-promociones',
   templateUrl: './promociones.component.html',
@@ -31,15 +38,25 @@ export class PromocionesComponent implements OnInit {
   promocionalesFormGroup: any;
   lstDetalles: Array<Detalle> = new Array<Detalle>();
 
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(public dialog: MatDialog, private promocionService: PromocionService,
     private message: MessageUtilsComponent, public dialogRef: MatDialogRef<PromocionesComponent>,) {
 
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
     this.inicializarComponente();
   }
 
+  /**
+   * Método que permite crear las instancias de los atributos cuando se es necesario dentro del componente.
+   */
   inicializarComponente() {
     this.promocionalesFormGroup = new FormGroup({
       npromocion: new FormControl('', Validators.required),
@@ -53,10 +70,16 @@ export class PromocionesComponent implements OnInit {
     this.lstDetalles = new Array<Detalle>();
   }
 
+  /**
+   * Método encargado de emitir un evento el cual modifica el tab seleccionado.
+   */
   emitirEvento() {
     this.eventoObtenerPromciones.emit(true);
   }
 
+  /**
+   * Método que permite ejecutar otro método, en este caso el de agregar un detalle.
+   */
   agregarDetallePromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -68,7 +91,9 @@ export class PromocionesComponent implements OnInit {
     }
   }
 
-  //Método que abre un dialog, este permite agregar un detalle a una promocion
+  /**
+   * Método que abre un dialog, este permite agregar un nuevo detalle a una promocion.
+   */
   openDialogPromocion(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: { name: this.name, red: this.red, premio: this.idPremio },
@@ -96,6 +121,10 @@ export class PromocionesComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validarPromocion() {
     if (this.promocion.codigo == undefined || this.promocion.codigo == '') {
       return true
@@ -114,7 +143,9 @@ export class PromocionesComponent implements OnInit {
   }
 
 
-  //Método encargado de guardar una promocion
+  /**
+   * Método encargado de guardar una nueva promoción.
+   */
   onClickGuardarPromocion() {
     if (!this.validarCampos()) {
       this.promocion.lstDetalles = this.lstDetalles;
@@ -146,6 +177,10 @@ export class PromocionesComponent implements OnInit {
 
   }
 
+  /**
+   * Método que permite verificar si el código de una promoción ya existe. Esto para evitar
+   * codigos duplicados.
+   */
   validarCodigoPromocion() {
     this.promocionService.getValidarPromocion(this.promocion.codigo).subscribe({
       next: (resp: any) => {
@@ -166,6 +201,10 @@ export class PromocionesComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validarCampos() {
     if (this.promocion.nombre == undefined || this.promocion.nombre == '') {
       return true;
@@ -182,6 +221,9 @@ export class PromocionesComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Permite eliminar un detalle (premio) de la lista que se crea cuando se agrega un nuevo detalle (premio).
+   */
   eliminarPremio(e: any) {
     console.log('e ', e)
     for (let i = 0; this.lstDetalles.length; i++) {

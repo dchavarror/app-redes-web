@@ -1,22 +1,25 @@
 import { Component, AfterViewInit, ViewChild, Inject, Output, EventEmitter } from '@angular/core';
 import { TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, TITULOS_MODALES, REDES, STATUS_SERVICE, TABS } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../../shared/message-utils/message-utils.component';
-import { PersonaService } from '../../../servicios/persona.service';
 import { PromocionService } from '../../../servicios/promocion.service';
 import { Promocion } from '../../../domain/Promocion';
 import { Response } from 'src/app/domain/Response';
 import { DetalleService } from '../../../servicios/detalle.service';
 import { Detalle } from '../../../domain/Detalle';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
-import { environment } from '../../../../environments/environment.prod';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ThisReceiver } from '@angular/compiler';
 import { DialogMessageEliminarComponent } from '../../shared/dialog-message-eliminar/dialog-message-eliminar.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Utils } from '../../../utils/Utils';
 import { GanadorService } from '../../../servicios/ganador.service';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite administrar una promocion ya existente, este se comporta como un dialog.
+ */
 
 @Component({
   selector: 'app-dialog-administracion-promociones',
@@ -42,8 +45,10 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
-
+  /**
+     * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+     * Usado para inicializar propiedades y dependencias.
+     */
   constructor(private message: MessageUtilsComponent, private promocionSevice: PromocionService,
     private serviceGanadores: GanadorService, private utils: Utils, public dialog: MatDialog,
     private detalleService: DetalleService, @Inject(MAT_DIALOG_DATA) public data: Promocion,
@@ -52,17 +57,25 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     this.detalles = new Array<Detalle>();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngAfterViewInit() {
     this.obtenerPromocionPorCodigo();
   }
 
+  /**
+   * Método que permite crear nuevas instancias de los atributos cuando se es necesario dentro del componente.
+   */
   inicializarLista() {
     this.datas = new MatTableDataSource<Detalle>();
     this.datas.data = new Array<Detalle>();
     this.datas.paginator = this.paginator;
   }
 
-  //Método encargado de obtener una promocion mediante el codigo y sus respectivos detalles
+  /**
+   * Método encargado de obtener una promocion mediante el codigo y sus respectivos detalles.
+   */
   obtenerPromocionPorCodigo() {
     this.inicializarLista();
     if (this.validarCampos()) {
@@ -94,7 +107,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
-  //Método que permite obtener una promoción mediante el código
+  /**
+   * Método que permite obtener una promoción mediante el código.
+   */
   obtenerPromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -120,6 +135,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Método que permite actualizar promoción.
+   */
   actulizarPromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -146,7 +164,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
-  //Método que permite agregar un detalle nuevo a una promocion ya existente
+  /**
+   * Método que permite agregar un detalle nuevo a una promocion ya existente, hace llamada a otro método que lo hace.
+   */
   agregarDetallePromocion() {
     if (this.validarCampos()) {
       this.message.mostrarMessage(MESSAGE_SERVICE.DATOS_FALTANTES, TYPE_ICON_SNACKBAR.WARN);
@@ -157,24 +177,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     }
   }
 
-  modificarDetalle(item: Detalle) {
-    this.detalleService.setDetallePremio(item.id).subscribe({
-      next: (resp: any) => {
-        this.response = resp;
-        if (this.response.statusCode == STATUS_SERVICE.CREACION || this.response.statusCode == STATUS_SERVICE.EXITOSO) {
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.SUCCES)
-          this.obtenerPromocionPorCodigo();
-        } else {
-          this.message.mostrarMessage(this.response.message, TYPE_ICON_SNACKBAR.ERROR)
-        }
-      },
-      error: (e) => {
-        console.log('error ', e);
-        this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
-      }
-    });
-  }
-
+  /**
+   * Método que abre un dialog el cual permite eliminar un detalle (premio).
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: { name: this.name, red: this.red, premio: this.idPremio, indGuardar: true, idPromocion: this.data.id },
@@ -186,6 +191,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Método que permite eliminar un detalle (premio) asociado a una promoción.
+   */
   openDialogEliminarDetallePrmocion(item: Detalle): void {
     this.serviceGanadores.getValidarDetalleGanador(item.id).subscribe({
       next: (reps: any) => {
@@ -209,6 +217,10 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validarCampos() {
     if (this.data.nombre == '' || this.data.codigo == '' || this.data.linkPublicacion == '' || this.data.terminos == '') {
       return true;
@@ -216,6 +228,9 @@ export class DialogAdministracionPromocionesComponent implements AfterViewInit {
     return false;
   }
 
+  /**
+   * Método que permite copiar el link de un detalle (premio).
+   */
   onClickCopyLink(item: Detalle) {
     this.utils.onCopyLink(item.link, item.vigencia.id);
   }

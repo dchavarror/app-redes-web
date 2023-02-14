@@ -9,6 +9,13 @@ import { MessageUtilsComponent } from '../message-utils/message-utils.component'
 import { Utils } from '../../../utils/Utils';
 import { FileDomain } from '../../../domain/FileDomain';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite actualizar los datos de una persona, este se comporta como un dialog.
+ */
+
 @Component({
   selector: 'app-dialog-personas-actualizar',
   templateUrl: './dialog-personas-actualizar.component.html',
@@ -21,6 +28,10 @@ export class DialogPersonasActualizarComponent implements OnInit {
   fileDomain: FileDomain;
   imageSource: any;
 
+  /**
+     * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+     * Usado para inicializar propiedades y dependencias.
+     */
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private message: MessageUtilsComponent,
     private personaService: PersonaService, public dialogRef: MatDialogRef<DialogPersonasActualizarComponent>, private utils: Utils) {
     this.persona = new Persona();
@@ -28,10 +39,16 @@ export class DialogPersonasActualizarComponent implements OnInit {
     this.fileDomain = new FileDomain();
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
     this.fileDomain.imageSource = this.utils.leerImage(this.data.foto);
   }
 
+  /**
+   * Método que se encarga de actualizar los datos de una persona.
+   */
   actualizarPersona() {
     if (this.validar()) {
       this.persona.id = this.data.id;
@@ -61,6 +78,10 @@ export class DialogPersonasActualizarComponent implements OnInit {
     }
   }
 
+  /**
+   * Método que valida los campos de entrada del formulario, de esta manera no se ejecuta un método
+   * innecesariamente, y permite evitar anomalias. 
+   */
   validar() {
     if (this.data.nombre == '' || this.data.cedula == '') {
       return false;
@@ -68,10 +89,17 @@ export class DialogPersonasActualizarComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Método que permite subir una imagen relacionada a un ganador.
+   * Asigna la imagen al atributo que se pasara como dato (imagen) a la persona (ganador).
+   */
   onFileSelected(event: any) {
     this.fileDomain = this.utils.onFileSelected(event);
   }
 
+  /**
+   * Método que lee los metadatos de la imagen y permite mostrarla de manera correcta al usuario.
+   */
   verImagen() {
     this.utils.verImagen(this.fileDomain)
   }

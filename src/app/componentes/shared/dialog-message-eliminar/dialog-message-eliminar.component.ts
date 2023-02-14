@@ -7,6 +7,13 @@ import { DetalleService } from '../../../servicios/detalle.service';
 import { STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite eliminar un premio, este se comporta como un dialog.
+ */
+
 @Component({
   selector: 'app-dialog-message-eliminar',
   templateUrl: './dialog-message-eliminar.component.html',
@@ -18,16 +25,24 @@ export class DialogMessageEliminarComponent implements OnInit {
   response: Response;
   validar = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private detalleService: DetalleService, private message: MessageUtilsComponent,  public dialogRef: MatDialogRef<DialogMessageEliminarComponent>) {
+  /**
+     * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+     * Usado para inicializar propiedades y dependencias.
+     */
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private detalleService: DetalleService, private message: MessageUtilsComponent, public dialogRef: MatDialogRef<DialogMessageEliminarComponent>) {
     this.response = new Response();
   }
 
-
+  /**
+     * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+     */
   ngOnInit(): void {
   }
 
+  /**
+   * Método que permite elimar un premio.
+   */
   confirmarEliminar() {
-    console.log('data ', this.item);
     this.detalleService.setDetallePremio(this.data.idDetallePremio).subscribe({
       next: (resp: any) => {
         this.response = resp;
@@ -39,7 +54,6 @@ export class DialogMessageEliminarComponent implements OnInit {
         }
       },
       error: (e) => {
-        console.log('error ', e);
         this.message.mostrarMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE, TYPE_ICON_SNACKBAR.WARN);
       }
     });

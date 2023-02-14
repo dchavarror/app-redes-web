@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Persona } from './Persona';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Clase que permite trabajar con la data de diferentes componentes.
+ * Esta clase permite pasar atributos de otras clases de modelo y asignarlos a esta clase.
+ */
+
 @Injectable()
 export class DialogData {
     red='';

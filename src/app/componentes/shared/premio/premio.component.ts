@@ -8,6 +8,13 @@ import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/en
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 import { Utils } from '../../../utils/Utils';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que permite mostrar información de un nuevo detalle (premio) en una promoción.
+ */
+
 @Component({
   selector: 'app-premio',
   templateUrl: './premio.component.html',
@@ -20,21 +27,26 @@ export class PremioComponent implements OnInit {
   premios: Array<Premio> = new Array<Premio>();
   response: Response = new Response();
 
+  /**
+     * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+     * Usado para inicializar propiedades y dependencias.
+     */
   constructor(private message: MessageUtilsComponent, private premioService: PremioService, public dialog: MatDialog, private utils: Utils) {
     this.obtenerTodosPremios();
     console.log('premio constructor', this.detalle);
 
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
     console.log('premio ngOnInit ', this.detalle);
   }
 
-  cambiarIcono() {
-
-  }
-
-  //Método encargado de obtener el listado de premios que existe (activos)
+  /**
+   * Método encargado de obtener el listado de premios que existen (activos).
+   */
   obtenerTodosPremios() {
     this.premioService.getPremio().subscribe({
       next: (responsePremios: any) => {
@@ -49,25 +61,29 @@ export class PremioComponent implements OnInit {
     });
   }
 
-  //Método que permite obtener la descripcion de un premio en especifico
+  /**
+   * Método que permite obtener la descripcion de un premio en especifico
+   */
   obtenerDescripcionPremio(idPremio: number) {
     for (let i = 0; i < this.premios.length; i++) {
       if (this.premios[i].id == idPremio) {
         return this.premios[i].descripcion;
       }
     }
-
     return '';
   }
 
-  agregraPremio() {
-
-  }
-
+  /**
+   * Método que permite copiar el link que se le asocia a un detalle (premio).
+   */
   onCopyLink() {
     this.utils.onCopyLink(this.detalle.link, -1);
   }
 
+  /**
+   * Método que emite un evento el cual ejecutara la accion de eliminar 
+   * un determinado detalle de la lista.
+   */
   onGenerarEvento() {
     this.eventEliminar.emit(this.detalle);
   }

@@ -4,6 +4,14 @@ import { AuthService } from '../../utils/AuthService';
 import { TABS, ROLES } from '../../../environments/enviroment.variables';
 import { Utils } from '../../utils/Utils';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Componente que contiene las vistas principales de la app.
+ * (buscar ganadores, reporte, administración y cerrar sesión)
+ */
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,7 +29,10 @@ export class HomeComponent implements OnInit {
   indConsulta = false;
   detectoCambio: boolean;
 
-
+  /**
+   * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+   * Usado para inicializar propiedades y dependencias.
+   */
   constructor(private serviceLogin: AuthService, private utils: Utils) {
     this.accordion = new MatAccordion();
     this.lstRoles = new Array<string>();
@@ -29,6 +40,9 @@ export class HomeComponent implements OnInit {
 
   }
 
+  /**
+   * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
+   */
   ngOnInit(): void {
     this.validarRoles();
     this.utils.evento.subscribe((data) => {
@@ -36,19 +50,24 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Método que permite cerrar sesión en la app.
+   */
   logout() {
     this.serviceLogin.logout();
   }
 
+  /**
+   * Método que actualiza la posicion en la cual se encuentra el tab.
+   */
   actualizarTab(event: any) {
     this.tabSeleccionado = event;
     this.detectoCambio = !this.detectoCambio;
   }
 
-  obtenerPromociones(event: any) {
-    this.obtenerPromciones = event;
-  }
-
+  /**
+   * Método que valida los roles y de esta manera se cargan los componentes.
+   */
   validarRoles() {
     this.lstRoles = this.roles.split(',');
     for (let i = 0; i < this.lstRoles?.length; i++) {
@@ -67,6 +86,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * Método que mofica el tab seleccionado por defecto, esto para cambiar de componente cuando ocurra un evento.
+   */
   onClickTabSeleccionado(event: any) {
     this.tabSeleccionado = event;
   }
