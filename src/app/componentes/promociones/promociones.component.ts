@@ -152,7 +152,7 @@ export class PromocionesComponent implements OnInit {
       this.promocion.activo = true;
       let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
       this.promocion.usuarioCreacion = String(user);
-      this.promocionService.guardarPromocion(this.promocion).subscribe({
+      this.promocionService.savePromocion(this.promocion).subscribe({
         next: (resp: any) => {
           this.response = resp;
           console.log('this.response ', this.response);

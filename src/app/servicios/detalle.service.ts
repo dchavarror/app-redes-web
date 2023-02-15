@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ServiceUtils } from './services.utils';
-import { Usuario } from '../domain/Usuario';
 import { END_POINT_SERVICE } from '../../environments/enviroment.variables';
 import { Detalle } from '../domain/Detalle';
 
@@ -9,7 +8,8 @@ import { Detalle } from '../domain/Detalle';
  * @author dchavarro & r
  * @version 1.0
  * 
- * Clase que contiene los metodos que permiten interactuar con los servicios expuestos.
+ * Clase que contiene los métodos que permiten trabajar con los tipos de verbos http,
+ * para de esta manera definir la operacion que se esta realizando.
  */
 
 @Injectable({
@@ -47,7 +47,7 @@ export class DetalleService {
   }
 
   /**
-   * Método que permite obtener un nuevo detalle (premio) mediante el id, este obtiene aquellos premios que estan
+   * Método que permite obtener un nuevo detalle (premio) mediante el id(atributo), este obtiene aquellos premios que estan
    * asociados a algun registro (promocion).
    */
   getPremioActivo(id: number) {

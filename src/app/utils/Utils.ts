@@ -10,25 +10,46 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogImagenComponent } from '../componentes/shared/dialog-imagen/dialog-imagen.component';
 
+/**
+ * @author dchavarro & r
+ * @version 1.0
+ * 
+ * Clase que contiene el métodos y variables que son de utilidad general en la app.
+ * Ejecuta métodos (funciones) y variables comunes en la app.
+ * Reduce los errores y disminuye la cantidad de código utilizado en la app.
+ */
+
 @Injectable({
     providedIn: 'root'
 })
 export class Utils {
-    
-  evento = new EventEmitter<any>();
 
-  enviarEvento(data: any) {
-    this.evento.emit(data);
-  }
-
+    evento = new EventEmitter<any>();
     detalle: Detalle;
     fileDomain: FileDomain;
+
+    /**
+     * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
+     * Usado para inicializar propiedades y dependencias.
+     */
     constructor(private clipboard: Clipboard,
         private dialog: MatDialog, private serviceVigencia: VigenciaService, private message: MessageUtilsComponent, private sanitizer: DomSanitizer) {
         this.detalle = new Detalle();
         this.fileDomain = new FileDomain();
     }
 
+    /**
+     * Método que emite un evento.
+     */
+    enviarEvento(data: any) {
+        this.evento.emit(data);
+    }
+
+    /**
+     * Método que permite buscar a qué red social pertenece un usuario,
+     * mediante la cadena (url) pasada como parametro.
+     * 
+     */
     buscarRed(cadena: string) {
 
         let posicionUser = cadena.indexOf('.com/');
@@ -51,6 +72,9 @@ export class Utils {
 
     }
 
+    /**
+     * Método que valida si la red ingresada es valida.
+     */
     getRedAplica(facebook: number, instagram: number, tiktok: number, twitter: number) {
         if (facebook != -1) {
             return REDES.FACEBOOK;
@@ -67,6 +91,10 @@ export class Utils {
         return 'NA';
     }
 
+    /**
+     * Método que permite copiar una cadena, en este caso usado para copiar un link.
+     * También activa una vigencia cuando se copia el link.
+     */
     onCopyLink(link: string, idVigencia: number) {
         console.log('sele ', idVigencia);
         this.clipboard.copy(link);
@@ -76,6 +104,9 @@ export class Utils {
         this.message.mostrarMessage(MENSAJE_MODALES.LINK_COPIADO, TYPE_ICON_SNACKBAR.SUCCES)
     }
 
+    /**
+     * Método que permite activar o actualizar la vigencia de un detalle (premio).
+     */
     actualizarVigencia(id: number) {
         console.log('actualizarVigencia ', id)
         this.serviceVigencia.actualizarVigencia(id).subscribe(resp => {
@@ -83,7 +114,9 @@ export class Utils {
         })
     }
 
-    //Método que permite subir una imagen relacionada a un ganador
+    /**
+     * Método que permite subir una imagen (atributo) relacionada a un objeto de tipo (Persona).
+     */
     onFileSelected(event: any) {
         debugger
         const file: File = event.target.files[0];
@@ -113,6 +146,9 @@ export class Utils {
         return this.fileDomain;
     }
 
+    /**
+     * Método que permite leer los metadatos de una imagen.
+     */
     leerImage(foto: any) {
         this.fileDomain.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl(TYPE_IMG.CADENA_PNG + foto);
         if (this.fileDomain.imageSource == TYPE_IMG.CADENA_PNG) {
@@ -122,6 +158,10 @@ export class Utils {
         return this.fileDomain.imageSource;
     }
 
+    /**
+     * Método que permite validar de que tipo es la imagen ingresada, 
+     * dependiendo de que tipo sea se extrae cierta cantidad de carecteres de la cadena de la img.
+     */
     validarDocumento(type: string, base: string) {
         switch (type) {
             case 'image/jpeg':
@@ -135,6 +175,10 @@ export class Utils {
         }
     }
 
+    /**
+     * Método que permite ver una imagen en un componente, el componente se comporta
+     * como un dialog.
+     */
     verImagen(img: any) {
         const dialogRef = this.dialog.open(DialogImagenComponent, {
             panelClass: 'custom-dialog-container',
