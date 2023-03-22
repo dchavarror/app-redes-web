@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Detalle } from '../../domain/Detalle';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { TITULOS_MODALES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE } from '../../../environments/enviroment.variables';
+import { TITULOS_MODALES, STATUS_SERVICE, TYPE_ICON_SNACKBAR, MESSAGE_SERVICE, DATOS_TOKEN } from '../../../environments/enviroment.variables';
 import { Promocion } from '../../domain/Promocion';
 import { PromocionService } from '../../servicios/promocion.service';
 import { Response } from 'src/app/domain/Response';
@@ -150,7 +150,7 @@ export class PromocionesComponent implements OnInit {
     if (!this.validarCampos()) {
       this.promocion.lstDetalles = this.lstDetalles;
       this.promocion.activo = true;
-      let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
+      let user = sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO) != undefined ? sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO)?.toString() : "";
       this.promocion.usuarioCreacion = String(user);
       this.promocionService.savePromocion(this.promocion).subscribe({
         next: (resp: any) => {

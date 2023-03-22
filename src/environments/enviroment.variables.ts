@@ -96,3 +96,8 @@ export const TYPE_IMG={
    CADENA_PNG : 'data:image/png;base64,',
    CADENA_JPG : 'data:image/jpj;base64,'
 }
+
+export const DATOS_TOKEN={
+    APP_TOKEN: 'Authorization',
+    APP_USUARIO: 'usuario'
+}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from './AuthService';
 
 /**
  * @author dchavarro & r
@@ -16,7 +17,7 @@ export class AutenticacionSave implements CanActivate {
    * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
    * Usado para inicializar propiedades y dependencias.
    */
-    constructor(private router: Router) { }
+    constructor(private router: Router, private autenticacionService: AuthService) { }
 
     /**
      * Método que verifica que rutas (vistas) estaran activas para el usuario logueado.
@@ -45,7 +46,7 @@ export class AutenticacionSave implements CanActivate {
      */
     public isLoggedIn(): boolean {
         let status = false;
-        if (localStorage.getItem('indLogeado') === 'true') {
+        if (this.autenticacionService.isAutenticado()) {
             status = true;
         } else {
             status = false;

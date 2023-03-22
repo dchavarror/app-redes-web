@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Persona } from '../../../domain/Persona';
 import { PersonaService } from '../../../servicios/persona.service';
 import { Response } from '../../../domain/Response';
-import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, TYPE_IMG } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, TYPE_IMG, DATOS_TOKEN } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 import { Utils } from '../../../utils/Utils';
 import { FileDomain } from '../../../domain/FileDomain';
@@ -56,7 +56,7 @@ export class DialogPersonasActualizarComponent implements OnInit {
       this.persona.cedula = this.data.cedula;
       this.persona.foto = this.fileDomain.base64 != undefined && this.fileDomain.base64 != '' ? this.fileDomain.base64 : this.data.foto;
       this.persona.usuario = this.data.usuario;
-      this.persona.usuarioModifica = String(localStorage.getItem(this.data.usuarioModifica));
+      this.persona.usuarioModifica = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
       this.personaService.actualizarPersona(this.persona).subscribe({
         next: (resp: any) => {
           this.response = resp;

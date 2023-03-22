@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     this.accordion = new MatAccordion();
     this.lstRoles = new Array<string>();
     this.roles = String(localStorage.getItem("roles"));
-
+    this.serviceLogin.isAutenticado();
   }
 
   /**

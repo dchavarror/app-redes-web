@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import jwt_decode from "jwt-decode";
+import { DATOS_TOKEN } from '../../environments/enviroment.variables';
 
 /**
  * @author dchavarro & r
@@ -19,14 +21,50 @@ export class AuthService {
    */
   constructor(private router: Router) { }
 
-  /**
-   * Método que cierra la sesion de un usuario.
-   */
-  logout(): void {
-    this.router.navigate(['/login']);
-    localStorage.setItem('indLogeado', 'false');
-    localStorage.setItem('usuario', '');
-    localStorage.setItem('roles', '');
+
+  getDataToken(token: string): any {
+    if (token != null) {
+      return jwt_decode(token);
+    }
+    return null;
+  }
+
+  asignarDatosStorage(token: string, usuario: string){
+    sessionStorage.setItem(DATOS_TOKEN.APP_TOKEN  ,token);
+    sessionStorage.setItem(DATOS_TOKEN.APP_USUARIO, usuario);
+  }
+
+  isAutenticado():boolean{
+    if(this.validateDataToken()){
+      return true;
+    }else{
+      this.logout();
+      return false;
+    }
+    
+  }
+
+  validateDataToken():boolean{
+    let token = sessionStorage.getItem(DATOS_TOKEN.APP_TOKEN);
+    if(token != undefined && token !=''){
+      const tokenInfo = this.getDataToken(String(token));
+      const fechaAuth = tokenInfo.exp;
+      const datePru = new Date(0);
+      let dateExpToken = datePru.setUTCSeconds(fechaAuth);
+      if(new Date().valueOf() > dateExpToken.valueOf()){
+        return false;
+      }
+      return true;
+    }else{
+      return false;
+    }
+    
+  }
+
+  logout() {
+    sessionStorage.clear();
+    localStorage.clear();
+    this.router.navigateByUrl('/login');
   }
 
 }

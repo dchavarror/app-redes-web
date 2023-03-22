@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Detalle } from '../../../domain/Detalle';
 import { DetalleService } from '../../../servicios/detalle.service';
 import { Utils } from 'src/app/utils/Utils';
-import { STATUS_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, MESSAGE_SERVICE } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, TYPE_ICON_SNACKBAR, MENSAJE_MODALES, MESSAGE_SERVICE, DATOS_TOKEN } from '../../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../message-utils/message-utils.component';
 
 /**
@@ -90,7 +90,7 @@ export class DialogComponent implements OnInit {
       if (!this.redValida(this.detalle.red)) {
         this.detalle.premio.id = Number(this.data.premio);
         this.detalle.promocion.id = this.data.idPromocion;
-        let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
+        let user = sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO) != undefined ? sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO)?.toString() : "";
         this.detalle.usuarioCreacion = String(user);
         this.serviceDetalle.postDetallePremio(this.detalle).subscribe({
           next: (resp: any) => {

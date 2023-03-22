@@ -46,7 +46,7 @@ import { HomeComponent } from './componentes/home/home.component';
 import { PromocionesComponent } from './componentes/promociones/promociones.component';
 import { GanadorComponent } from './componentes/ganador/ganador.component';
 import { BuscarGanadoresComponent } from './componentes/buscar-ganadores/buscar-ganadores.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Usuario } from './domain/Usuario';
 import { AutenticacionSave } from './utils/AutenticacionSave';
@@ -72,6 +72,8 @@ import { DialogActualizarPremioComponent } from './componentes/shared/dialog-act
 import { DialogAdministracionPromocionesComponent } from './componentes/shared/dialog-administracion-promociones/dialog-administracion-promociones.component';
 import { DialogImagenComponent } from './componentes/shared/dialog-imagen/dialog-imagen.component';
 import { DialogMessageServiceComponent } from './componentes/shared/dialog-message-service/dialog-message-service.component';
+import { TokenInterceptor } from './api-interceptor.service';
+
 
 const materialModules = [
   CdkTreeModule,
@@ -152,7 +154,7 @@ const materialModules = [
     ReactiveFormsModule,
     FlexLayoutModule
   ],
-  providers: [AutenticacionSave, Usuario, MessageUtilsComponent, MatTabNav],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, AutenticacionSave, Usuario, MessageUtilsComponent, MatTabNav],
   bootstrap: [AppComponent],
   entryComponents:[
     SnackbarComponent

@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Inject, ChangeDetectorRef } from '@angular/core';
 import { Premio } from '../../../domain/Premio';
 import { PremioService } from '../../../servicios/premio.service';
 import { Response } from 'src/app/domain/Response';
 import { MessageUtilsComponent } from '../../shared/message-utils/message-utils.component';
-import { MESSAGE_SERVICE, MENSAJE_MODALES, TYPE_ICON_SNACKBAR, STATUS_SERVICE } from '../../../../environments/enviroment.variables';
+import { MESSAGE_SERVICE, MENSAJE_MODALES, TYPE_ICON_SNACKBAR, STATUS_SERVICE, DATOS_TOKEN } from '../../../../environments/enviroment.variables';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DialogEliminarPremioComponent } from '../../shared/dialog-eliminar-premio/dialog-eliminar-premio.component';
@@ -35,18 +35,27 @@ export class PremiosComponent implements AfterViewInit {
   data = new MatTableDataSource<Premio>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    if (mp) {
+      this.paginator = mp;
+      this.data = new MatTableDataSource<Premio>();
+      this.data.paginator = this.paginator;
+      this.cdRef.detectChanges();
+    }
+  }
+
   /**
    * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
    * Usado para inicializar propiedades y dependencias.
    */
-  constructor(private servicePremio: PremioService, private message: MessageUtilsComponent, private dialog: MatDialog, private detalleService: DetalleService) {
+  constructor(private cdRef: ChangeDetectorRef, private servicePremio: PremioService, private message: MessageUtilsComponent, private dialog: MatDialog, private detalleService: DetalleService) {
+    this.descripcion ='';
   }
 
   /**
    * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
    */
   ngAfterViewInit() {
-    this.data.paginator = this.paginator;
     this.crearNuevasInstancias();
   }
 
@@ -58,6 +67,7 @@ export class PremiosComponent implements AfterViewInit {
     this.response = new Response();
     this.premios = new Array<Premio>();
     this.data = new MatTableDataSource<Premio>();
+    this.data.paginator = this.paginator;
     this.obtenerAllPremios();
   }
 
@@ -66,8 +76,10 @@ export class PremiosComponent implements AfterViewInit {
    */
   guardarNuevoPremio() {
     if (this.valid()) {
+      this.premio = new Premio();
       this.premio.descripcion = this.descripcion;
-      let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
+      this.descripcion = '';
+      let user = sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO) != undefined ? sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO)?.toString() : "";
       this.premio.usuarioCreacion = String(user);
       this.servicePremio.savePremio(this.premio).subscribe({
         next: (resp: any) => {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpHeaderResponse } from '@angular/common/http';
-import { concat, Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import {  Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DATOS_TOKEN } from '../../environments/enviroment.variables';
 
 /**
  * @author dchavarro & r
@@ -21,11 +22,12 @@ export class ServiceUtils {
    * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
    * Usado para inicializar propiedades y dependencias.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+  }
   private getHeader(): HttpHeaders{
     const headers = new HttpHeaders({
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     });
 
     return headers;
@@ -37,7 +39,16 @@ export class ServiceUtils {
    */
   public post(endpoint: string, payload = {}): Observable<any> {
     const headers = this.getHeader();
-    return this.http.post(environment.apiUrl  + endpoint, payload, { headers });
+    return this.http.post(environment.apiUrl  + endpoint, payload, { headers: headers, withCredentials: false });
+  }
+
+  /**
+   * Método que permite crear un nuevo recurso.
+   * Este trabaja con el verbo (POST(crear nuevos recursos)).
+   */
+  public postAutenticacion(endpoint: string, payload = {}): Observable<any> {
+    const headers = this.getHeader();
+    return this.http.post(environment.apiUrl  + endpoint, payload, { headers: headers, withCredentials: false});
   }
 
   /**
@@ -46,7 +57,7 @@ export class ServiceUtils {
    */
   public put(endpoint: string, payload = {}): Observable<any> {
     const headers = this.getHeader();
-    return this.http.put(environment.apiUrl  + endpoint, payload, { headers });
+    return this.http.put(environment.apiUrl  + endpoint, payload, {  headers: headers, withCredentials: false });
   }
 
   /**
@@ -56,7 +67,9 @@ export class ServiceUtils {
   public get(endpoint: string, query: string): Observable<any> {
     const endpointFinal = endpoint + query;
     const headers = this.getHeader();
-    return this.http.get(environment.apiUrl  + endpointFinal, { headers });
+     const requestOptions = { headers:headers, 
+      withCredentials: false };
+    return this.http.get(environment.apiUrl  + endpointFinal, requestOptions);
   }
 
 }

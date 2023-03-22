@@ -57,12 +57,14 @@ export class PersonasComponent implements AfterViewInit {
     private message: MessageUtilsComponent, private dialog: MatDialog, private cdRef: ChangeDetectorRef) {
     this.response = new Response();
     this.personas = new Array<Persona>();
+    this.clases='';
   }
 
   /**
    * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
    */
   ngAfterViewInit(): void {
+    this.clases='';
     this.datas.paginator = this.paginator;
     this.clases = 'content-one';
   }

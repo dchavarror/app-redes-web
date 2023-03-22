@@ -16,7 +16,7 @@ import { Detalle } from '../../domain/Detalle';
 import { PersonaService } from '../../servicios/persona.service';
 import { GanadorService } from '../../servicios/ganador.service';
 import { DialogCondicionesComponent } from '../shared/dialog-condiciones/dialog-condiciones.component';
-import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../environments/enviroment.variables';
+import { PAGINAS, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, DATOS_TOKEN } from '../../../environments/enviroment.variables';
 import { MessageUtilsComponent } from '../shared/message-utils/message-utils.component';
 import { DialogPremioFisicoComponent } from '../shared/dialog-premio-fisico/dialog-premio-fisico.component';
 import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/forms';
@@ -241,11 +241,11 @@ export class GanadorComponent implements OnInit {
       this.persona.id = this.detalle.persona.id;
       this.ganador.detallePremio.id = this.detalle.id;
       this.ganador.persona.id = this.detalle.persona.id;
-      this.ganador.usuarioCreacion = String(localStorage.getItem('usuario'));
+      this.ganador.usuarioCreacion = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
       this.ganador.activo = true;
       this.persona.foto = this.fileDomain.base64 != undefined && this.fileDomain.base64 != '' ? this.fileDomain.base64 : this.detalle.persona.foto;
       this.persona.usuario = this.detalle.persona.usuario;
-      this.persona.usuarioModifica = String(localStorage.getItem('usuario'));
+      this.persona.usuarioModifica = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
       this.personaService.actualizarPersona(this.persona).subscribe({
         next: (resp: any) => {
           this.response = resp;

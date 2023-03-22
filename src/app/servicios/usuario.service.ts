@@ -28,6 +28,6 @@ export class UsuarioService {
    * Método que permite validar el objeto de tipo (Usuario) que se encuentra activo en la aplicación.
    */
   validarUsuario(usuario: Usuario) {
-    return this.servicio.post(END_POINT_SERVICE.USUARIO_VALIDAR, usuario).pipe(map(data => data));
+    return this.servicio.postAutenticacion(END_POINT_SERVICE.USUARIO_VALIDAR, usuario).pipe(map(data => data));
   }
 }

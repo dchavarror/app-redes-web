@@ -7,6 +7,7 @@ import { MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, STATUS_SERVICE } from '../../../en
 import { Response } from 'src/app/domain/Response';
 import { Router } from '@angular/router';
 import { Rol } from '../../domain/Rol';
+import { AuthService } from '../../utils/AuthService';
 
 /**
  * @author dchavarro & r
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
    * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
    * Usado para inicializar propiedades y dependencias.
    */
-  constructor(private serviceUsuario: UsuarioService, private message: MessageUtilsComponent, private router: Router) {
+  constructor(private serviceUsuario: UsuarioService, private message: MessageUtilsComponent, private router: Router, private autenticacionService: AuthService) {
     this.usuario = new Usuario();
     this.response = new Response();
     this.lstRoles = new Array<Rol>();
@@ -59,8 +60,8 @@ export class LoginComponent implements OnInit {
           console.log(data);
           this.response = data;
           if (this.response.statusCode === STATUS_SERVICE.CREACION || this.response.statusCode === STATUS_SERVICE.EXITOSO) {
-            localStorage.setItem('indLogeado', 'true');
-            localStorage.setItem('usuario', this.usuario.nombre);
+            this.autenticacionService.asignarDatosStorage(this.response.objectResponse.token, this.usuario.nombre);
+          
             this.lstRoles = this.response.objectResponse.lstRol;
             let roles = '';
             for (let i = 0; i < this.lstRoles.length; i++) {

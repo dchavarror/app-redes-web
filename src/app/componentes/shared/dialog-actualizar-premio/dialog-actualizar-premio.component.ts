@@ -5,7 +5,7 @@ import { MessageUtilsComponent } from '../message-utils/message-utils.component'
 import { Premio } from '../../../domain/Premio';
 import { PremioService } from '../../../servicios/premio.service';
 import { Response } from 'src/app/domain/Response';
-import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR } from '../../../../environments/enviroment.variables';
+import { STATUS_SERVICE, MESSAGE_SERVICE, TYPE_ICON_SNACKBAR, DATOS_TOKEN } from '../../../../environments/enviroment.variables';
 
 /**
  * @author dchavarro & r
@@ -46,7 +46,7 @@ export class DialogActualizarPremioComponent implements OnInit {
     if (this.valid()) {
       this.premio.id = this.data.idPremio;
       this.premio.descripcion = this.data.descripcion;
-      let user = localStorage.getItem("usuario") != undefined ? localStorage.getItem("usuario")?.toString() : "";
+      let user = sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO) != undefined ? sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO)?.toString() : "";
       this.premio.usuarioCreacion = String(user);
       this.servicePremio.savePremio(this.premio).subscribe({
         next: (resp: any) => {
