@@ -53,7 +53,7 @@ export class PromocionService {
    * Método que permite actualizar un objeto de tipo (Promoción).
    */
   setPromocion(codigo: number, promocion: Promocion) {
-    return this.servicio.put(`${END_POINT_SERVICE.GET_CODIGO_PROMOCION}/${codigo}`, promocion).pipe(map(data => data));
+    return this.servicio.put(`${END_POINT_SERVICE.GET_CODIGO_PROMOCION}${codigo}`, promocion).pipe(map(data => data));
   }
 
   /**

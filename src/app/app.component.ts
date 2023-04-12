@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from './utils/AuthService';
 
 /**
  * @author dchavarro & r
@@ -17,7 +16,6 @@ import { AuthService } from './utils/AuthService';
 
 export class AppComponent {
   title = 'app-redes-web';
-  constructor(private serviceAutenticacion :AuthService){
-    this.serviceAutenticacion.isAutenticado();
+  constructor(){
   }
 }
