@@ -71,7 +71,7 @@ export const DOCUMENTO = {
 export const TERMINOS = {
     TITULO_TERMINOS: 'Terminos',
     CODIGO_TERMINOS: 'CTERMINOS',
-    TITULO_TRATAMIENTOS: 'Terminos y condiciones',
+    TITULO_TRATAMIENTOS: 'Tratamiento de datos',
     CODIGO_TRATAMIENTOS: 'CTTRATAMIENTO',
     TITULO_CONDICIONES: 'Terminos y condiciones',
     CODIGO_CONDICIONES: 'CCONDICIONES'

@@ -132,7 +132,7 @@ export class BuscarGanadoresComponent implements AfterViewInit {
    */
   openDialogDetalleDePersona(sele: Persona): void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "600px";
+    dialogConfig.width = "auto";
 
     dialogConfig.data = sele;
     const dialogRef = this.dialog.open(DialogGanadorComponent, dialogConfig,);
