@@ -8,13 +8,53 @@
                 <div>
                     <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                         <mat-label class="label">Nombre completo</mat-label>
-                        <input class="input-one" [(ngModel)]="persona.nombreCompleto" matInput placeholder="Nombre completo" [ngModelOptions]="{ standalone: true }" disabled="{{ indDisablePersona }}" />
+                        <input class="input-one" [(ngModel)]="persona.nombreCompleto" matInput placeholder="Nombre completo" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                         <mat-label class="label">Cedula</mat-label>
                         <input type="number" class="example-right-align" disabled="{{ indDisablePersona }}" [(ngModel)]="persona.cedula" matInput placeholder="Cedula" [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="50%">
+                        <mat-label class="label">Correo</mat-label>
+                        <input class="input-one" [(ngModel)]="persona.correo" matInput placeholder="Correo" [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="50%">
+                        <mat-select [(ngModel)]="persona.dominio" (selectionChange)="onChangeDominio($event)" [ngModelOptions]="{ standalone: true }">
+                            <mat-option value="@gmail.com">@gmail.com</mat-option>
+                            <mat-option value="@hotmail.com">@hotmail.com</mat-option>
+                            <mat-option value="@yahoot.com">@yahoot.com</mat-option>
+                            <mat-option value="@oulook.com">@oulook.com</mat-option>
+                            <mat-option value="otro">Otro</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div>
+                    <mat-form-field *ngIf="indOcultoOtro" appearance="outline" class="mat-form-field-100" fxFlex="100%">
+                        <mat-label class="label">Dominio</mat-label>
+                        <input class="input-one" [(ngModel)]="otroDominio" matInput placeholder="Dominio" [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
+                        <mat-label class="label">Direccion</mat-label>
+                        <input class="input-one" [(ngModel)]="direccion.descripcion" matInput placeholder="Direccion" [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
+                        <mat-label class="label">Ciudad/Municipio</mat-label>
+                        <input class="input-one" [(ngModel)]="direccion.ciudad" matInput placeholder="Ciudad o municipio" [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
+                        <mat-label class="label">Indicaciones entrega</mat-label>
+                        <input class="input-one" [(ngModel)]="direccion.adicionales" matInput placeholder="Inidicaciones Apt,casa,piso,vereda" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>
                 </div>
                 <div fxLayoutAlign="center">
@@ -45,10 +85,10 @@
                                 <mat-checkbox [(ngModel)]="ganador.tratamientoDatos" disabled="{{ indDisable }}" [ngModelOptions]="{ standalone: true }">Acepto tratamiento de datos <a class="link-terminos" (click)="openDialogTratamiento()">(Ver
                                         Tratamientos)</a></mat-checkbox>
                             </p>
-                            <p class="button-save">
+                            <!-- <p class="button-save">
                                 <mat-checkbox [(ngModel)]="ganador.aceptacionPremio" disabled="{{ indDisable }}" [ngModelOptions]="{ standalone: true }">Acepta premio <a class="link-terminos" (click)="openDialogCondiciones()">(Ver
                                         Condiciones)</a></mat-checkbox>
-                            </p>
+                            </p> -->
                         </section>
                         <section>
                             <div class="button-save" fxLayoutAlign="center">

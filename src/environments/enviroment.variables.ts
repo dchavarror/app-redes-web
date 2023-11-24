@@ -15,7 +15,8 @@ export const END_POINT_SERVICE = {
     GET_CODIGO_PROMOCION: 'promocion/',
     GET_PROMOCION: 'promocion/promocion/',
     GET_VALIDAR_PROMOCION: 'promocion/validar/',
-    GET_ALL_PROMOCIONES: 'promocion/obtener/promociones'
+    GET_ALL_PROMOCIONES: 'promocion/obtener/promociones',
+    DIRECCION: 'direccion',
 };
 
 export const MESSAGE_SERVICE = {

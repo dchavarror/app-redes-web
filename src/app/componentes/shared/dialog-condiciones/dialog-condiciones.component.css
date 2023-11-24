@@ -10,7 +10,10 @@
     margin-bottom: 20px;
 }
 
-p,
 h1 {
     text-align: center;
+}
+
+p {
+    text-align: left;
 }

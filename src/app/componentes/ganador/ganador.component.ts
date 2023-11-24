@@ -23,6 +23,9 @@ import { AbstractControl, ValidatorFn, FormControl, Validators } from '@angular/
 import { FileDomain } from '../../domain/FileDomain';
 import { Utils } from '../../utils/Utils';
 import { DialogMessageServiceComponent } from '../shared/dialog-message-service/dialog-message-service.component';
+import { DireccionService } from 'src/app/servicios/direccion.service';
+import { Direccion } from 'src/app/domain/Direccion';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * @author dchavarro & r
@@ -46,6 +49,11 @@ export class GanadorComponent implements OnInit {
   indDisable = false;
   indDisablePersona = false;
   fileDomain: FileDomain;
+  direccion: Direccion;
+  dominios: any[] = [];
+  indOcultoOtro = false;
+  otroDominio ='';
+
 
   /**
    * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
@@ -58,7 +66,9 @@ export class GanadorComponent implements OnInit {
     private personaService: PersonaService,
     private ganadorService: GanadorService,
     private message: MessageUtilsComponent,
-    private utils: Utils
+    private utils: Utils,
+    private direccionService: DireccionService,
+    private http: HttpClient
   ) {
     this.persona = new Persona();
     this.ganador = new Ganador();
@@ -67,13 +77,13 @@ export class GanadorComponent implements OnInit {
     let codigo = this.activateRoute.snapshot.params['codigoPromocion'];
     this.getDetalleService(codigo);
     this.fileDomain = new FileDomain();
+    this.direccion = new Direccion();
   }
 
   /**
    * Método que se ejecuta cuando se hace llamada a la directiva del componente cuando se ha instanciado.
    */
   ngOnInit(): void {
-
   }
 
   /**
@@ -246,6 +256,7 @@ export class GanadorComponent implements OnInit {
       this.persona.foto = this.fileDomain.base64 != undefined && this.fileDomain.base64 != '' ? this.fileDomain.base64 : this.detalle.persona.foto;
       this.persona.usuario = this.detalle.persona.usuario;
       this.persona.usuarioModifica = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
+      this.persona.correo = this.persona.correo + (this.otroDominio !='' ? this.otroDominio : this.persona.dominio);
       this.personaService.actualizarPersona(this.persona).subscribe({
         next: (resp: any) => {
           this.response = resp;
@@ -260,9 +271,29 @@ export class GanadorComponent implements OnInit {
                   this.response.statusCode == STATUS_SERVICE.CREACION ||
                   this.response.statusCode == STATUS_SERVICE.EXITOSO
                 ) {
-                  this.persona = new Persona();
-                  this.ganador = new Ganador();
-                  this.openDialog('Ganador guardado con exito!');
+                  this.direccion.persona.id=this.detalle.persona.id;
+                  this.direccion.usuarioCreacion = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
+                  this.direccion.usuarioModifica = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
+                  this.direccionService.guardarDireccion(this.direccion).subscribe({
+                    next: (resp: any) => {
+                      this.response = resp;
+                      if (
+                        this.response.statusCode == STATUS_SERVICE.CREACION ||
+                        this.response.statusCode == STATUS_SERVICE.EXITOSO
+                      ) {
+                        this.persona = new Persona();
+                        this.ganador = new Ganador();
+                        this.direccion = new Direccion();
+                        this.openDialog('Ganador guardado con exito!');
+                      }else{
+                        this.openDialog(this.response.message);
+                      }
+                    },
+                    error: (e) => {
+                      console.log('error ', e);
+                      this.openDialogServiceMessage(MESSAGE_SERVICE.SIN_RESPONSE_SERVICE_MESSAGE);
+                    }
+                  })
                 } else {
                   this.openDialog(this.response.message);
                 }
@@ -304,12 +335,6 @@ export class GanadorComponent implements OnInit {
       return true;
     }
     if (
-      this.ganador.aceptacionPremio == undefined ||
-      this.ganador.aceptacionPremio == false
-    ) {
-      return true;
-    }
-    if (
       this.ganador.aceptoTerminos == undefined ||
       this.ganador.aceptoTerminos == false
     ) {
@@ -318,6 +343,30 @@ export class GanadorComponent implements OnInit {
     if (
       this.ganador.tratamientoDatos == undefined ||
       this.ganador.tratamientoDatos == false
+    ) {
+      return true;
+    }
+    if (
+      this.direccion.descripcion == undefined ||
+      this.direccion.descripcion == ''
+    ) {
+      return true;
+    }
+    if (
+      this.direccion.adicionales == undefined ||
+      this.direccion.adicionales == ''
+    ) {
+      return true;
+    }
+    if (
+      this.direccion.ciudad == undefined ||
+      this.direccion.ciudad == ''
+    ) {
+      return true;
+    }
+    if (
+      this.persona.correo == undefined ||
+      this.persona.correo == ''
     ) {
       return true;
     }
@@ -331,5 +380,16 @@ export class GanadorComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogPremioFisicoComponent, {
     });
     console.log("Agregar Dirección!!!")
+  }
+
+  onChangeDominio(valor:any){
+    console.log('dominio', valor);
+    if(valor.value =='otro'){
+      this.indOcultoOtro = true;
+    }else{
+      this.indOcultoOtro = false;
+      this.persona.dominio =valor.value;
+      this.otroDominio ='';
+    }
   }
 }
