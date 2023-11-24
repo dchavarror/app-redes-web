@@ -18,5 +18,5 @@ export class Persona {
     usuarioCreacion ='';
     activo = true;
     correo ='';
-    dominio='@gmail.com';
+    dominio='gmail.com';
 }

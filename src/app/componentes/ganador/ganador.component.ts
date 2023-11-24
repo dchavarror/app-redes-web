@@ -53,6 +53,7 @@ export class GanadorComponent implements OnInit {
   dominios: any[] = [];
   indOcultoOtro = false;
   otroDominio ='';
+  ARROBA='@';
 
 
   /**
@@ -256,7 +257,7 @@ export class GanadorComponent implements OnInit {
       this.persona.foto = this.fileDomain.base64 != undefined && this.fileDomain.base64 != '' ? this.fileDomain.base64 : this.detalle.persona.foto;
       this.persona.usuario = this.detalle.persona.usuario;
       this.persona.usuarioModifica = String(sessionStorage.getItem(DATOS_TOKEN.APP_USUARIO));
-      this.persona.correo = this.persona.correo + (this.otroDominio !='' ? this.otroDominio : this.persona.dominio);
+      this.persona.correo = this.persona.correo + this.ARROBA + (this.otroDominio !='' ? this.otroDominio : this.persona.dominio);
       this.personaService.actualizarPersona(this.persona).subscribe({
         next: (resp: any) => {
           this.response = resp;
@@ -370,6 +371,12 @@ export class GanadorComponent implements OnInit {
     ) {
       return true;
     }
+    if (
+      this.persona.dominio == 'otro' && (this.otroDominio == undefined
+      || this.otroDominio == '') 
+    ) {
+      return true;
+    }
     return false;
   }
 
@@ -391,5 +398,20 @@ export class GanadorComponent implements OnInit {
       this.persona.dominio =valor.value;
       this.otroDominio ='';
     }
+  }
+
+  validarCorreo(){
+    if(this.persona.correo !=undefined && this.persona.correo !=''){
+      let correo = this.persona.correo + this.ARROBA + (this.otroDominio !='' ? this.otroDominio : this.persona.dominio);
+      const regex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+      if(!regex.test(correo)){
+        this.message.mostrarMessage(MESSAGE_SERVICE.DOMINIO_INVALIDO, TYPE_ICON_SNACKBAR.WARN);
+        this.otroDominio ='';
+      }
+    }else{
+      this.message.mostrarMessage(MESSAGE_SERVICE.INGRESAR_CORREO, TYPE_ICON_SNACKBAR.WARN);
+      this.otroDominio ='';
+    }
+    
   }
 }

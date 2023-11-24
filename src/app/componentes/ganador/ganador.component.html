@@ -8,7 +8,7 @@
                 <div>
                     <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                         <mat-label class="label">Nombre completo</mat-label>
-                        <input class="input-one" [(ngModel)]="persona.nombreCompleto" matInput placeholder="Nombre completo" [ngModelOptions]="{ standalone: true }" />
+                        <input class="input-one" [(ngModel)]="persona.nombreCompleto" disabled="{{ indDisablePersona }}" matInput placeholder="Nombre completo" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>
                 </div>
                 <div>
@@ -22,12 +22,14 @@
                         <mat-label class="label">Correo</mat-label>
                         <input class="input-one" [(ngModel)]="persona.correo" matInput placeholder="Correo" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>
+                    <mat-label appearance="outline" class="mat-form-field-100" class="center-correo">@</mat-label>
+
                     <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="50%">
                         <mat-select [(ngModel)]="persona.dominio" (selectionChange)="onChangeDominio($event)" [ngModelOptions]="{ standalone: true }">
-                            <mat-option value="@gmail.com">@gmail.com</mat-option>
-                            <mat-option value="@hotmail.com">@hotmail.com</mat-option>
-                            <mat-option value="@yahoot.com">@yahoot.com</mat-option>
-                            <mat-option value="@oulook.com">@oulook.com</mat-option>
+                            <mat-option value="gmail.com">gmail.com</mat-option>
+                            <mat-option value="hotmail.com">hotmail.com</mat-option>
+                            <mat-option value="yahoot.com">yahoot.com</mat-option>
+                            <mat-option value="oulook.com">oulook.com</mat-option>
                             <mat-option value="otro">Otro</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -36,7 +38,7 @@
                 <div>
                     <mat-form-field *ngIf="indOcultoOtro" appearance="outline" class="mat-form-field-100" fxFlex="100%">
                         <mat-label class="label">Dominio</mat-label>
-                        <input class="input-one" [(ngModel)]="otroDominio" matInput placeholder="Dominio" [ngModelOptions]="{ standalone: true }" />
+                        <input (blur)="validarCorreo()" class="input-one" [(ngModel)]="otroDominio" matInput placeholder="Dominio" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>
                 </div>
                 <div>
