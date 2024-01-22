@@ -43,6 +43,12 @@
                 </div>
                 <div>
                     <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
+                        <mat-label class="label">Teléfono</mat-label>
+                        <input class="input-one" [(ngModel)]="persona.telefono" matInput placeholder="Teléfono" [ngModelOptions]="{ standalone: true }" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="mat-form-field-100" fxFlex="100%">
                         <mat-label class="label">Direccion</mat-label>
                         <input class="input-one" [(ngModel)]="direccion.descripcion" matInput placeholder="Direccion" [ngModelOptions]="{ standalone: true }" />
                     </mat-form-field>

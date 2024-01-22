@@ -52,6 +52,14 @@
             la autorización al uso de los mismos, puede escribir a protecciondedatos@cempresarial.co para realizar la solicitud.
         </p>
     </div>
+
+    <div *ngIf="felicidadesNuestroGana">
+        <p>Para poder realizar el envío respectivo de tu premio, por favor diligencia el formulario con tus datos de contacto y dirección de residencia a la que quieres llegue tu premio. A finalizar en el botón
+            <img width="25px" height="25px" src="../../../../assets/img/ImgGanadores.png"> envíanos copia de tu documento de identidad por ambas caras. Acepta términos y condiciones, política de tratamiento de datos y presiona "GUARDAR". ¡Y listo! estaremos
+            enviando tu premio dentro de los periodos establecidos en nuestros términos y condiciones. GRACIAS POR PARTICIPAR
+
+        </p>
+    </div>
 </div>
 <div mat-dialog-actions>
     <button class="mat-button" [mat-dialog-close]="data.codigoInvocacion" cdkFocusInitial>Aceptar</button>

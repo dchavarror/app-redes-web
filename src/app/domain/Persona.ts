@@ -19,4 +19,5 @@ export class Persona {
     activo = true;
     correo ='';
     dominio='gmail.com';
+    telefono='';
 }

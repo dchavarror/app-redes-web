@@ -79,6 +79,7 @@ export class GanadorComponent implements OnInit {
     this.getDetalleService(codigo);
     this.fileDomain = new FileDomain();
     this.direccion = new Direccion();
+    this.openDialogGanador();
   }
 
   /**
@@ -101,6 +102,11 @@ export class GanadorComponent implements OnInit {
   openDialogTratamiento() {
     this.ganador.tratamientoDatos = false;
     this.openDialogGenerico(TERMINOS.TITULO_TRATAMIENTOS, TERMINOS.CODIGO_TRATAMIENTOS);
+  }
+
+  openDialogGanador() {
+    this.ganador.tratamientoDatos = false;
+    this.openDialogGenerico(TERMINOS.TITULO_GANADORES, TERMINOS.CODIGO_GANADORES);
   }
 
   /**

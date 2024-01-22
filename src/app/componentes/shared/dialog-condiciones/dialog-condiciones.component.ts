@@ -21,6 +21,7 @@ export class DialogCondicionesComponent implements OnInit {
   tratamiento = false;
   terminos = false;
   condiciones = false;
+  felicidadesNuestroGana = false;
 
   /**
      * Método constructor, este se invoca cuando se crea una instancia del componente (clase TS).
@@ -40,6 +41,9 @@ export class DialogCondicionesComponent implements OnInit {
     }
     if (this.data.codigoInvocacion == TERMINOS.CODIGO_TRATAMIENTOS) {
       this.tratamiento = true;
+    }
+    if (this.data.codigoInvocacion == TERMINOS.CODIGO_GANADORES) {
+      this.felicidadesNuestroGana = true;
     }
   }
 
